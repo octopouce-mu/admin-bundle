@@ -1,4 +1,9 @@
 require('materialize-css');
+// require jQuery normally
+const $ = require('jquery');
+
+// create global $ and jQuery variables
+global.$ = global.jQuery = $;
 
 
 $(".hamburger").on('click', function(){
@@ -46,3 +51,4 @@ $('.timepicker').pickatime({
     canceltext: 'Cancel', // Text for cancel-button
     format: 'HH:i'
 });
+

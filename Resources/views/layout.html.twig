@@ -25,15 +25,28 @@
 
                 <article>
                     <h2 class="center-align">Admin</h2>
-                    <p class="text-justify">{{ projectname }}</p>
+                    <p class="text-justify">
+                        {% if thor.options.PROJECT_NAME is defined and thor.options.PROJECT_NAME.value %}
+                            {{thor.options.PROJECT_NAME.value}}
+                        {% else %}
+                            Thor
+                        {% endif %}
+                    </p>
                 </article>
                 <div class="social">
                     <div class="h3 center-align title-social">Vos réseaux sociaux</div>
                     <div class="bar-social">
                         <ul class="center-align">
-                            <li><a href=""><i class="ion-social-facebook-outline"></i></a></li>
-                            <li><a href=""><i class="ion-social-twitter-outline"></i></a></li>
-                            <li><a href=""><i class="ion-social-googleplus-outline"></i></a></li>
+                            {% if thor.options.FACEBOOK_PAGE_URL is defined and thor.options.FACEBOOK_PAGE_URL.value %}
+                                <li><a href="{{ thor.options.FACEBOOK_PAGE_URL.value }}" target="_blank"><i class="ion-social-facebook-outline"></i></a></li>
+                            {% endif %}
+                            {% if thor.options.TWITTER_PAGE_URL is defined and thor.options.TWITTER_PAGE_URL.value %}
+                                <li><a href="{{ thor.options.TWITTER_PAGE_URL.value }}" target="_blank"><i class="ion-social-twitter-outline"></i></a></li>
+
+                            {% endif %}
+                            {% if thor.options.GOOGLE_PAGE_URL is defined and thor.options.GOOGLE_PAGE_URL.value %}
+                                <li><a href="{{ thor.options.GOOGLE_PAGE_URL.value }}" target="_blank"><i class="ion-social-googleplus-outline"></i></a></li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>
@@ -46,7 +59,7 @@
                 </div>
                 <ul>
                     <li class="current">
-                        <a href="{{ path('octopouce_admin_dashboard') }}">
+                        <a href="{{ path('octopouce_admin_dashboard_index') }}">
                             <i class="fas fa-tachometer-alt"></i>
                             <span class="label-menu">Dashboard</span>
                         </a>

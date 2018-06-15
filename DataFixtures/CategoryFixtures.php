@@ -14,6 +14,7 @@ class CategoryFixtures extends Fixture
 	    foreach ($this->getData() as [$name, $parent]) {
 		    $category = new Category();
 		    $category->setName($name);
+		    $category->setType('option');
 		    if($parent){
 		    	$category->setParent($this->getReference('cat-'.$parent));
 		    }

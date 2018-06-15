@@ -4,7 +4,7 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
-    <link rel="stylesheet" href="{{ asset('@OctopouceAdminBundle/Resources/public/css/login.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/octopouceadmin/css/login.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -18,7 +18,7 @@
             {% if thor.options.PROJECT_LOGO is defined and thor.options.PROJECT_LOGO.value %}
                 <img class="mb-4" src="{{ asset('uploads/' ~ thor.options.PROJECT_LOGO.value) }}" alt="Logo" height="72">
             {% else %}
-                <img class="mb-4" src="{{ asset('img/logo-octopouce.svg') }}" alt="Logo Octopouce" height="72">
+                <img class="mb-4" src="{{ asset('bundles/octopouceadmin/img/logo-octopouce.svg') }}" alt="Logo Octopouce" height="72">
             {% endif %}
             <h3 class="h3 mb-3 font-weight-normal">{{ 'title.login'|trans }}</h3>
         </div>

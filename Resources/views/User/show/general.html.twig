@@ -1,0 +1,10 @@
+Username : {{ entity.username }} <br>
+Name : {{ entity.firstname }} {{ entity.lastname }}<br>
+Email : {{ entity.email }} <br>
+Phone : {{ entity.phone }} <br>
+address : {{ entity.address }} <br>
+complementAddress : {{ entity.complementAddress }} <br>
+postalCode : {{ entity.postalCode }} <br>
+City : {{ entity.city }} <br>
+Country : {{ entity.country }} <br>
+Role : {% for role in entity.roles %}{{ role }},{% endfor %}<br>

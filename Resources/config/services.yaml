@@ -1,0 +1,11 @@
+services:
+    Octopouce\AdminBundle\:
+        resource: '../../*'
+        exclude: '../../{DependencyInjection,Entity,Resources}'
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Octopouce\AdminBundle\Utils\FileUploader:
+        arguments:
+            $targetDirectory: '/uploads'

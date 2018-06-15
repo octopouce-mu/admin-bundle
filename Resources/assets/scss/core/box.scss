@@ -1,0 +1,77 @@
+.box {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  background-color: #031421;
+  position: relative;
+  margin-top: 15px;
+
+  a {
+    color: inherit;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+   > .bg-img {
+     background-size: cover;
+     width: 100%;
+     height: 100%;
+     position: absolute;
+     opacity: .2;
+     z-index: 1;
+   }
+
+   > .title {
+    padding: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    color: #87b7ae;
+    text-transform: uppercase;
+    font-size: 1.1em;
+    letter-spacing: 1px;
+    font-family: "Roboto Slab", serif;
+    position: relative;
+    z-index: 2;
+    display: block;
+  }
+
+  .title-icon {
+    padding-left: 45px;
+    i {
+      position: absolute;
+      top: 0;
+      left: 0;
+      font-size: 1.9em;
+      width: 45px;
+      text-align: center;
+    }
+  }
+
+  .sup-right {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: rgba(255, 255, 255, 0.14);
+    text-transform: uppercase;
+    font-size: 1.1em;
+    letter-spacing: 1px;
+    font-family: "Roboto Slab", serif;
+    a {
+      color: rgba(255, 255, 255, 0.14);
+      &:hover {
+        color: #87b7ae;
+      }
+    }
+  }
+
+  > .content {
+    padding: 10px;
+    overflow: auto;
+    z-index: 2;
+    position: relative;
+    display: block;
+    img {
+      opacity: 0.6;
+      margin: auto;
+    }
+  }
+}

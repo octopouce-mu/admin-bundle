@@ -1,0 +1,169 @@
+.dashboard {
+  width: 100%;
+  position: relative;
+  //background: url("../img/fond.png") no-repeat fixed;
+  background-size: cover;
+  overflow: hidden;
+  @media screen and (min-width: 993px) {
+    &:not(.no-data-ga){
+      height: 100vh;
+    }
+  }
+  .dashboard-filter{
+      @media only screen and (max-width: 767px){
+        display: none;
+
+      }
+  }
+  &.no-data {
+    display: flex;
+    background: url("/img/dashboard.png") right top no-repeat fixed;
+  }
+  .data-ga {
+    padding-top: 20px;
+    height: 100%;
+    .world-sessions{
+      #map{
+        width: 100%;
+        height: 50vh;
+      }
+      table tr {
+        td:first-child{
+          width: 20%;
+        }
+        td:last-child {
+          overflow: hidden;
+          position: relative;
+          text-align: center;
+        }
+        .band {
+          margin: 5px 0;
+          position: absolute;
+          z-index: 0;
+          top:0;
+          left: 0;
+          background-color: #0d6aad;
+          height: 100%;
+        }
+        .text-band {
+          z-index: 2;
+          position: relative;
+        }
+      }
+    }
+  }
+}
+
+
+.rs{
+    background-color: #FFF;
+  .title-zone {
+    background: url("/img/background-t-rs.jpg") center center/auto 100% no-repeat;
+    background-position: 35% 40%;
+    .h1-like {
+      color: #87b7ae;
+    }
+  }
+  .h2-like {
+    color: #000;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  }
+  .block-rs {
+    border-left: 1px solid rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+    h3 {
+      i {
+        border: 1px solid #031421;
+        border-radius: 50%;
+        padding: 10px;
+        width: 65px;
+        height: 65px;
+        display: inline-block;
+      }
+      color: #031421;
+      padding-top: 50px;
+      font-size: 2.5rem;
+      font-weight: 400;
+      font-family: "Yanone Kaffeesatz", sans-serif;
+      letter-spacing: 2px;
+    }
+    .rs-title {
+      font-weight: bold;
+      color: #031421;
+      margin: 40px 0 0 30px;
+      position: relative;
+      z-index: 1;
+    }
+    .rs-count {
+      font-family: "Roboto Slab", serif;
+      text-align: center;
+      padding: 40px 0 60px 0;
+      color: #87b7ae;
+      font-size: 4vw;
+      position: relative;
+      z-index: 1;
+    }
+    .rs-icon {
+      position: absolute;
+      bottom: -50px;
+      right: 30px;
+      font-size: 12rem;
+      color: #eeeeee;
+    }
+  }
+}
+.perf {
+  .title-zone{
+      .h1-like{
+          font-size: 25px;
+      }
+  }
+  .block-perf {
+    text-align: center;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    min-height: 350px;
+    position: relative;
+    .perf-icon {
+      font-size: 6rem;
+      padding-top: 50px;
+      &.perf-up {
+        color: #167516;
+      }
+      &.perf-down {
+        color: #751616;
+      }
+    }
+    .perf-pourcent {
+      font-size: 2rem;
+      margin-top: -30px;
+      font-weight: 300;
+      font-family: "Roboto Slab", serif;
+    }
+    h3 {
+      i {
+        border: 1px solid #fff;
+        border-radius: 50%;
+        padding: 10px;
+        width: 65px;
+        height: 65px;
+        display: inline-block;
+      }
+      padding-top: 50px;
+      font-size: 2.5rem;
+      font-weight: 400;
+      font-family: "Yanone Kaffeesatz", sans-serif;
+      letter-spacing: 2px;
+    }
+    p {
+      font-family: "Yanone Kaffeesatz", sans-serif;
+      font-weight: 100;
+      letter-spacing: 2px;
+      position: absolute;
+      right: 50px;
+      bottom: 10px;
+      font-size: 1.6rem;
+    }
+  }
+}

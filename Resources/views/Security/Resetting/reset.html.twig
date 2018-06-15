@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body_id 'login' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+    <link rel="stylesheet" href="{{ asset('@OctopouceAdminBundle/Resources/public/css/login.css') }}">
+{% endblock %}
+
+{% block body %}
+    {{ form_start(form, {'action':path('octopouce_admin_password_resetting_reset', {'token':token}), 'attr':{'class':'form-signin'}}) }}
+        <div class="text-center mb-4">
+            {% if thor.options.PROJECT_LOGO is defined and thor.options.PROJECT_LOGO.value %}
+                <img class="mb-4" src="{{ asset('uploads/' ~ thor.options.PROJECT_LOGO.value) }}" alt="Logo" height="72">
+            {% else %}
+                <img class="mb-4" src="{{ asset('img/logo-octopouce.svg') }}" alt="Logo Octopouce" height="72">
+            {% endif %}
+            <h3 class="h3 mb-3 font-weight-normal">{{ 'modify_password.title' | trans }}</h3>
+        </div>
+
+        <div class="form-label-group input-field">
+            {{ form_widget(form.password.first) }}
+            {{ form_label(form.password.first) }}
+        </div>
+
+        <div class="form-label-group input-field">
+            {{ form_widget(form.password.second) }}
+            {{ form_label(form.password.second) }}
+        </div>
+        <br>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">{{ 'modify_password.button' | trans }}</button>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+{% endblock %}

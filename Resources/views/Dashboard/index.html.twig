@@ -1,0 +1,354 @@
+{% extends '@OctopouceAdmin/layout.html.twig' %}
+
+
+{% block main %}
+    <section class="dashboard {% if stats.ga is not defined and stats.rs is not defined %}no-data padding-filter{% elseif stats.ga is not defined  %}no-data-ga padding-filter{% endif %}">
+        {% if stats.ga is defined %}
+            <div class="data-ga">
+                <div class="row">
+                    <div class="col s6 m6 l3">
+                        <div class="box">
+                            <div class="title">{{ 'dashboard.stats.ga.users'|trans({}, 'admin') }}</div>
+                            <div class="content">
+                                {{ stats.ga.metrics.users }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s6 m6 l3">
+                        <div class="box">
+                            <div class="title">{{ 'dashboard.stats.ga.sessions'|trans({}, 'admin') }}</div>
+                            <div class="content">
+                                {{ stats.ga.metrics.sessions }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s6 m6 l3">
+                        <div class="box">
+                            <div class="title">{{ 'dashboard.stats.ga.bounce_rate'|trans({}, 'admin') }}</div>
+                            <div class="content">
+                                {{ stats.ga.metrics.bounceRate }}%
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col s6 m6 l3">
+                        <div class="box">
+                            <div class="title">{{ 'dashboard.stats.ga.session_duration'|trans({}, 'admin') }}</div>
+                            <div class="content">
+                                {{ stats.ga.metrics.avgSessionDuration }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12 m12 l3">
+                        <div class="box">
+                            <div class="title">{{ 'dashboard.stats.ga.devices'|trans({}, 'admin') }}</div>
+                            <div class="content">
+                                <canvas id="chartDeviceCategorySessions"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s12 m12 l6">
+                        <div class="box world-sessions">
+                            <div class="title">{{ 'dashboard.stats.ga.world_sessions'|trans({}, 'admin') }}</div>
+                            <div class="content">
+                                <div id="map"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s12 m12 l3">
+                        <div class="box">
+                            <div class="title">{{ 'dashboard.stats.ga.country_sessions'|trans({}, 'admin') }}</div>
+                            <div class="content">
+                                <canvas id="chartCountrySessions"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% elseif stats.ga is not defined and stats.rs is not defined %}
+            <div class="valign-wrapper center-align" style="margin: auto;">
+                <p><a class="waves-effect waves-light btn-large" href="{{ path('admin_option_index', {'category':'google'}) }}">{{ 'dashboard.config.all'|trans({}, 'admin') }}</a></p>
+            </div>
+        {% else %}
+            <nav class="top-nav amber">
+                <div class="container">
+                    <a class="waves-effect waves-light btn blue night-1" href="{{ path('admin_option_index', {'category':'google'}) }}">{{ 'dashboard.config.ga'|trans({}, 'admin') }}</a>
+                </div>
+            </nav>
+        {% endif %}
+
+        {% block top_nav %}
+            <div class="dashboard-filter  {% if stats.ga is not defined %}fixed{% endif %}" id="zone_dock">
+                <div class="left">
+                    <div class="icon-nav">
+                        <a href="javascript:void(0)" class="hamburger">
+                            <span></span>
+                        </a>
+                    </div>
+                    <div class="logo main-gradient">
+                        {% if thor.options.PROJECT_LOGO is defined and thor.options.PROJECT_LOGO.value %}
+                            <img src="{{ asset('uploads/' ~ thor.options.PROJECT_LOGO.value) }}" alt="Logo Octopouce" height="50">
+                        {% else %}
+                            <img src="{{ asset('img/logo-octopouce.svg') }}" alt="Logo Octopouce" height="50">
+                        {% endif %}
+                    </div>
+                    <div class="filter-section">
+                        <span>DASHBOARD<br>{% if thor.options.PROJECT_NAME is defined and thor.options.PROJECT_NAME.value %}{{ thor.options.PROJECT_NAME.value }}{% else %}{{ projectname }}{% endif %}</span>
+                    </div>
+                    <div class="icon-nav rightIcon">
+                        <a href="javascript:void(0)" class="hamburger-menu">
+                            <span></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="right">
+                    <ul>
+                        <li class="calendar-stat"><span>{{ 'dashboard.stats_of'|trans({'%day1%': 'now'|date_modify('-28 days')|date('d F'), '%day2%':'yesterday'|date('d F')}, 'admin')|raw }}</span> <i class="far fa-calendar-alt"></i></li>
+                        <li class="profile">{{ 'dashboard.connected_by'|trans({}, 'admin') }} <br>{{ app.user.username }} <i class="far fa-user"></i></li>
+                    </ul>
+                </div>
+            </div>
+        {% endblock %}
+    </section>
+    {% if stats.rs is defined %}
+        <section class="rs">
+            <div class="title-zone">
+                <h1 class="h1-like bg-circle">{{ 'dashboard.social.h1'|trans({}, 'admin') }}</h1>
+            </div>
+            <h2 class="h2-like center-align">{{ 'dashboard.social.h2'|trans({}, 'admin') }}</h2>
+            <div class="row no-margin">
+
+                {% if stats.rs|length == 4 %}
+                    {% set class_rs_title = 'hide' %}
+                    {% set class_block_rs = 's6 m3 l3' %}
+                {% elseif stats.rs|length == 3 %}
+                    {% set class_rs_title = 's12 m3 l3' %}
+                    {% set class_block_rs = 's4 m3 l3' %}
+                {% elseif stats.rs|length == 2 %}
+                    {% set class_rs_title = 's12 m4 l4' %}
+                    {% set class_block_rs = 's6 m4 l4' %}
+                {% elseif stats.rs|length == 1 %}
+                    {% set class_rs_title = 's12 m3 l3' %}
+                    {% set class_block_rs = 's12 m9 l9' %}
+                {% endif %}
+
+
+                <div class="col {{ class_rs_title }} block-rs center-align hide-on-small-only">
+                    <h3>{{ 'dashboard.social.h3'|trans({}, 'admin')|raw }}</h3>
+                </div>
+
+                {% if stats.rs.facebook is defined %}
+                    <div class="col {{ class_block_rs }} block-rs">
+                        <div class="rs-title">{{ 'dashboard.social.facebook'|trans({}, 'admin') }}</div>
+                        <div class="rs-count">{{ stats.rs.facebook.fan_count }}</div>
+                        <div class="rs-icon"><i class="fab fa-facebook-f"></i></div>
+                    </div>
+                {% endif %}
+                {% if stats.rs.twitter is defined %}
+                    <div class="col {{ class_block_rs }} block-rs">
+                        <div class="rs-title">{{ 'dashboard.social.twitter'|trans({}, 'admin') }}</div>
+                        <div class="rs-count">{{ stats.rs.twitter.followers_count }}</div>
+                        <div class="rs-icon"><i class="fab fa-twitter"></i></div>
+                    </div>
+                {% endif %}
+                {% if stats.rs.youtube is defined %}
+                    <div class="col {{ class_block_rs }} block-rs">
+                        <div class="rs-title">{{ 'dashboard.social.youtube'|trans({}, 'admin') }}</div>
+                        <div class="rs-count">{{ stats.rs.youtube.statistics.subscriberCount }}</div>
+                        <div class="rs-icon"><i class="fab fa-youtube"></i></div>
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+    {% endif %}
+    {% if stats.ga is defined %}
+        <section class="perf">
+            <div class="title-zone">
+                <h1 class="h1-like bg-square">{{ 'dashboard.perf.h1'|trans({}, 'admin') }}</h1>
+            </div>
+            <h2 class="h2-like center-align bg-dark">{{ 'dashboard.perf.h2'|trans({}, 'admin') }}</h2>
+            <div class="row no-margin">
+                <div class="col s12 m6 l6 block-perf bg-dark hide-on-small-only">
+                    <h3>{{ 'dashboard.perf.h3'|trans({}, 'admin')|raw }}</h3>
+                </div>
+                <div class="col s6 m3 l3 block-perf">
+                    {% if stats.perf.newVisitors is defined %}
+                        <div class="perf-icon {% if stats.perf.newVisitors >= 0 %}perf-up{% else %}perf-down{% endif %}"><i class="ion-arrow-graph-{% if stats.perf.newVisitors >= 0 %}up{% else %}down{% endif %}-right"></i></div>
+                        <div class="perf-pourcent">{{ stats.perf.newVisitors | replace({'-':''}) | round(2) }} %</div>
+                    {% endif %}
+                    <p>{{ 'dashboard.perf.new_visitors'|trans({}, 'admin') }}</p>
+                </div>
+                <div class="col s6 m3 l3 block-perf bg-dark">
+                    <div class="perf-icon {% if stats.perf.newUsers >= 0 %}perf-up{% else %}perf-down{% endif %}"><i class="ion-arrow-graph-{% if stats.perf.newUsers >= 0 %}up{% else %}down{% endif %}-right"></i></div>
+                    <div class="perf-pourcent">{{ stats.perf.newUsers | replace({'-':''}) | round(2) }} %</div>
+                    <p>{{ 'dashboard.perf.new_users'|trans({}, 'admin') }}</p>
+                </div>
+                <div class="col s6 m3 l3 block-perf bg-dark">
+                    <div class="perf-icon perf-up"><i class="ion-arrow-graph-up-right"></i></div>
+                    <div class="perf-pourcent">12%</div>
+                    <p>{{ 'dashboard.perf.read_your_blog'|trans({}, 'admin') }}</p>
+                </div>
+                <div class="col s6 m3 l3 block-perf">
+                    <div class="perf-icon perf-down"><i class="ion-arrow-graph-down-right"></i></div>
+                    <div class="perf-pourcent">34%</div>
+                    <p>{{ 'dashboard.perf.lorem'|trans({}, 'admin') }}</p>
+                </div>
+                <div class="col s6 m3 l3 block-perf bg-dark">
+                    <div class="perf-icon perf-up"><i class="ion-arrow-graph-up-right"></i></div>
+                    <div class="perf-pourcent">23%</div>
+                    <p>{{ 'dashboard.perf.lorem'|trans({}, 'admin') }}</p>
+                </div>
+                <div class="col s6 m3 l3 block-perf">
+                    <div class="perf-icon perf-up"><i class="ion-arrow-graph-up-right"></i></div>
+                    <div class="perf-pourcent">19%</div>
+                    <p>{{ 'dashboard.perf.lorem'|trans({}, 'admin') }}</p>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('vendor/jvectormap/jquery-jvectormap-2.0.3.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('build/js/admin/dashboard.js') }}"></script>
+
+    <script>
+        var $window = $(window),
+            $filter = $('.dashboard-filter'),
+            $perfTop   = $('.perf').offset().top,
+            $calendarFilter = $('.calendar-stat span'),
+            filterTop = $filter.offset().top;
+
+        {% if stats.ga is defined %}
+            $window.scroll(function() {
+                $filter.toggleClass('fixed', $window.scrollTop() > filterTop);
+            });
+        {% endif %}
+
+
+        $window.scroll(function() {
+            if($window.scrollTop() > filterTop && $window.scrollTop() <= $perfTop){
+                $calendarFilter.html('{{ 'dashboard.resume_social_media'|trans({}, 'admin')|raw }}');
+            }else if($window.scrollTop() <= filterTop){
+                $calendarFilter.html('{{ 'dashboard.stats_of'|trans({'%day1%': 'now'|date_modify('-28 days')|date('d F'), '%day2%':'yesterday'|date('d F')}, 'admin')|raw }}');
+            }else if($window.scrollTop() > $perfTop){
+                $calendarFilter.html('{{ 'dashboard.yield_of'|trans({'%day1%': 'now'|date_modify('Last Week Next Monday')|date('d F'), '%day2%': 'now'|date('d F')}, 'admin')|raw }}');
+            }
+        });
+    </script>
+    {% if stats.ga is defined %}
+        <script>
+            var countryISOSessions = { {% for country, metrics in stats.ga.countryIsoCode %}'{{ country }}':{{ metrics.sessions }},{% endfor %} };
+
+            $('.world-sessions #map').vectorMap({
+                map: 'world_mill',
+                backgroundColor: 'transparant',
+                zoomOnScroll: false,
+                series: {
+                    regions: [{
+                        values: countryISOSessions,
+                        scale: ['#C8EEFF', '#0071A4'],
+                        normalizeFunction: 'polynomial'
+                    }]
+                },
+                onRegionTipShow: function(e, el, code){
+                    if(countryISOSessions[code] !== undefined){
+                        el.html(el.html()+'<br><b>'+countryISOSessions[code]+'</b>');
+                    }
+                },
+                regionStyle:{
+                    initial: {
+                        fill: 'rgba(255, 255, 255, .02)',
+                        "fill-opacity": 1,
+                        stroke: 'none',
+                        "stroke-width": 0,
+                        "stroke-opacity": 1
+                    },
+                    hover: {
+                        "fill-opacity": 0.8,
+                        cursor: 'pointer'
+                    },
+                    selected: {
+                        fill: 'yellow'
+                    }
+                }
+            });
+        </script>
+        <script>
+            var dataDevice = [];
+            {% for device, metrics in stats.ga.deviceCategory|reverse %}
+                dataDevice.push({{ (100 * metrics.sessions / stats.ga.metrics.users) | round(2) }});
+            {% endfor %}
+
+            var labelsDevice = [];
+            {% for device, metrics in stats.ga.deviceCategory|reverse %}
+                labelsDevice.push('{{ device }}');
+            {% endfor %}
+
+            var elemDeviceCategorySessions = document.getElementById('chartDeviceCategorySessions');
+            var chartDeviceCategorySessions = new Chart(elemDeviceCategorySessions, {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data:dataDevice,
+                        backgroundColor: ['rgb(104, 188, 237)', 'rgb(66, 133, 244)']
+                    }],
+                    labels: labelsDevice
+                },
+                options: {
+                    tooltips: {
+                        callbacks: {
+                            label: function(tooltipItem, data) {
+                                return labelsDevice[tooltipItem.index] + ' : ' + data.datasets[0].data[tooltipItem.index] +'%';;
+                            }
+                        }
+                    }
+                }
+            });
+        </script>
+        <script>
+            var dataCountry = [];
+            var labelsCountry = [];
+            {% for country, metrics in stats.ga.country|slice(0, 4)  %}
+                dataCountry.push({{ (100 * metrics.sessions / stats.ga.metrics.users) | round(2) }});
+                labelsCountry.push('{{ country }} ({{ metrics.sessions }})');
+            {% endfor %}
+            {% set others = 0 %}
+            {% for country, metrics in stats.ga.country|slice(4, stats.ga.country|length) %}
+                {% set others = others + metrics.sessions %}
+            {% endfor %}
+            dataCountry.push({{ (100 * others / stats.ga.metrics.users) | round(2) }});
+            labelsCountry.push('{{ 'dashboard.stats.ga.others'|trans({}, 'admin') }}... ({{ others }})');
+            var elemCountrySessions = document.getElementById('chartCountrySessions');
+            var chartCountrySessions = new Chart(elemCountrySessions, {
+                type: 'horizontalBar',
+                data: {
+                    datasets: [{
+                        data:dataCountry,
+                        backgroundColor: 'rgb(66, 133, 244)'
+                    }],
+                    labels: labelsCountry
+                },
+                options: {
+                    legend: { display: false },
+                    tooltips: {
+                        callbacks: {
+                            label: function(tooltipItem, data) {
+                                return data.datasets[0].data[tooltipItem.index] +'%';;
+                            }
+                        }
+                    }
+                }
+            });
+        </script>
+    {% endif %}
+{% endblock %}

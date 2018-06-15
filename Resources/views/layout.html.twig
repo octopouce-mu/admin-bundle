@@ -1,0 +1,140 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin {{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,200,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{{ asset('build/js/vendor.css') }}" />
+    <link rel="stylesheet" href="{{ asset('build/css/admin/app.css') }}">
+{% endblock %}
+
+
+{% block body %}
+    {% block sidebar_left %}
+        <header class="sidebar sidebar-left">
+            <div class="hide-bar hide-bar-left">
+                <div class="h1 center-align title-menu">Menu</div>
+                <div class="input-field search">
+                    <input type="text" placeholder="Search..." name="search" />
+                </div>
+
+                <article>
+                    <h2 class="center-align">Admin</h2>
+                    <p class="text-justify">{{ projectname }}</p>
+                </article>
+                <div class="social">
+                    <div class="h3 center-align title-social">Vos réseaux sociaux</div>
+                    <div class="bar-social">
+                        <ul class="center-align">
+                            <li><a href=""><i class="ion-social-facebook-outline"></i></a></li>
+                            <li><a href=""><i class="ion-social-twitter-outline"></i></a></li>
+                            <li><a href=""><i class="ion-social-googleplus-outline"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="bar center-align">
+                <div class="icon-nav">
+                    <a href="javascript:void(0)" class="hamburger">
+                        <span></span>
+                    </a>
+                </div>
+                <ul>
+                    <li class="current">
+                        <a href="{{ path('octopouce_admin_dashboard') }}">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span class="label-menu">Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('octopouce_admin_user_index') }}">
+                            <i class="fas fa-users"></i>
+                            <span class="label-menu">Users</span>
+                        </a>
+                        <ul>
+                            <li>
+                                <a href="{{ path('octopouce_admin_user_index') }}">Users</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="fas fa-share-alt"></i>
+                            <span class="label-menu">Social Media</span>
+                        </a>
+                        <ul>
+                            <li>
+                                <a href="{{ path('octopouce_admin_option_index', {'category':'facebook'}) }}">Facebook</a>
+                                <a href="{{ path('octopouce_admin_option_index', {'category':'twitter'}) }}">Twitter</a>
+                                <a href="{{ path('octopouce_admin_option_index', {'category':'google'}) }}">Google</a>
+                                <a href="{{ path('octopouce_admin_option_index', {'category':'youtube'}) }}">Youtube</a>
+                                <a href="{{ path('octopouce_admin_option_index', {'category':'instagram'}) }}">Instagram</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="{{ path('octopouce_admin_option_index') }}">
+                            <i class="fas fa-cogs"></i>
+                            <span class="label-menu">Options</span>
+                        </a>
+                        <ul>
+                            <li>
+                                <a href="{{ path('octopouce_admin_option_index') }}">Général</a>
+                                <a href="{{ path('octopouce_admin_option_index', {'category':'company'}) }}">Company</a>
+                                <a href="{{ path('octopouce_admin_option_index', {'category':'mail'}) }}">Mail</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </header>
+    {% endblock %}
+
+    <div class="main">
+        {% block top_nav %}
+            <div class="dashboard-filter fixed " id="zone_dock">
+                <div class="left">
+                    <div class="icon-nav">
+                        <a href="javascript:void(0)" class="hamburger">
+                            <span></span>
+                        </a>
+                    </div>
+                    <div class="logo main-gradient">
+
+                        {% if thor.options.PROJECT_LOGO is defined and thor.options.PROJECT_LOGO.value %}
+                            <img src="{{ asset('uploads/' ~ thor.options.PROJECT_LOGO.value) }}" alt="Logo Octopouce" height="50">
+                        {% else %}
+                            <img src="{{ asset('img/logo-octopouce.svg') }}" alt="Logo Octopouce" height="50">
+                        {% endif %}
+                    </div>
+                    <div class="filter-section">
+                        <span>DASHBOARD<br>{{ projectname }}</span>
+                    </div>
+                    <div class="icon-nav rightIcon">
+                        <a href="javascript:void(0)" class="hamburger-menu">
+                            <span></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="right">
+                    <ul>
+                        <li class="profile">{{ 'dashboard.connected_by'|trans({}, 'admin') }} <br>{{ app.user.username }} <i class="far fa-user"></i></li>
+                    </ul>
+                </div>
+            </div>
+
+        {% endblock %}
+        {% block main %}{% endblock %}
+    </div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/js/admin/admin.js') }}"></script>
+{% endblock %}

@@ -70,12 +70,12 @@
             </div>
         {% elseif stats.ga is not defined and stats.rs is not defined %}
             <div class="valign-wrapper center-align" style="margin: auto;">
-                <p><a class="waves-effect waves-light btn-large" href="{{ path('admin_option_index', {'category':'google'}) }}">{{ 'dashboard.config.all'|trans({}, 'admin') }}</a></p>
+                <p><a class="waves-effect waves-light btn-large" href="{{ path('octopouce_admin_option_index', {'category':'google'}) }}">{{ 'dashboard.config.all'|trans({}, 'admin') }}</a></p>
             </div>
         {% else %}
             <nav class="top-nav amber">
                 <div class="container">
-                    <a class="waves-effect waves-light btn blue night-1" href="{{ path('admin_option_index', {'category':'google'}) }}">{{ 'dashboard.config.ga'|trans({}, 'admin') }}</a>
+                    <a class="waves-effect waves-light btn blue night-1" href="{{ path('octopouce_admin_option_index', {'category':'google'}) }}">{{ 'dashboard.config.ga'|trans({}, 'admin') }}</a>
                 </div>
             </nav>
         {% endif %}
@@ -92,7 +92,7 @@
                         {% if thor.options.PROJECT_LOGO is defined and thor.options.PROJECT_LOGO.value %}
                             <img src="{{ asset('uploads/' ~ thor.options.PROJECT_LOGO.value) }}" alt="Logo Octopouce" height="50">
                         {% else %}
-                            <img src="{{ asset('img/logo-octopouce.svg') }}" alt="Logo Octopouce" height="50">
+                            <img src="{{ asset('bundles/octopouceadmin/img/logo-octopouce.svg') }}" alt="Logo Octopouce" height="50">
                         {% endif %}
                     </div>
                     <div class="filter-section">
@@ -213,13 +213,14 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('vendor/jvectormap/jquery-jvectormap-2.0.3.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/octopouceadmin/css/vendor/jvector.css') }}">
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
 
-    <script src="{{ asset('build/js/admin/dashboard.js') }}"></script>
+    <script src="{{ asset('bundles/octopouceadmin/js/dashboard.js') }}"></script>
+
 
     <script>
         var $window = $(window),

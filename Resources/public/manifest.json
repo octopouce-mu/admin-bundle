@@ -1,0 +1,10 @@
+{
+  "public/css/login.css": "/public/css/login.css",
+  "public/css/login.js": "/public/css/login.js",
+  "public/css/style.css": "/public/css/style.css",
+  "public/css/style.js": "/public/css/style.js",
+  "public/css/vendor/jvector.css": "/public/css/vendor/jvector.css",
+  "public/css/vendor/jvector.js": "/public/css/vendor/jvector.js",
+  "public/js/admin.js": "/public/js/admin.js",
+  "public/js/dashboard.js": "/public/js/dashboard.js"
+}

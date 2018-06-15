@@ -8,8 +8,9 @@
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,200,300,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="{{ asset('build/js/vendor.css') }}" />
-    <link rel="stylesheet" href="{{ asset('build/css/admin/app.css') }}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/octopouceadmin/css/style.css') }}" />
 {% endblock %}
 
 
@@ -76,6 +77,22 @@
                             </li>
                         </ul>
                     </li>
+                    {% if 'octopouce_advertising_admin_dashboard_index'|routeExist %}
+                        <li>
+                            <a href="{{ path('octopouce_advertising_admin_dashboard_index') }}">
+                                <i class="fab fa-adversal"></i>
+                                <span class="label-menu">Advertising</span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="{{ path('octopouce_advertising_admin_dashboard_index') }}">Dashboard</a>
+                                    <a href="{{ path('octopouce_advertising_admin_campaign_index') }}">Campaigns</a>
+                                    <a href="{{ path('octopouce_advertising_admin_adzone_index') }}">Adzones</a>
+                                    <a href="{{ path('octopouce_advertising_admin_page_index') }}">Pages</a>
+                                </li>
+                            </ul>
+                        </li>
+                    {% endif %}
                     <li>
                         <a href="{{ path('octopouce_admin_option_index') }}">
                             <i class="fas fa-cogs"></i>
@@ -108,7 +125,7 @@
                         {% if thor.options.PROJECT_LOGO is defined and thor.options.PROJECT_LOGO.value %}
                             <img src="{{ asset('uploads/' ~ thor.options.PROJECT_LOGO.value) }}" alt="Logo Octopouce" height="50">
                         {% else %}
-                            <img src="{{ asset('img/logo-octopouce.svg') }}" alt="Logo Octopouce" height="50">
+                            <img src="{{ asset('bundles/octopouceadmin/img/logo-octopouce.svg') }}" alt="Logo Octopouce" height="50">
                         {% endif %}
                     </div>
                     <div class="filter-section">
@@ -136,5 +153,5 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('build/js/admin/admin.js') }}"></script>
+    <script src="{{ asset('bundles/octopouceadmin/js/admin.js') }}"></script>
 {% endblock %}

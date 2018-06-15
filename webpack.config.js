@@ -1,6 +1,3 @@
-require('./Resources/assets/scss/style.scss');
-require('./Resources/assets/scss/login.scss');
-
 // webpack.config.js
 var Encore = require('@symfony/webpack-encore');
 
@@ -12,8 +9,12 @@ Encore
     .setPublicPath('/public')
 
     // will create public/build/app.js and public/build/app.css
-    .addEntry('app', './Resources/assets/js/admin.js')
-    .addEntry('app', './Resources/assets/js/dashboard.js')
+    .addEntry('js/admin', './Resources/assets/js/admin.js')
+    .addEntry('js/dashboard', './Resources/assets/js/dashboard.js')
+
+    .addEntry('css/login', './Resources/assets/scss/login.scss')
+    .addEntry('css/style', './Resources/assets/scss/style.scss')
+    .addEntry('css/vendor/jvector', './Resources/assets/scss/jvectormap/jquery-jvectormap-2.0.3.css')
 
     // allow legacy applications to use $/jQuery as a global variable
     .autoProvidejQuery()

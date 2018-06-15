@@ -17,7 +17,7 @@
   }
   &.no-data {
     display: flex;
-    background: url("/img/dashboard.png") right top no-repeat fixed;
+    background: url("../img/dashboard.png") right top no-repeat fixed;
   }
   .data-ga {
     padding-top: 20px;
@@ -58,7 +58,7 @@
 .rs{
     background-color: #FFF;
   .title-zone {
-    background: url("/img/background-t-rs.jpg") center center/auto 100% no-repeat;
+    background: url("../img/background-t-rs.jpg") center center/auto 100% no-repeat;
     background-position: 35% 40%;
     .h1-like {
       color: #87b7ae;

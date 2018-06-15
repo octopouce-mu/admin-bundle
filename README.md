@@ -69,6 +69,17 @@ class Invitation extends BaseInvitation
 ```bash
 php bin/console doctrine:schema:update --force
 ```
+If error "1071 Specified key was too long; max key length is 767 bytes", you change configs doctrine :
+```yml
+# config/packages/doctrine.yaml
+
+doctrine:
+    dbal:
+        charset: utf8
+        default_table_options:
+            charset: utf8
+            collate: utf8_unicode_ci
+```
 
 ### Step 4: Import Octopouce Admin routing file
 Now that you have activated and configured the bundle, all that is left to do is import the routing files.

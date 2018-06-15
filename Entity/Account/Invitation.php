@@ -3,15 +3,12 @@
 namespace Octopouce\AdminBundle\Entity\Account;
 
 use Doctrine\ORM\Mapping as ORM;
-use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 
 /**
  * @ORM\MappedSuperclass(repositoryClass="Octopouce\AdminBundle\Repository\Account\InvitationRepository")
  */
 abstract class Invitation
 {
-	use ORMBehaviors\Timestampable\Timestampable;
-
 	/**
 	 * @ORM\Id
 	 * @ORM\Column(type="string", length=18)
@@ -43,12 +40,21 @@ abstract class Invitation
 	 */
 	private $sender;
 
+	/**
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(type="datetime")
+	 */
+	protected $createdAt;
+
 	public function __construct()
 	{
 		// generate identifier only once, here a 18 characters length code
 		$this->code = substr(md5(uniqid(rand(), true)), 0, 18);
 		$this->sent = false;
 		$this->confirm = false;
+		$this->createdAt = new \DateTime();
+
 	}
 
 	public function getCode()

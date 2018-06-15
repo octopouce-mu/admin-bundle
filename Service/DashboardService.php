@@ -69,8 +69,6 @@ class DashboardService {
 	}
 
 
-
-
 	public function getData(){
 		$response = [];
 

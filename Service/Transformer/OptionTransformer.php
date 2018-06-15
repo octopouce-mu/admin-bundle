@@ -30,7 +30,7 @@ class OptionTransformer {
 	 */
 	public function __construct( EntityManagerInterface $em) {
 		$this->em = $em;
-		$this->cache = new FilesystemAdapter('cache.app');
+		$this->cache = new FilesystemAdapter();
 	}
 
 	public function getOptionsWithKeyName(){

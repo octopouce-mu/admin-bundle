@@ -14,7 +14,7 @@
         </div>
     {% endif %}
     <form class="form-signin" action="{{ path('octopouce_admin_login_admin') }}" method="post">
-        <div class="text-center mb-4">
+        <div class="center mb-4">
             {% if thor.options.PROJECT_LOGO is defined and thor.options.PROJECT_LOGO.value %}
                 <img class="mb-4" src="{{ asset('uploads/' ~ thor.options.PROJECT_LOGO.value) }}" alt="Logo" height="72">
             {% else %}

@@ -6,16 +6,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 
 /**
  * @ORM\MappedSuperclass(repositoryClass="Octopouce\AdminBundle\Repository\Account\UserRepository")
  */
 abstract class User implements UserInterface
 {
-
-	use ORMBehaviors\Timestampable\Timestampable;
-
     /**
      * @var int
      *
@@ -151,12 +147,20 @@ abstract class User implements UserInterface
 	 */
 	protected $enabled;
 
+	/**
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(type="datetime")
+	 */
+	protected $createdAt;
+
 
 	public function __construct()
 	{
 		$this->invitations = new ArrayCollection();
 		$this->roles = array('ROLE_USER');
 		$this->enabled = false;
+		$this->createdAt = new \DateTime();
 	}
 
 	public function __toString() {

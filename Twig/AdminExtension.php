@@ -12,14 +12,12 @@ use Twig\TwigFilter;
 class AdminExtension extends AbstractExtension implements \Twig_Extension_GlobalsInterface
 {
 	private $options;
-	private $tokenStorage;
 	private $router;
 
 
-	public function __construct(OptionTransformer $optionTransformer, TokenStorageInterface $tokenStorage, RouterInterface $router)
+	public function __construct(OptionTransformer $optionTransformer, RouterInterface $router)
 	{
 		$this->options = $optionTransformer->getOptionsWithKeyName();
-		$this->tokenStorage = $tokenStorage;
 		$this->router = $router;
 	}
 
@@ -27,13 +25,6 @@ class AdminExtension extends AbstractExtension implements \Twig_Extension_Global
 	{
 		$globals = [];
 		$globals['thor'] = ['options' => $this->options];
-
-		$token = $this->tokenStorage->getToken();
-		if($token && is_object($token->getUser()) && get_class($token->getUser()) == User::class){
-			$subscriptions = $token->getUser()->getSubscriptionsActive();
-//			if(count($subscriptions) > 1)
-			$globals['subscriptionsActive'] = $subscriptions;
-		}
 
 		return $globals;
 	}

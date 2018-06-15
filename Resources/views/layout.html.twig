@@ -134,7 +134,6 @@
                         </a>
                     </div>
                     <div class="logo main-gradient">
-
                         {% if thor.options.PROJECT_LOGO is defined and thor.options.PROJECT_LOGO.value %}
                             <img src="{{ asset('uploads/' ~ thor.options.PROJECT_LOGO.value) }}" alt="Logo Octopouce" height="50">
                         {% else %}
@@ -142,7 +141,13 @@
                         {% endif %}
                     </div>
                     <div class="filter-section">
-                        <span>DASHBOARD<br>{{ projectname }}</span>
+                        <span>DASHBOARD<br>
+                            {% if thor.options.PROJECT_NAME is defined and thor.options.PROJECT_NAME.value %}
+                                {{thor.options.PROJECT_NAME.value}}
+                            {% else %}
+                                Thor
+                            {% endif %}
+                        </span>
                     </div>
                     <div class="icon-nav rightIcon">
                         <a href="javascript:void(0)" class="hamburger-menu">

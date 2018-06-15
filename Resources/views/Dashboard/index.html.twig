@@ -92,7 +92,7 @@
                         {% if thor.options.PROJECT_LOGO is defined and thor.options.PROJECT_LOGO.value %}
                             <img src="{{ asset('uploads/' ~ thor.options.PROJECT_LOGO.value) }}" alt="Logo Octopouce" height="50">
                         {% else %}
-                            <img src="{{ asset('bundles/octopouceadmin/img/logo-octopouce.svg') }}" alt="Logo Octopouce" height="50">
+                            <img src="{{ asset('bundles/octopouceadmin/images/logo-octopouce.svg') }}" alt="Logo Octopouce" height="50">
                         {% endif %}
                     </div>
                     <div class="filter-section">
@@ -223,13 +223,13 @@
 
 
     <script>
-        var $window = $(window),
-            $filter = $('.dashboard-filter'),
-            $perfTop   = $('.perf').offset().top,
-            $calendarFilter = $('.calendar-stat span'),
-            filterTop = $filter.offset().top;
+        var $window = $(window);
+        var $filter = $('.dashboard-filter');
+        var $calendarFilter = $('.calendar-stat span');
+        var filterTop = $filter.offset().top;
 
         {% if stats.ga is defined %}
+            var $perfTop   = $('.perf').offset().top;
             $window.scroll(function() {
                 $filter.toggleClass('fixed', $window.scrollTop() > filterTop);
             });

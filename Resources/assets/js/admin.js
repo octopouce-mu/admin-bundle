@@ -32,23 +32,23 @@ $(".hamburger-menu").on('click', function(){
 });
 $(document).ready(function(){
    // Materialize.toast('I am a toast!', 10000);
-    $('select').material_select();
+    $('select').formSelect();
     $('.tooltipped').tooltip();
+    $('.datepicker').datepicker({
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: 15, // Creates a dropdown of 15 years to control year,
+        today: 'Today',
+        clear: 'Clear',
+        close: 'Ok',
+        format: 'yyyy/mm/dd'
+    });
+    $('.timepicker').timepicker({
+        twelvehour: false, // Use AM/PM or 24-hour format
+        donetext: 'OK', // text for done-button
+        cleartext: 'Clear', // text for clear-button
+        canceltext: 'Cancel', // Text for cancel-button
+        format: 'HH:i'
+    });
+});
 
-});
-$('.datepicker').pickadate({
-    selectMonths: true, // Creates a dropdown to control month
-    selectYears: 15, // Creates a dropdown of 15 years to control year,
-    today: 'Today',
-    clear: 'Clear',
-    close: 'Ok',
-    format: 'yyyy/mm/dd'
-});
-$('.timepicker').pickatime({
-    twelvehour: false, // Use AM/PM or 24-hour format
-    donetext: 'OK', // text for done-button
-    cleartext: 'Clear', // text for clear-button
-    canceltext: 'Cancel', // Text for cancel-button
-    format: 'HH:i'
-});
 

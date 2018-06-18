@@ -159,8 +159,16 @@ security:
         # additional security lives in the controllers
         - { path: '^/admin', roles: ROLE_ADMIN }
 ```
-
 ### Step 6: Load fixtures
+Add a translator in framework.yaml
+```yaml
+framework:
+    default_locale: en
+    translator:
+        fallbacks: ['en']
+```
+
+### Step 7: Load fixtures
 You can to generate fixtures data in database
 ```
 php bin/console doctrine:fixtures:load

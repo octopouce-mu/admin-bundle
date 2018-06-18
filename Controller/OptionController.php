@@ -53,6 +53,10 @@ class OptionController extends AbstractController
 						    $value = $fileUploader->upload($value, ($option->getName() == 'GOOGLE_GA_JSON') ? '../var' : null);
 					    }
 
+					    if($option->getName() == 'GOOGLE_GA_JSON' && !$value){
+					    	continue;
+					    }
+
 					    $option->setValue($value);
 
 					    // insert category name in array for remove cache

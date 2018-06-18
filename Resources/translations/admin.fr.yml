@@ -1,37 +1,30 @@
-dashboard:
-    connected_by: Connecté en tant que
+dashboard.config.all: Configurer votre dashboard
+dashboard.config.ga: Pour voir votre dashboard, configurer l'API de Google Analytics.
 
-    config:
-        all: Configurer votre dashboard
-        ga: Pour voir votre dashboard, configurer l'API de Google Analytics.
+dashboard.stats.ga.users: Utilisateurs
+dashboard.stats.ga.sessions: Sessions
+dashboard.stats.ga.bounce_rate: Taux de rebond
+dashboard.stats.ga.session_duration: Durée de la session
+dashboard.stats.ga.devices: Sessions par appareil
+dashboard.stats.ga.world_sessions: Sessions par pays
+dashboard.stats.ga.country_sessions: Pourcentages par pays
+dashboard.stats.ga.others: Autres
+dashboard.stats_of: Statistique du <br>%day1% au %day2%
+dashboard.resume_social_media: Résumé des réseaux sociaux <br> à ce jour
+dashboard.yield_of: Rendement du <br>%day1% au %day2%
+dashboard.connected_by: Connecté en tant que
 
-    stats_of: Statistique du <br>%day1% au %day2%
-    stats:
-        ga:
-            users: Utilisateurs
-            sessions: Sessions
-            bounce_rate: Taux de rebond
-            session_duration: Durée de la session
-            devices: Sessions par appareil
-            world_sessions: Sessions par pays
-            country_sessions: Pourcentages par pays
-            others: Autres
+dashboard.social.h1: Social
+dashboard.social.h2: Résumé des réseaux sociaux
+dashboard.social.h3: <i class="ion-android-star"></i> Vos favoris
+dashboard.social.facebook: Likes fabebook
+dashboard.social.twitter: Followers Twitter
+dashboard.social.youtube: Abonnés Youtube
 
-    resume_social_media: Résumé des réseaux sociaux <br> à ce jour
-    social:
-        h1: Social
-        h2: Résumé des réseaux sociaux
-        h3: <i class="ion-android-star"></i> Vos favoris
-        facebook: Likes fabebook
-        twitter: Followers Twitter
-        youtube: Abonnés Youtube
-
-    yield_of: Rendement du <br>%day1% au %day2%
-    perf:
-        h1: Performances
-        h2: Le rendement de votre site web
-        h3: <i class="ion-stats-bars"></i> Les perf' de la semaine
-        new_visitors: Nouveaux visiteurs
-        new_users: Nouveaux inscrits
-        read_your_blog: Lecture de votre blog
-        lorem: Lorem Ipsum
+dashboard.perf.h1: Performances
+dashboard.perf.h2: Le rendement de votre site web
+dashboard.perf.h3: <i class="ion-stats-bars"></i> Les perf' de la semaine
+dashboard.perf.new_visitors: Nouveaux visiteurs
+dashboard.perf.new_users: Nouveaux inscrits
+dashboard.perf.read_your_blog: Lecture de votre blog
+dashboard.perf.lorem: Lorem Ipsum

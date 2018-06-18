@@ -1,6 +1,5 @@
 {% extends '@OctopouceAdmin/layout.html.twig' %}
 
-
 {% block main %}
     <section class="dashboard {% if stats.ga is not defined and stats.rs is not defined %}no-data padding-filter{% elseif stats.ga is not defined  %}no-data-ga padding-filter{% endif %}">
         {% if stats.ga is defined %}
@@ -235,16 +234,27 @@
             });
         {% endif %}
 
-
-        $window.scroll(function() {
-            if($window.scrollTop() > filterTop && $window.scrollTop() <= $perfTop){
-                $calendarFilter.html('{{ 'dashboard.resume_social_media'|trans({}, 'admin')|raw }}');
-            }else if($window.scrollTop() <= filterTop){
-                $calendarFilter.html('{{ 'dashboard.stats_of'|trans({'%day1%': 'now'|date_modify('-28 days')|date('d F'), '%day2%':'yesterday'|date('d F')}, 'admin')|raw }}');
-            }else if($window.scrollTop() > $perfTop){
-                $calendarFilter.html('{{ 'dashboard.yield_of'|trans({'%day1%': 'now'|date_modify('Last Week Next Monday')|date('d F'), '%day2%': 'now'|date('d F')}, 'admin')|raw }}');
-            }
-        });
+        {% if stats.rs is defined %}
+            $window.scroll(function() {
+                if($window.scrollTop() > filterTop && $window.scrollTop() <= $perfTop){
+                    $calendarFilter.html('{{ 'dashboard.resume_social_media'|trans({}, 'admin')|raw }}');
+                }else if($window.scrollTop() <= filterTop){
+                    $calendarFilter.html('{{ 'dashboard.stats_of'|trans({'%day1%': 'now'|date_modify('-28 days')|date('d F'), '%day2%':'yesterday'|date('d F')}, 'admin')|raw }}');
+                }else if($window.scrollTop() > $perfTop){
+                    $calendarFilter.html('{{ 'dashboard.yield_of'|trans({'%day1%': 'now'|date_modify('Last Week Next Monday')|date('d F'), '%day2%': 'now'|date('d F')}, 'admin')|raw }}');
+                }
+            });
+        {% else %}
+            $window.scroll(function() {
+                if($window.scrollTop() > filterTop && $window.scrollTop() <= $perfTop){
+                    $calendarFilter.html('{{ 'dashboard.yield_of'|trans({'%day1%': 'now'|date_modify('Last Week Next Monday')|date('d F'), '%day2%': 'now'|date('d F')}, 'admin')|raw }}');
+                }else if($window.scrollTop() <= filterTop){
+                    $calendarFilter.html('{{ 'dashboard.stats_of'|trans({'%day1%': 'now'|date_modify('-28 days')|date('d F'), '%day2%':'yesterday'|date('d F')}, 'admin')|raw }}');
+                }else if($window.scrollTop() > $perfTop){
+                    $calendarFilter.html('{{ 'dashboard.yield_of'|trans({'%day1%': 'now'|date_modify('Last Week Next Monday')|date('d F'), '%day2%': 'now'|date('d F')}, 'admin')|raw }}');
+                }
+            });
+        {% endif %}
     </script>
     {% if stats.ga is defined %}
         <script>

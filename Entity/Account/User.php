@@ -136,7 +136,7 @@ abstract class User implements UserInterface
     /**
      * @var array
      *
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="json")
      */
     protected $roles;
 

@@ -75,12 +75,6 @@ class UserType extends AbstractType
 				'multiple' => true,
 				'placeholder' => 'Choose the role'
 			])
-			->add('createdAt', DateTimePickerType::class, [
-				'required' => false,
-				'date_widget' => 'single_text',
-				'time_widget' => 'single_text',
-				'attr' => ['class' => 'datepicker']
-			])
 
 			->add('submit', SubmitType::class, [
 				'label' => 'submit',

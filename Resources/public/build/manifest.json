@@ -1,0 +1,13 @@
+{
+  "public/build/css/login.css": "/public/build/css/login.css",
+  "public/build/css/login.js": "/public/build/css/login.js",
+  "public/build/css/style.css": "/public/build/css/style.css",
+  "public/build/css/style.js": "/public/build/css/style.js",
+  "public/build/images.js": "/public/build/images.js",
+  "public/build/images/background-t-rs.jpg": "/public/build/images/background-t-rs.jpg",
+  "public/build/images/circle.png": "/public/build/images/circle.png",
+  "public/build/images/dashboard.png": "/public/build/images/dashboard.png",
+  "public/build/images/logo-octopouce.svg": "/public/build/images/logo-octopouce.svg",
+  "public/build/js/admin.js": "/public/build/js/admin.js",
+  "public/build/js/dashboard.js": "/public/build/js/dashboard.js"
+}

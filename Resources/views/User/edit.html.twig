@@ -1,5 +1,7 @@
 {% extends '@OctopouceAdmin/layout.html.twig' %}
 
+{% form_theme form '@OctopouceAdmin/Form/layout.html.twig' %}
+
 {% block main %}
     <div class="padding-filter">
         <div class="row title">
@@ -18,7 +20,7 @@
                                 </ul>
                             </div>
                             <div id="general">
-                                {% include '@OctopouceAdmin/User/show/general.html.twig' %}
+                                {% include '@OctopouceAdmin/User/edit/general.html.twig' %}
                             </div>
                             <div class="row">
                                 {{ form_widget(form.submit) }}

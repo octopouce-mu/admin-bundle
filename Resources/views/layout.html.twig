@@ -10,7 +10,7 @@
     <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,200,300,700' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/octopouceadmin/css/style.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/octopouceadmin/build/css/style.css') }}" />
 {% endblock %}
 
 
@@ -137,7 +137,7 @@
                         {% if thor.options.PROJECT_LOGO is defined and thor.options.PROJECT_LOGO.value %}
                             <img src="{{ asset('uploads/' ~ thor.options.PROJECT_LOGO.value) }}" alt="Logo" height="50">
                         {% else %}
-                            <img src="{{ asset('bundles/octopouceadmin/images/logo-octopouce.svg') }}" alt="Logo Octopouce" height="50">
+                            <img src="{{ asset('bundles/octopouceadmin/build/images/logo-octopouce.svg') }}" alt="Logo Octopouce" height="50">
                         {% endif %}
                     </div>
                     <div class="filter-section">
@@ -171,5 +171,5 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('bundles/octopouceadmin/js/admin.js') }}"></script>
+    <script src="{{ asset('bundles/octopouceadmin/build.js/admin.js') }}"></script>
 {% endblock %}

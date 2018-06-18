@@ -575,4 +575,22 @@ abstract class User implements UserInterface
         return $this->enabled;
     }
 
+	/**
+	 * @return \DateTime
+	 */
+	public function getCreatedAt() {
+		return $this->createdAt;
+	}
+
+	/**
+	 * @param \DateTime $createdAt
+	 *
+	 * @return User
+	 */
+	public function setCreatedAt( \DateTime $createdAt ){
+		$this->createdAt = $createdAt;
+
+		return $this;
+	}
+
 }

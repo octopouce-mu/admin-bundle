@@ -59,7 +59,7 @@ class UserController extends AbstractController
 			return $this->redirectToRoute('octopouce_admin_user_index');
 		}
 
-		return $this->render('@OctopouceAdmin/Crud/edit.html.twig', [
+		return $this->render('@OctopouceAdmin/User/edit.html.twig', [
 			'user' => $user,
 			'form' => $form->createView()
 		]);

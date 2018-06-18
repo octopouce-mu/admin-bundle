@@ -1,0 +1,37 @@
+dashboard:
+    connected_by: Connected as
+
+    config:
+        all: Set up your dashboard
+        ga: To see your dashboard, configure the Google Analytics API.
+
+    stats_of: Statistics from <br>%day1% to %day2%
+    stats:
+        ga:
+            users: Users
+            sessions: Sessions
+            bounce_rate: Bounce rate
+            session_duration: Duration of the session
+            devices: Sessions by device
+            world_sessions: Sessions by country
+            country_sessions: Percentages by country
+            others: Other
+
+    resume_social_media: Summary of social networks <br> to date
+    social:
+        h1: Social
+        h2: Summary of social networks
+        h3: <i class = "ion-android-star"> </ i> Your favorites
+        facebook: Likes fabebook
+        twitter: Twitter followers
+        youtube: Youtube Subscribers
+
+    yield_of: Yield from <br>%day1% to %day2%
+    perf:
+        h1: Performances
+        h2: The performance of your website
+        h3: <i class="ion-stats-bars"> </i> The perf' of the week
+        new_visitors: New visitors
+        new_users: New members
+        read_your_blog: Reading your blog
+        lorem: Lorem Ipsum

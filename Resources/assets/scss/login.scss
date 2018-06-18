@@ -42,6 +42,10 @@ body {
         padding: var(--input-padding-y) var(--input-padding-x);
     }
 
+    .form-label-group input {
+        color: #E8E8E8;
+    }
+
     .form-label-group > label {
         position: absolute;
         top: 0;
@@ -84,7 +88,7 @@ body {
     .form-label-group input:not(:placeholder-shown) ~ label {
         padding-top: calc(var(--input-padding-y) / 3);
         padding-bottom: calc(var(--input-padding-y) / 3);
-        font-size: 12px;
+        //font-size: 12px;
         color: #E8E8E8;
     }
 }

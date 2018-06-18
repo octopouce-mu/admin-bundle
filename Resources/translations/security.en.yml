@@ -1,0 +1,6 @@
+title.login: Admin
+label:
+    username: Pseudo
+    password: Password
+    remember: Remember me
+action.sign_in: Sign-in

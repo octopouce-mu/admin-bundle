@@ -36,7 +36,7 @@ class YoutubeService {
 	public function __construct(OptionTransformer $optionTransformer) {
 		$options = $optionTransformer->getOptionsWithKeyName();
 
-		if(boolval($options['FACEBOOK_ENABLE']->getValue())) {
+		if(boolval($options['YOUTUBE_ENABLE']->getValue())) {
 
 			$this->client = new \Google_Client();
 			$this->client->setApplicationName( $options['PROJECT_NAME']->getValue() ? $options['PROJECT_NAME']->getValue() : 'Thor' );

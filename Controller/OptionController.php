@@ -74,7 +74,7 @@ class OptionController extends AbstractController
 			    }
 		    }
 
-		    $cache = new FilesystemAdapter('cache.app');
+		    $cache = new FilesystemAdapter();
 	    	$cache->deleteItem('thor.options');
 
 

@@ -27,12 +27,7 @@ class UserController extends AbstractController
     	$users = $this->getDoctrine()->getRepository(User::class)->findAll();
 
         return $this->render('@OctopouceAdmin/User/index.html.twig', [
-	        'entities' => $users,
-	        'fieldsHide' => ['address', 'complementAddress', 'postalCode', 'city', 'password',
-		        'subscriptionsLawyers', 'subscriptionsParents', 'subscriptionsChildren', 'subscriptionsTiers',
-	            'eventsChildren', 'eventsParents', 'medicines', 'vaccines', 'logs', 'country', 'image', 'resetToken',
-		        'passwordRequestedAt', 'invitations', 'phone', 'updatedAt'
-	        ]
+	        'users' => $users
         ]);
     }
 
@@ -42,7 +37,7 @@ class UserController extends AbstractController
 	public function show(User $user): Response
 	{
 		return $this->render('@OctopouceAdmin/User/show.html.twig', [
-			'entity' => $user,
+			'user' => $user,
 		]);
 	}
 
@@ -65,7 +60,7 @@ class UserController extends AbstractController
 		}
 
 		return $this->render('@OctopouceAdmin/Crud/edit.html.twig', [
-			'entity' => $user,
+			'user' => $user,
 			'form' => $form->createView()
 		]);
 	}

@@ -1,5 +1,7 @@
 {% extends '@OctopouceAdmin/layout.html.twig' %}
 
+{% trans_default_domain 'admin' %}
+
 {% block main %}
     <section class="dashboard {% if stats.ga is not defined and stats.rs is not defined %}no-data padding-filter{% elseif stats.ga is not defined  %}no-data-ga padding-filter{% endif %}">
         {% if stats.ga is defined %}
@@ -7,7 +9,7 @@
                 <div class="row">
                     <div class="col s6 m6 l3">
                         <div class="box">
-                            <div class="title">{{ 'dashboard.stats.ga.users'|trans({}, 'admin') }}</div>
+                            <div class="title">{{ 'dashboard.stats.ga.users'|trans }}</div>
                             <div class="content">
                                 {{ stats.ga.metrics.users }}
                             </div>
@@ -15,7 +17,7 @@
                     </div>
                     <div class="col s6 m6 l3">
                         <div class="box">
-                            <div class="title">{{ 'dashboard.stats.ga.sessions'|trans({}, 'admin') }}</div>
+                            <div class="title">{{ 'dashboard.stats.ga.sessions'|trans }}</div>
                             <div class="content">
                                 {{ stats.ga.metrics.sessions }}
                             </div>
@@ -23,7 +25,7 @@
                     </div>
                     <div class="col s6 m6 l3">
                         <div class="box">
-                            <div class="title">{{ 'dashboard.stats.ga.bounce_rate'|trans({}, 'admin') }}</div>
+                            <div class="title">{{ 'dashboard.stats.ga.bounce_rate'|trans }}</div>
                             <div class="content">
                                 {{ stats.ga.metrics.bounceRate }}%
                             </div>
@@ -32,7 +34,7 @@
 
                     <div class="col s6 m6 l3">
                         <div class="box">
-                            <div class="title">{{ 'dashboard.stats.ga.session_duration'|trans({}, 'admin') }}</div>
+                            <div class="title">{{ 'dashboard.stats.ga.session_duration'|trans }}</div>
                             <div class="content">
                                 {{ stats.ga.metrics.avgSessionDuration }}
                             </div>
@@ -43,7 +45,7 @@
                 <div class="row">
                     <div class="col s12 m12 l3">
                         <div class="box">
-                            <div class="title">{{ 'dashboard.stats.ga.devices'|trans({}, 'admin') }}</div>
+                            <div class="title">{{ 'dashboard.stats.ga.devices'|trans }}</div>
                             <div class="content">
                                 <canvas id="chartDeviceCategorySessions"></canvas>
                             </div>
@@ -51,7 +53,7 @@
                     </div>
                     <div class="col s12 m12 l6">
                         <div class="box world-sessions">
-                            <div class="title">{{ 'dashboard.stats.ga.world_sessions'|trans({}, 'admin') }}</div>
+                            <div class="title">{{ 'dashboard.stats.ga.world_sessions'|trans }}</div>
                             <div class="content">
                                 <div id="map"></div>
                             </div>
@@ -59,7 +61,7 @@
                     </div>
                     <div class="col s12 m12 l3">
                         <div class="box">
-                            <div class="title">{{ 'dashboard.stats.ga.country_sessions'|trans({}, 'admin') }}</div>
+                            <div class="title">{{ 'dashboard.stats.ga.country_sessions'|trans }}</div>
                             <div class="content">
                                 <canvas id="chartCountrySessions"></canvas>
                             </div>
@@ -69,12 +71,12 @@
             </div>
         {% elseif stats.ga is not defined and stats.rs is not defined %}
             <div class="valign-wrapper center-align" style="margin: auto;">
-                <p><a class="waves-effect waves-light btn-large" href="{{ path('octopouce_admin_option_index', {'category':'google'}) }}">{{ 'dashboard.config.all'|trans({}, 'admin') }}</a></p>
+                <p><a class="waves-effect waves-light btn-large" href="{{ path('octopouce_admin_option_index', {'category':'google'}) }}">{{ 'dashboard.config.all'|trans }}</a></p>
             </div>
         {% else %}
             <nav class="top-nav amber">
                 <div class="container">
-                    <a class="waves-effect waves-light btn blue night-1" href="{{ path('octopouce_admin_option_index', {'category':'google'}) }}">{{ 'dashboard.config.ga'|trans({}, 'admin') }}</a>
+                    <a class="waves-effect waves-light btn blue night-1" href="{{ path('octopouce_admin_option_index', {'category':'google'}) }}">{{ 'dashboard.config.ga'|trans }}</a>
                 </div>
             </nav>
         {% endif %}
@@ -106,7 +108,7 @@
                 <div class="right">
                     <ul>
                         <li class="calendar-stat"><span>{{ 'dashboard.stats_of'|trans({'%day1%': 'now'|date_modify('-28 days')|date('d F'), '%day2%':'yesterday'|date('d F')}, 'admin')|raw }}</span> <i class="far fa-calendar-alt"></i></li>
-                        <li class="profile">{{ 'dashboard.connected_by'|trans({}, 'admin') }} <br>{{ app.user.username }} <i class="far fa-user"></i></li>
+                        <li class="profile">{{ 'dashboard.connected_by'|trans }} <br>{{ app.user.username }} <i class="far fa-user"></i></li>
                     </ul>
                 </div>
             </div>
@@ -115,9 +117,9 @@
     {% if stats.rs is defined %}
         <section class="rs">
             <div class="title-zone">
-                <h1 class="h1-like bg-circle">{{ 'dashboard.social.h1'|trans({}, 'admin') }}</h1>
+                <h1 class="h1-like bg-circle">{{ 'dashboard.social.h1'|trans }}</h1>
             </div>
-            <h2 class="h2-like center-align">{{ 'dashboard.social.h2'|trans({}, 'admin') }}</h2>
+            <h2 class="h2-like center-align">{{ 'dashboard.social.h2'|trans }}</h2>
             <div class="row no-margin">
 
                 {% if stats.rs|length == 4 %}
@@ -136,26 +138,26 @@
 
 
                 <div class="col {{ class_rs_title }} block-rs center-align hide-on-small-only">
-                    <h3>{{ 'dashboard.social.h3'|trans({}, 'admin')|raw }}</h3>
+                    <h3>{{ 'dashboard.social.h3'|trans|raw }}</h3>
                 </div>
 
                 {% if stats.rs.facebook is defined %}
                     <div class="col {{ class_block_rs }} block-rs">
-                        <div class="rs-title">{{ 'dashboard.social.facebook'|trans({}, 'admin') }}</div>
+                        <div class="rs-title">{{ 'dashboard.social.facebook'|trans }}</div>
                         <div class="rs-count">{{ stats.rs.facebook.fan_count }}</div>
                         <div class="rs-icon"><i class="fab fa-facebook-f"></i></div>
                     </div>
                 {% endif %}
                 {% if stats.rs.twitter is defined %}
                     <div class="col {{ class_block_rs }} block-rs">
-                        <div class="rs-title">{{ 'dashboard.social.twitter'|trans({}, 'admin') }}</div>
+                        <div class="rs-title">{{ 'dashboard.social.twitter'|trans }}</div>
                         <div class="rs-count">{{ stats.rs.twitter.followers_count }}</div>
                         <div class="rs-icon"><i class="fab fa-twitter"></i></div>
                     </div>
                 {% endif %}
                 {% if stats.rs.youtube is defined %}
                     <div class="col {{ class_block_rs }} block-rs">
-                        <div class="rs-title">{{ 'dashboard.social.youtube'|trans({}, 'admin') }}</div>
+                        <div class="rs-title">{{ 'dashboard.social.youtube'|trans }}</div>
                         <div class="rs-count">{{ stats.rs.youtube.statistics.subscriberCount }}</div>
                         <div class="rs-icon"><i class="fab fa-youtube"></i></div>
                     </div>
@@ -166,44 +168,44 @@
     {% if stats.ga is defined %}
         <section class="perf">
             <div class="title-zone">
-                <h1 class="h1-like bg-square">{{ 'dashboard.perf.h1'|trans({}, 'admin') }}</h1>
+                <h1 class="h1-like bg-square">{{ 'dashboard.perf.h1'|trans }}</h1>
             </div>
-            <h2 class="h2-like center-align bg-dark">{{ 'dashboard.perf.h2'|trans({}, 'admin') }}</h2>
+            <h2 class="h2-like center-align bg-dark">{{ 'dashboard.perf.h2'|trans }}</h2>
             <div class="row no-margin">
                 <div class="col s12 m6 l6 block-perf bg-dark hide-on-small-only">
-                    <h3>{{ 'dashboard.perf.h3'|trans({}, 'admin')|raw }}</h3>
+                    <h3>{{ 'dashboard.perf.h3'|trans|raw }}</h3>
                 </div>
                 <div class="col s6 m3 l3 block-perf">
                     {% if stats.perf.newVisitors is defined %}
                         <div class="perf-icon {% if stats.perf.newVisitors >= 0 %}perf-up{% else %}perf-down{% endif %}"><i class="ion-arrow-graph-{% if stats.perf.newVisitors >= 0 %}up{% else %}down{% endif %}-right"></i></div>
                         <div class="perf-pourcent">{{ stats.perf.newVisitors | replace({'-':''}) | round(2) }} %</div>
                     {% endif %}
-                    <p>{{ 'dashboard.perf.new_visitors'|trans({}, 'admin') }}</p>
+                    <p>{{ 'dashboard.perf.new_visitors'|trans }}</p>
                 </div>
                 <div class="col s6 m3 l3 block-perf bg-dark">
                     <div class="perf-icon {% if stats.perf.newUsers >= 0 %}perf-up{% else %}perf-down{% endif %}"><i class="ion-arrow-graph-{% if stats.perf.newUsers >= 0 %}up{% else %}down{% endif %}-right"></i></div>
                     <div class="perf-pourcent">{{ stats.perf.newUsers | replace({'-':''}) | round(2) }} %</div>
-                    <p>{{ 'dashboard.perf.new_users'|trans({}, 'admin') }}</p>
+                    <p>{{ 'dashboard.perf.new_users'|trans }}</p>
                 </div>
                 <div class="col s6 m3 l3 block-perf bg-dark">
                     <div class="perf-icon perf-up"><i class="ion-arrow-graph-up-right"></i></div>
                     <div class="perf-pourcent">12%</div>
-                    <p>{{ 'dashboard.perf.read_your_blog'|trans({}, 'admin') }}</p>
+                    <p>{{ 'dashboard.perf.read_your_blog'|trans }}</p>
                 </div>
                 <div class="col s6 m3 l3 block-perf">
                     <div class="perf-icon perf-down"><i class="ion-arrow-graph-down-right"></i></div>
                     <div class="perf-pourcent">34%</div>
-                    <p>{{ 'dashboard.perf.lorem'|trans({}, 'admin') }}</p>
+                    <p>{{ 'dashboard.perf.lorem'|trans }}</p>
                 </div>
                 <div class="col s6 m3 l3 block-perf bg-dark">
                     <div class="perf-icon perf-up"><i class="ion-arrow-graph-up-right"></i></div>
                     <div class="perf-pourcent">23%</div>
-                    <p>{{ 'dashboard.perf.lorem'|trans({}, 'admin') }}</p>
+                    <p>{{ 'dashboard.perf.lorem'|trans }}</p>
                 </div>
                 <div class="col s6 m3 l3 block-perf">
                     <div class="perf-icon perf-up"><i class="ion-arrow-graph-up-right"></i></div>
                     <div class="perf-pourcent">19%</div>
-                    <p>{{ 'dashboard.perf.lorem'|trans({}, 'admin') }}</p>
+                    <p>{{ 'dashboard.perf.lorem'|trans }}</p>
                 </div>
             </div>
         </section>
@@ -239,7 +241,7 @@
         {% if stats.rs is defined %}
             $window.scroll(function() {
                 if($window.scrollTop() > filterTop && $window.scrollTop() <= $perfTop){
-                    $calendarFilter.html('{{ 'dashboard.resume_social_media'|trans({}, 'admin')|raw }}');
+                    $calendarFilter.html('{{ 'dashboard.resume_social_media'|trans|raw }}');
                 }else if($window.scrollTop() <= filterTop){
                     $calendarFilter.html('{{ 'dashboard.stats_of'|trans({'%day1%': 'now'|date_modify('-28 days')|date('d F'), '%day2%':'yesterday'|date('d F')}, 'admin')|raw }}');
                 }else if($window.scrollTop() > $perfTop){
@@ -340,7 +342,7 @@
                 {% set others = others + metrics.sessions %}
             {% endfor %}
             dataCountry.push({{ (100 * others / stats.ga.metrics.users) | round(2) }});
-            labelsCountry.push('{{ 'dashboard.stats.ga.others'|trans({}, 'admin') }}... ({{ others }})');
+            labelsCountry.push('{{ 'dashboard.stats.ga.others'|trans }}... ({{ others }})');
             var elemCountrySessions = document.getElementById('chartCountrySessions');
             var chartCountrySessions = new Chart(elemCountrySessions, {
                 type: 'horizontalBar',

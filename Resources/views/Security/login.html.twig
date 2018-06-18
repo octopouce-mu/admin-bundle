@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% trans_default_domain 'security' %}
+
 {% block body_id 'login' %}
 
 {% block stylesheets %}
@@ -10,7 +12,7 @@
 {% block body %}
     {% if error %}
         <div class="alert alert-danger">
-            {{ error.messageKey|trans(error.messageData, 'security') }}
+            {{ error.messageKey|trans(error.messageData) }}
         </div>
     {% endif %}
     <form class="form-signin" action="{{ path('octopouce_admin_login_admin') }}" method="post">
@@ -20,28 +22,28 @@
             {% else %}
                 <img class="mb-4" src="{{ asset('bundles/octopouceadmin/images/logo-octopouce.svg') }}" alt="Logo Octopouce" height="72">
             {% endif %}
-            <h3 class="h3 mb-3 font-weight-normal">{{ 'title.login'|trans({}, 'security') }}</h3>
+            <h3 class="h3 mb-3 font-weight-normal">{{ 'title.login'|trans }}</h3>
         </div>
 
         <div class="form-label-group input-field">
             <input type="text" id="username" class="form-control" name="_username"  required autofocus value="{{ lastUsername }}">
-            <label for="username">{{ 'label.username'|trans({}, 'security') }}</label>
+            <label for="username">{{ 'label.username'|trans }}</label>
         </div>
 
         <div class="form-label-group input-field">
             <input type="password" id="password" name="_password" class="form-control" required>
-            <label for="password">{{ 'label.password'|trans({}, 'security') }}</label>
+            <label for="password">{{ 'label.password'|trans }}</label>
         </div>
 
         <div class="checkbox mb-3">
             <label for="remember_me">
                 <input type="checkbox" id="remember_me" name="_remember_me" />
-                <span>{{ 'label.remember'|trans({}, 'security') }}</span>
+                <span>{{ 'label.remember'|trans }}</span>
             </label>
         </div>
         <br>
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">{{ 'action.sign_in'|trans({}, 'security') }}</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">{{ 'action.sign_in'|trans }}</button>
     </form>
 {% endblock %}
 

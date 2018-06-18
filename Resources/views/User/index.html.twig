@@ -1,99 +1,50 @@
 {% extends '@OctopouceAdmin/layout.html.twig' %}
 
-{% if fieldsHide is not defined %}
-    {% set fieldsHide = ['reordered'] %}
-{% else %}
-    {% set fieldsHide = fieldsHide|merge(['reordered']) %}
-{% endif %}
-
 {% block main %}
     <div class="padding-filter">
         <div class="row title">
             <div class="col s12">
-                <h1>List</h1>
+                <h1>Users</h1>
             </div>
         </div>
         <div class="row">
             <div class="col s12">
                 <div class="box">
                     <div class="content">
-                        {% if app.request.get('_route')|replace({'index':'new'})|routeExist %}
-                            <p>
-                                <a href="{{ path(app.request.get('_route')|replace({'index':'new'})) }}" class="waves-effect waves-light btn green"><i class="fas fa-plus"></i> Create</a>
-                            </p>
-                        {% endif %}
-                        {% if entities %}
+                        {% if users %}
                             <table>
                                 <thead>
                                     <tr>
-                                        {% for key, val in entities.0|cast_to_array if key not in fieldsHide %}
-                                            <th>{{ key }}</th>
-                                        {% endfor %}
-                                        {% if entities.0.translate is defined %}
-                                            {% for key, val in entities.0.translate|cast_to_array if key not in fieldsHide %}
-                                                {% if key != 'id' %}
-                                                    <th>{{ key }}</th>
-                                                {% endif %}
-                                            {% endfor %}
-                                        {% endif %}
-                                        <th>subscriptionActive</th>
-                                        {% if app.request.get('_route')|replace({'index':'edit'})|routeExist or app.request.get('_route')|replace({'index':'delete'})|routeExist %}
-                                            <th width="300">Actions</th>
-                                        {% endif %}
+                                        <th>Id</th>
+                                        <th>Firstname</th>
+                                        <th>Lastname</th>
+                                        <th>Username</th>
+                                        <th>E-Mail</th>
+                                        <th>Roles</th>
+                                        <th>Enabled</th>
+                                        <th>Created At</th>
+                                        <th width="300">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for entity in entities %}
+                                    {% for user in users %}
                                         <tr>
-                                            {% for key, val in entity|cast_to_array if key not in fieldsHide %}
-                                                <td>
-                                                    {% if val is iterable %}
-                                                        {% for v in val %}
-                                                            <span class="chip blue">{{ v }}</span>
-                                                        {% endfor %}
-                                                    {% elseif val.timestamp is defined %}
-                                                        {{ val|date('d/m/Y') }}
-                                                    {% else %}
-                                                        {{ val|raw }}
-                                                    {% endif %}
-                                                </td>
-                                            {% endfor %}
-                                            {% if entity.translate is defined %}
-                                                {% for key, val in entity.translate|cast_to_array if key not in fieldsHide %}
-                                                    {% if key != 'id' %}
-                                                        <td>
-                                                            {% if val is iterable %}
-                                                                {% for v in val %}
-                                                                    <span class="chip blue">{{ v }}</span>
-                                                                {% endfor %}
-                                                            {% elseif val.timestamp is defined %}
-                                                                {{ val|date('d/m/Y') }}
-                                                            {% else %}
-                                                                {{ val|raw }}
-                                                            {% endif %}
-                                                        </td>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            {% endif %}
+                                            <td>{{ user.id }}</td>
+                                            <td>{{ user.firstname }}</td>
+                                            <td>{{ user.lastname }}</td>
+                                            <td>{{ user.username }}</td>
+                                            <td>{{ user.email }}</td>
                                             <td>
-                                                {% if entity.subscriptionsActive %}
-                                                    {% for subscriptions in entity.subscriptionsActive %}
-                                                        {% for subscription in subscriptions %}
-                                                        <span class="chip blue">{{ subscription.offer.translate.name }}</span>
-                                                        {% endfor %}
-                                                    {% endfor %}
-                                                {% endif %}
+                                                {% for role in user.roles %}
+                                                    <span class="chip blue">{{ role }}</span>
+                                                {% endfor %}
                                             </td>
+                                            <td>{{ user.enabled }}</td>
+                                            <td>{{ user.createdAt|date('d/m/Y') }}</td>
                                             <td class="center-align">
-                                                {% if app.request.get('_route')|replace({'index':'show'})|routeExist %}
-                                                    <a href="{{ path(app.request.get('_route')|replace({'index':'show'}), {'id': entity.id}) }}" class="waves-effect waves-light btn blue"><i class="fas fa-eye"></i></a>
-                                                {% endif %}
-                                                {% if app.request.get('_route')|replace({'index':'edit'})|routeExist %}
-                                                    <a href="{{ path(app.request.get('_route')|replace({'index':'edit'}), {'id': entity.id}) }}" class="waves-effect waves-light btn orange"><i class="fas fa-pencil-alt"></i></a>
-                                                {% endif %}
-                                                {% if app.request.get('_route')|replace({'index':'delete'})|routeExist %}
-                                                    <a href="{{ path(app.request.get('_route')|replace({'index':'delete'}), {'id': entity.id}) }}" class="waves-effect waves-light btn red"><i class="fas fa-times"></i></a>
-                                                {% endif %}
+                                                <a href="{{ path('octopouce_admin_user_show', {'id': entity.id}) }}" class="waves-effect waves-light btn blue"><i class="fas fa-eye"></i></a>
+                                                <a href="{{ path('octopouce_admin_user_edit', {'id': entity.id}) }}" class="waves-effect waves-light btn orange"><i class="fas fa-pencil-alt"></i></a>
+                                                <a href="{{ path('octopouce_admin_user_delete', {'id': entity.id}) }}" class="waves-effect waves-light btn red"><i class="fas fa-times"></i></a>
                                             </td>
                                         </tr>
                                     {% endfor %}

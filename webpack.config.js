@@ -11,10 +11,13 @@ Encore
     // will create public/build/app.js and public/build/app.css
     .addEntry('js/admin', './Resources/assets/js/admin.js')
     .addEntry('js/dashboard', './Resources/assets/js/dashboard.js')
+    .addEntry('js/vendor/jvector', './Resources/assets/js/jvectormap/jquery-jvectormap-2.0.3.min.js')
+    .addEntry('js/vendor/jvector-world-mill', './Resources/assets/js/jvectormap/jquery-jvectormap-world-mill.js')
 
     .addEntry('css/login', './Resources/assets/scss/login.scss')
     .addEntry('css/style', './Resources/assets/scss/style.scss')
     .addEntry('css/vendor/jvector', './Resources/assets/scss/jvectormap/jquery-jvectormap-2.0.3.css')
+
 
     // allow legacy applications to use $/jQuery as a global variable
     .autoProvidejQuery()
@@ -30,8 +33,12 @@ Encore
 
     // create hashed filenames (e.g. app.abc123.css)
     // .enableVersioning()
+    .configureFilenames({
+        images: 'images/[name].[ext]',
+        fonts: 'images/[name].[ext]'
+     })
 
-    // allow sass/scss files to be processed
+// allow sass/scss files to be processed
     .enableSassLoader()
 ;
 

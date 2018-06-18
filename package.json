@@ -16,8 +16,6 @@
     "fullcalendar": "^3.9.0",
     "materialize-css": "^1.0.0-rc.1",
     "moment": "^2.22.1",
-    "moment-timezone": "^0.5.16",
-    "jvectormap": "^2.0.4",
-    "jvectormap-next": "^3.0.0"
+    "moment-timezone": "^0.5.16"
   }
 }

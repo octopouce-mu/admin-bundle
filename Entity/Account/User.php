@@ -136,7 +136,7 @@ abstract class User implements UserInterface
     /**
      * @var array
      *
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="json")
      */
     protected $roles;
 
@@ -286,6 +286,20 @@ abstract class User implements UserInterface
         // if you had a plainPassword property, you'd nullify it here
         // $this->plainPassword = null;
     }
+
+	public function serialize(): string
+	{
+		// add $this->salt too if you don't use Bcrypt or Argon2i
+		return serialize([$this->id, $this->username, $this->password]);
+	}
+	/**
+	 * {@inheritdoc}
+	 */
+	public function unserialize($serialized): void
+	{
+		// add $this->salt too if you don't use Bcrypt or Argon2i
+		[$this->id, $this->username, $this->password] = unserialize($serialized, ['allowed_classes' => false]);
+	}
 
     /**
      * Set firstname.

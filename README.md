@@ -88,6 +88,9 @@ Now that you have activated and configured the bundle, all that is left to do is
 
 _octopouce_admin:
     resource: "@OctopouceAdminBundle/Resources/config/routing.yaml"
+    
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
 ```
 
 ### Step 5: Publish the Assets

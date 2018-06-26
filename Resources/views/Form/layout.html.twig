@@ -131,13 +131,13 @@
     <div class="input-field col s6">
         <i class="prefix far fa-calendar-alt"></i>
         {{ form_widget(form.date, {'attr': {'class':'datepicker'}}) }}
-        {{ form_label(form) }}
+        {{ form_label(form.date) }}
         {{ form_errors(form.date) }}
     </div>
     <div class="input-field col s6">
         <i class="prefix far fa-clock"></i>
         {{ form_widget(form.time, {'attr': {'class':'timepicker'}}) }}
-        {{ form_label(form) }}
+        {{ form_label(form.time) }}
         {{ form_errors(form.time) }}
     </div>
 {% endblock %}

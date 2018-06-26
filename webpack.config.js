@@ -11,7 +11,6 @@ Encore
 
     // will create public/build/app.js and public/build/app.css
     .addEntry('js/admin', './Resources/assets/js/admin.js')
-    .addEntry('js/dashboard', './Resources/assets/js/dashboard.js')
 
     .addEntry('css/login', './Resources/assets/scss/login.scss')
     .addEntry('css/style', './Resources/assets/scss/style.scss')

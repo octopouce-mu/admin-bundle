@@ -1,4 +1,6 @@
 require('materialize-css');
+require('chart.js');
+
 // require jQuery normally
 const $ = require('jquery');
 
@@ -33,21 +35,25 @@ $(".hamburger-menu").on('click', function(){
 $(document).ready(function(){
    // Materialize.toast('I am a toast!', 10000);
     $('select').formSelect();
+    $('.tabs').tabs();
     $('.tooltipped').tooltip();
     $('.datepicker').datepicker({
         selectMonths: true, // Creates a dropdown to control month
-        selectYears: 15, // Creates a dropdown of 15 years to control year,
+        selectYears: 2, // Creates a dropdown of 15 years to control year,
         today: 'Today',
         clear: 'Clear',
         close: 'Ok',
-        format: 'yyyy/mm/dd'
+        format: 'yyyy/mm/dd',
+        autoClose: true,
+        defaultDate: 'now'
     });
     $('.timepicker').timepicker({
-        twelvehour: false, // Use AM/PM or 24-hour format
+        twelveHour: false, // Use AM/PM or 24-hour format
         donetext: 'OK', // text for done-button
         cleartext: 'Clear', // text for clear-button
         canceltext: 'Cancel', // Text for cancel-button
-        format: 'HH:i'
+        defaultTime: 'now',
+        autoClose: true
     });
 });
 

@@ -19,6 +19,7 @@ use Google_Service_AnalyticsReporting_MetricFilter;
 use Google_Service_AnalyticsReporting_MetricFilterClause;
 use Google_Service_AnalyticsReporting_OrderBy;
 use Google_Service_AnalyticsReporting_ReportRequest;
+use Psr\Log\LoggerInterface;
 
 
 /**
@@ -59,7 +60,7 @@ class GoogleAnalyticsService {
 	 *
 	 * @throws \Google_Exception
 	 */
-	public function __construct(OptionTransformer $optionTransformer) {
+	public function __construct(OptionTransformer $optionTransformer, LoggerInterface $logger) {
 
 		$options = $optionTransformer->getOptionsWithKeyName();
 
@@ -69,12 +70,19 @@ class GoogleAnalyticsService {
 			if($options['GOOGLE_API_KEY']->getValue()) $this->client->setDeveloperKey($options['GOOGLE_API_KEY']->getValue());
 
 			$this->client->addScope(['https://www.googleapis.com/auth/analytics.readonly']);
-			$this->client->setAuthConfig('../var/'.$options['GOOGLE_GA_JSON']->getValue());
 
-			$this->setAnalytics(new Google_Service_AnalyticsReporting($this->client));
-			$this->setViewId($options['GOOGLE_GA_VIEW']->getValue());
+			try {
+				$this->client->setAuthConfig('../var/'.$options['GOOGLE_GA_JSON']->getValue());
+				$this->setAnalytics(new Google_Service_AnalyticsReporting($this->client));
+				$this->setViewId($options['GOOGLE_GA_VIEW']->getValue());
 
-			$this->enabled = true;
+				$this->enabled = true;
+			} catch (\Exception $e){
+				$logger->error('Error file JSON Google Analytic for display Dashboard Admin');
+				$this->enabled = false;
+			}
+
+
 		}
 
 

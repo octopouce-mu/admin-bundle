@@ -33,6 +33,13 @@ class Category
 	 *
 	 * @ORM\Column(type="string")
 	 */
+	private $slug;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(type="string")
+	 */
 	private $type;
 
 	/**
@@ -63,6 +70,10 @@ class Category
 	{
 		$this->options = new ArrayCollection();
 		$this->childs = new ArrayCollection();
+	}
+
+	public function __toString() {
+		return $this->name;
 	}
 
     /**
@@ -98,6 +109,30 @@ class Category
     {
         return $this->name;
     }
+
+	/**
+	 * Set slug.
+	 *
+	 * @param string $slug
+	 *
+	 * @return Category
+	 */
+	public function setSlug($slug)
+	{
+		$this->slug = $slug;
+
+		return $this;
+	}
+
+	/**
+	 * Get slug.
+	 *
+	 * @return string
+	 */
+	public function getSlug()
+	{
+		return $this->slug;
+	}
 
     /**
      * Add option.

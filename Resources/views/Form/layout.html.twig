@@ -105,8 +105,17 @@
 {%- endblock choice_widget_collapsed -%}
 
 {%- block textarea_widget -%}
-    {% set attr = attr|merge({class: (attr.class|default('') ~ 'materialize-textarea')|trim}) %}
+    {% if 'editor' in attr.class %}
+    {% else %}
+    {% endif %}
+
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' materialize-textarea')|trim}) %}
     {{ parent() }}
+{%- endblock -%}
+{%- block textarea_row -%}
+    {{- form_label(form) -}}
+    {{- form_widget(form) -}}
+    {{- form_errors(form) -}}
 {%- endblock -%}
 
 {%- block form_errors -%}
@@ -122,6 +131,7 @@
 
 {% block date_time_picker_row %}
     <div class="row{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+        <div class="col s12">{{- form_label(form) -}}</div>
         {{- form_widget(form) -}}
         {{- form_errors(form) -}}
     </div>

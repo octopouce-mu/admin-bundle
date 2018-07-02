@@ -1,12 +1,24 @@
 require('materialize-css');
 require('chart.js');
 
+
 // require jQuery normally
 const $ = require('jquery');
 
 // create global $ and jQuery variables
 global.$ = global.jQuery = $;
-
+jQuery.expr[':'].regex = function(elem, index, match) {
+    var matchParams = match[3].split(','),
+        validLabels = /^(data|css):/,
+        attr = {
+            method: matchParams[0].match(validLabels) ?
+                matchParams[0].split(':')[0] : 'attr',
+            property: matchParams.shift().replace(validLabels,'')
+        },
+        regexFlags = 'ig',
+        regex = new RegExp(matchParams.join('').replace(/^\s+|\s+$/g,''), regexFlags);
+    return regex.test(jQuery(elem)[attr.method](attr.property));
+}
 
 $(".hamburger").on('click', function(){
     var sidebarLeft = $('.sidebar-left');
@@ -34,7 +46,12 @@ $(".hamburger-menu").on('click', function(){
 });
 $(document).ready(function(){
    // Materialize.toast('I am a toast!', 10000);
-    $('select').formSelect();
+    $('select').select2();
+
+    $('select[data-increment=true]').select2({
+        tags: true
+    });
+
     $('.tabs').tabs();
     $('.tooltipped').tooltip();
     $('.datepicker').datepicker({
@@ -55,6 +72,34 @@ $(document).ready(function(){
         defaultTime: 'now',
         autoClose: true
     });
+
+    $('input:regex(name, slug)').each(function(index, value) {
+        var id = value.id;
+        var target = $(this);
+        $('input#'+id.replace('slug', 'name')).keyup(function() {
+            var source = $(this).val();
+            if(source.length > 0) {
+                var slug = slugify(source);
+                target.val(slug);
+            }
+        });
+        $('input#'+id.replace('slug', 'title')).keyup(function() {
+            var source = $(this).val();
+            if(source.length > 0) {
+                var slug = slugify(source);
+                target.val(slug);
+            }
+        });
+
+    })
 });
 
-
+function slugify(text)
+{
+    return text.toString().toLowerCase()
+        .replace(/\s+/g, '-')           // Replace spaces with -
+        .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+        .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+        .replace(/^-+/, '')             // Trim - from start of text
+        .replace(/-+$/, '');            // Trim - from end of text
+}

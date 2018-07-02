@@ -9,3 +9,8 @@ services:
     Octopouce\AdminBundle\Utils\FileUploader:
         arguments:
             $targetDirectory: '/uploads'
+
+    twig.extension.text:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - { name: twig.extension }

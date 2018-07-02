@@ -374,22 +374,28 @@ ul.staggered-list li {
 }
 
 // Footer
-.page-footer {
-  padding-top: 20px;
-  color: $footer-font-color;
-  background-color: $footer-bg-color;
-
+footer{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
   .footer-copyright {
     overflow: hidden;
     min-height: 50px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 0px;
+    padding: 10px;
     color: $footer-copyright-font-color;
-    background-color: $footer-copyright-bg-color;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    a {
+      color: $footer-copyright-font-color;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 }
+
 
 // Tables
 table, th, td {

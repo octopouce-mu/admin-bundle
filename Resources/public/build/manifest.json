@@ -8,6 +8,5 @@
   "public/build/images/circle.png": "/public/build/images/circle.png",
   "public/build/images/dashboard.png": "/public/build/images/dashboard.png",
   "public/build/images/logo-octopouce.svg": "/public/build/images/logo-octopouce.svg",
-  "public/build/js/admin.js": "/public/build/js/admin.js",
-  "public/build/js/dashboard.js": "/public/build/js/dashboard.js"
+  "public/build/js/admin.js": "/public/build/js/admin.js"
 }

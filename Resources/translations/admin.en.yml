@@ -28,3 +28,18 @@ dashboard.perf.new_visitors: New visitors
 dashboard.perf.new_users: New Members
 dashboard.perf.read_your_blog: Reading your blog
 dashboard.perf.lorem: Lorem Ipsum
+
+header.sidebar.left.search: Search...
+header.sidebar.left.go_to_website: Go to the website
+header.sidebar.left.todo.change_site_name: Modify your site name
+header.sidebar.left.todo.add_logo: Add a logo
+header.sidebar.left.todo.config_rs: Set up one of the social networks
+header.sidebar.left.todo.config_ga: Set up your <span title="Google Analytic">GA</span> to see your stats
+header.sidebar.left.title_rs: Your social networks
+
+header.sidebar.left.nav.dashboard: <i class="fas fa-tachometer-alt"></i><span class="label-menu">Dashboard</span>
+header.sidebar.left.nav.users: <i class="fas fa-users"></i><span class="label-menu">Users</span>
+header.sidebar.left.nav.rs: <i class="fas fa-share-alt"></i><span class="label-menu">Social Media</span>
+header.sidebar.left.nav.options: <i class="fas fa-cogs"></i><span class="label-menu">Options</span>
+header.sidebar.left.nav.advertising: <i class="fab fa-adversal"></i><span class="label-menu">Advertising</span>
+header.sidebar.left.nav.post: <i class="fas fa-comments"></i><span class="label-menu">Blog</span>

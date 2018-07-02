@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% trans_default_domain 'admin' %}
+
 {% block title %}Admin {{ parent() }}{% endblock %}
 
 {% block stylesheets %}
@@ -9,8 +11,8 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,200,300,700' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/octopouceadmin/build/css/style.css') }}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 {% endblock %}
 
 
@@ -20,36 +22,66 @@
             <div class="hide-bar hide-bar-left">
                 <div class="h1 center-align title-menu">Menu</div>
                 <div class="input-field search">
-                    <input type="text" placeholder="Search..." name="search" />
+                    <input type="text" placeholder="{{ 'header.sidebar.left.search'|trans }}" name="search" />
+                </div>
+                <div class="center-align">
+                    <a href="/" class="btn btn-large">{{ 'header.sidebar.left.go_to_website'|trans }}</a>
                 </div>
 
                 <article>
-                    <h2 class="center-align">Admin</h2>
-                    <p class="text-justify">
-                        {% if thor.options.PROJECT_NAME is defined and thor.options.PROJECT_NAME.value %}
-                            {{thor.options.PROJECT_NAME.value}}
-                        {% else %}
-                            Thor
+                    <h3 class="center-align">TODO LIST</h3>
+                    <ul>
+                        {% if thor.options.PROJECT_NAME is not defined or thor.options.PROJECT_NAME.value == "Thor"  %}
+                            <li> - {{ 'header.sidebar.left.todo.change_site_name'|trans }}</li>
                         {% endif %}
-                    </p>
-                </article>
-                <div class="social">
-                    <div class="h3 center-align title-social">Vos réseaux sociaux</div>
-                    <div class="bar-social">
-                        <ul class="center-align">
-                            {% if thor.options.FACEBOOK_PAGE_URL is defined and thor.options.FACEBOOK_PAGE_URL.value %}
-                                <li><a href="{{ thor.options.FACEBOOK_PAGE_URL.value }}" target="_blank"><i class="ion-social-facebook-outline"></i></a></li>
-                            {% endif %}
-                            {% if thor.options.TWITTER_PAGE_URL is defined and thor.options.TWITTER_PAGE_URL.value %}
-                                <li><a href="{{ thor.options.TWITTER_PAGE_URL.value }}" target="_blank"><i class="ion-social-twitter-outline"></i></a></li>
+                        {% if thor.options.PROJECT_LOGO is not defined or not thor.options.PROJECT_LOGO.value %}
+                            <li> - {{ 'header.sidebar.left.todo.add_logo'|trans }}</li>
+                        {% endif %}
+                        {% if
+                            (thor.options.FACEBOOK_PAGE_URL is not defined or not thor.options.FACEBOOK_PAGE_URL.value) and
+                            (thor.options.TWITTER_PAGE_URL is not defined or not thor.options.TWITTER_PAGE_URL.value) and
+                            (thor.options.GOOGLE_PAGE_URL is not defined or not thor.options.GOOGLE_PAGE_URL.value)
 
-                            {% endif %}
-                            {% if thor.options.GOOGLE_PAGE_URL is defined and thor.options.GOOGLE_PAGE_URL.value %}
-                                <li><a href="{{ thor.options.GOOGLE_PAGE_URL.value }}" target="_blank"><i class="ion-social-googleplus-outline"></i></a></li>
-                            {% endif %}
-                        </ul>
+                        %}
+                            <li> - {{ 'header.sidebar.left.todo.config_rs'|trans }}</li>
+                        {% endif %}
+                        {% if thor.options.GOOGLE_GA_JSON is not defined or not thor.options.GOOGLE_GA_JSON.value %}
+                            <li> - {{ 'header.sidebar.left.todo.config_ga'|trans|raw }}</li>
+                        {% endif %}
+                    </ul>
+                </article>
+                {% if
+                    (thor.options.FACEBOOK_PAGE_URL is defined and thor.options.FACEBOOK_PAGE_URL.value) or
+                    (thor.options.TWITTER_PAGE_URL is defined and thor.options.TWITTER_PAGE_URL.value) or
+                    (thor.options.GOOGLE_PAGE_URL is defined and thor.options.GOOGLE_PAGE_URL.value)
+
+                %}
+                    <div class="social">
+                        <div class="h3 center-align title-social">{{ 'header.sidebar.left.title_rs'|trans }}</div>
+                        <div class="bar-social">
+                            <ul class="center-align">
+                                {% if thor.options.FACEBOOK_PAGE_URL is defined and thor.options.FACEBOOK_PAGE_URL.value %}
+                                    <li><a href="{{ thor.options.FACEBOOK_PAGE_URL.value }}" target="_blank"><i class="ion-social-facebook-outline"></i></a></li>
+                                {% endif %}
+                                {% if thor.options.TWITTER_PAGE_URL is defined and thor.options.TWITTER_PAGE_URL.value %}
+                                    <li><a href="{{ thor.options.TWITTER_PAGE_URL.value }}" target="_blank"><i class="ion-social-twitter-outline"></i></a></li>
+
+                                {% endif %}
+                                {% if thor.options.GOOGLE_PAGE_URL is defined and thor.options.GOOGLE_PAGE_URL.value %}
+                                    <li><a href="{{ thor.options.GOOGLE_PAGE_URL.value }}" target="_blank"><i class="ion-social-googleplus-outline"></i></a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
                     </div>
-                </div>
+                {% endif %}
+                <footer>
+                    <div class="footer-copyright">
+                        <a href="http://www.octopouce.mu" target="_blank">
+                            <img src="{{ asset('bundles/octopouceadmin/build/images/logo-octopouce.svg') }}" alt="Logo Octopouce" height="50">
+                        </a>
+                            <a href="http://www.octopouce.mu" target="_blank">© 2018 Octopouce</a>
+                    </div>
+                </footer>
             </div>
             <div class="bar center-align">
                 <div class="icon-nav">
@@ -57,69 +89,76 @@
                         <span></span>
                     </a>
                 </div>
-                <ul>
-                    <li class="current">
-                        <a href="{{ path('octopouce_admin_dashboard_index') }}">
-                            <i class="fas fa-tachometer-alt"></i>
-                            <span class="label-menu">Dashboard</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ path('octopouce_admin_user_index') }}">
-                            <i class="fas fa-users"></i>
-                            <span class="label-menu">Users</span>
-                        </a>
-                        <ul>
-                            <li>
-                                <a href="{{ path('octopouce_admin_user_index') }}">Users</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="fas fa-share-alt"></i>
-                            <span class="label-menu">Social Media</span>
-                        </a>
-                        <ul>
-                            <li>
-                                <a href="{{ path('octopouce_admin_option_index', {'category':'facebook'}) }}">Facebook</a>
-                                <a href="{{ path('octopouce_admin_option_index', {'category':'twitter'}) }}">Twitter</a>
-                                <a href="{{ path('octopouce_admin_option_index', {'category':'google'}) }}">Google</a>
-                                <a href="{{ path('octopouce_admin_option_index', {'category':'youtube'}) }}">Youtube</a>
-                                <a href="{{ path('octopouce_admin_option_index', {'category':'instagram'}) }}">Instagram</a>
-                            </li>
-                        </ul>
-                    </li>
-                    {% if 'octopouce_advertising_admin_dashboard_index'|routeExist %}
+                {% block siderbar_left_nav %}
+                    <ul>
+                        <li class="current">
+                            <a href="{{ path('octopouce_admin_dashboard_index') }}">
+                                {{ 'header.sidebar.left.nav.dashboard'|trans|raw }}
+                            </a>
+                        </li>
                         <li>
-                            <a href="{{ path('octopouce_advertising_admin_dashboard_index') }}">
-                                <i class="fab fa-adversal"></i>
-                                <span class="label-menu">Advertising</span>
+                            <a href="{{ path('octopouce_admin_user_index') }}">
+                                {{ 'header.sidebar.left.nav.users'|trans|raw }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                {{ 'header.sidebar.left.nav.rs'|trans|raw }}
                             </a>
                             <ul>
                                 <li>
-                                    <a href="{{ path('octopouce_advertising_admin_dashboard_index') }}">Dashboard</a>
-                                    <a href="{{ path('octopouce_advertising_admin_campaign_index') }}">Campaigns</a>
-                                    <a href="{{ path('octopouce_advertising_admin_adzone_index') }}">Adzones</a>
-                                    <a href="{{ path('octopouce_advertising_admin_page_index') }}">Pages</a>
+                                    <a href="{{ path('octopouce_admin_option_index', {'category':'facebook'}) }}">Facebook</a>
+                                    <a href="{{ path('octopouce_admin_option_index', {'category':'twitter'}) }}">Twitter</a>
+                                    <a href="{{ path('octopouce_admin_option_index', {'category':'google'}) }}">Google</a>
+                                    <a href="{{ path('octopouce_admin_option_index', {'category':'youtube'}) }}">Youtube</a>
+                                    <a href="{{ path('octopouce_admin_option_index', {'category':'instagram'}) }}">Instagram</a>
                                 </li>
                             </ul>
                         </li>
-                    {% endif %}
-                    <li>
-                        <a href="{{ path('octopouce_admin_option_index') }}">
-                            <i class="fas fa-cogs"></i>
-                            <span class="label-menu">Options</span>
-                        </a>
-                        <ul>
+                        {% if 'octopouce_blog_admin_post_index'|routeExist %}
                             <li>
-                                <a href="{{ path('octopouce_admin_option_index') }}">Général</a>
-                                <a href="{{ path('octopouce_admin_option_index', {'category':'company'}) }}">Company</a>
-                                <a href="{{ path('octopouce_admin_option_index', {'category':'mail'}) }}">Mail</a>
+                                <a href="{{ path('octopouce_blog_admin_post_index') }}">
+                                    {{ 'header.sidebar.left.nav.post'|trans|raw }}
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a href="{{ path('octopouce_blog_admin_post_index') }}">Posts</a>
+                                        <a href="{{ path('octopouce_blog_admin_category_index') }}">Categories</a>
+                                        <a href="{{ path('octopouce_blog_admin_tag_index') }}">Tag</a>
+                                    </li>
+                                </ul>
                             </li>
-                        </ul>
-                    </li>
-                </ul>
+                        {% endif %}
+                        {% if 'octopouce_advertising_admin_dashboard_index'|routeExist %}
+                            <li>
+                                <a href="{{ path('octopouce_advertising_admin_dashboard_index') }}">
+                                    {{ 'header.sidebar.left.nav.advertising'|trans|raw }}
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a href="{{ path('octopouce_advertising_admin_dashboard_index') }}">Dashboard</a>
+                                        <a href="{{ path('octopouce_advertising_admin_campaign_index') }}">Campaigns</a>
+                                        <a href="{{ path('octopouce_advertising_admin_adzone_index') }}">Adzones</a>
+                                        <a href="{{ path('octopouce_advertising_admin_page_index') }}">Pages</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        <li>
+                            <a href="{{ path('octopouce_admin_option_index') }}">
+                                {{ 'header.sidebar.left.nav.options'|trans|raw }}
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="{{ path('octopouce_admin_option_index') }}">Général</a>
+                                    <a href="{{ path('octopouce_admin_option_index', {'category':'company'}) }}">Company</a>
+                                    <a href="{{ path('octopouce_admin_option_index', {'category':'mail'}) }}">Mail</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                {% endblock %}
+
             </div>
         </header>
     {% endblock %}
@@ -172,4 +211,5 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/octopouceadmin/build/js/admin.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 {% endblock %}

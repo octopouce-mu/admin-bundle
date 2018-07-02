@@ -123,6 +123,8 @@ header.sidebar {
  }
   .hide-bar {
     width: 320px;
+    position: relative;
+    height: 100%;
     @media only screen and (min-width: 768px) and (max-width: 991px){
       width:220px;
     }

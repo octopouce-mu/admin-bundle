@@ -3,8 +3,8 @@
 namespace Octopouce\AdminBundle\Controller;
 
 use App\Entity\Account\User;
-use App\Form\Security\Password\RequestType;
-use App\Form\Security\Password\ResetType;
+use Octopouce\AdminBundle\Form\Security\Password\RequestType;
+use Octopouce\AdminBundle\Form\Security\Password\ResetType;
 use Octopouce\AdminBundle\Utils\User\ResettingPassword;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

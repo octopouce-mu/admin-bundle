@@ -89,32 +89,36 @@
                         <span></span>
                     </a>
                 </div>
-                {% block siderbar_left_nav %}
+                {% block sidebar_left_nav %}
                     <ul>
                         <li class="current">
-                            <a href="{{ path('octopouce_admin_dashboard_index') }}">
-                                {{ 'header.sidebar.left.nav.dashboard'|trans|raw }}
-                            </a>
+                            {% block dashboard_sidebar_left_nav %}
+                                <a href="{{ path('octopouce_admin_dashboard_index') }}">
+                                    {{ 'header.sidebar.left.nav.dashboard'|trans|raw }}
+                                </a>
+                            {% endblock %}
                         </li>
-                        <li>
-                            <a href="{{ path('octopouce_admin_user_index') }}">
-                                {{ 'header.sidebar.left.nav.users'|trans|raw }}
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                {{ 'header.sidebar.left.nav.rs'|trans|raw }}
-                            </a>
-                            <ul>
-                                <li>
-                                    <a href="{{ path('octopouce_admin_option_index', {'category':'facebook'}) }}">Facebook</a>
-                                    <a href="{{ path('octopouce_admin_option_index', {'category':'twitter'}) }}">Twitter</a>
-                                    <a href="{{ path('octopouce_admin_option_index', {'category':'google'}) }}">Google</a>
-                                    <a href="{{ path('octopouce_admin_option_index', {'category':'youtube'}) }}">Youtube</a>
-                                    <a href="{{ path('octopouce_admin_option_index', {'category':'instagram'}) }}">Instagram</a>
-                                </li>
-                            </ul>
-                        </li>
+                        {% block custom_sidebar_left_nav %}
+                        {% endblock %}
+                        {#<li>#}
+                            {#<a href="{{ path('octopouce_cms_admin_page_index') }}">#}
+                                {#{{ 'header.sidebar.left.nav.menu'|trans|raw }}#}
+                            {#</a>#}
+                        {#</li>#}
+                        {% if 'octopouce_cms_admin_page_index'|routeExist %}
+                            <li>
+                                <a href="{{ path('octopouce_cms_admin_page_index') }}">
+                                    {{ 'header.sidebar.left.nav.cms'|trans|raw }}
+                                </a>
+                                <ul>
+                                    <li>
+                                        {% block cms_sidebar_left_nav %}
+                                            <a href="{{ path('octopouce_cms_admin_page_index') }}">Page</a>
+                                        {% endblock %}
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
                         {% if 'octopouce_blog_admin_post_index'|routeExist %}
                             <li>
                                 <a href="{{ path('octopouce_blog_admin_post_index') }}">
@@ -122,13 +126,45 @@
                                 </a>
                                 <ul>
                                     <li>
-                                        <a href="{{ path('octopouce_blog_admin_post_index') }}">Posts</a>
-                                        <a href="{{ path('octopouce_blog_admin_category_index') }}">Categories</a>
-                                        <a href="{{ path('octopouce_blog_admin_tag_index') }}">Tag</a>
+                                        {% block blog_sidebar_left_nav %}
+                                            <a href="{{ path('octopouce_blog_admin_post_index') }}">Posts</a>
+                                            <a href="{{ path('octopouce_blog_admin_category_index') }}">Categories</a>
+                                            <a href="{{ path('octopouce_blog_admin_tag_index') }}">Tag</a>
+                                        {% endblock %}
                                     </li>
                                 </ul>
                             </li>
                         {% endif %}
+                        <li>
+                            {% block user_sidebar_left_nav %}
+                                <a href="{{ path('octopouce_admin_user_index') }}">
+                                    {{ 'header.sidebar.left.nav.users'|trans|raw }}
+                                </a>
+                            {% endblock %}
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                {{ 'header.sidebar.left.nav.rs'|trans|raw }}
+                            </a>
+                            <ul>
+                                <li>
+                                    {% block rs_sidebar_left_nav %}
+                                        <a href="{{ path('octopouce_admin_option_index', {'category':'facebook'}) }}">Facebook</a>
+                                        <a href="{{ path('octopouce_admin_option_index', {'category':'twitter'}) }}">Twitter</a>
+                                        <a href="{{ path('octopouce_admin_option_index', {'category':'google'}) }}">Google</a>
+                                        <a href="{{ path('octopouce_admin_option_index', {'category':'youtube'}) }}">Youtube</a>
+                                        <a href="{{ path('octopouce_admin_option_index', {'category':'instagram'}) }}">Instagram</a>
+                                    {% endblock %}
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        {#<li>#}
+                            {#<a href="{{ path('octopouce_cms_admin_page_index') }}">#}
+                                {#{{ 'header.sidebar.left.nav.language'|trans|raw }}#}
+                            {#</a>#}
+                        {#</li>#}
                         {% if 'octopouce_advertising_admin_dashboard_index'|routeExist %}
                             <li>
                                 <a href="{{ path('octopouce_advertising_admin_dashboard_index') }}">
@@ -136,10 +172,12 @@
                                 </a>
                                 <ul>
                                     <li>
-                                        <a href="{{ path('octopouce_advertising_admin_dashboard_index') }}">Dashboard</a>
-                                        <a href="{{ path('octopouce_advertising_admin_campaign_index') }}">Campaigns</a>
-                                        <a href="{{ path('octopouce_advertising_admin_adzone_index') }}">Adzones</a>
-                                        <a href="{{ path('octopouce_advertising_admin_page_index') }}">Pages</a>
+                                        {% block advertising_sidebar_left_nav %}
+                                            <a href="{{ path('octopouce_advertising_admin_dashboard_index') }}">Dashboard</a>
+                                            <a href="{{ path('octopouce_advertising_admin_campaign_index') }}">Campaigns</a>
+                                            <a href="{{ path('octopouce_advertising_admin_adzone_index') }}">Adzones</a>
+                                            <a href="{{ path('octopouce_advertising_admin_page_index') }}">Pages</a>
+                                        {% endblock %}
                                     </li>
                                 </ul>
                             </li>
@@ -150,9 +188,11 @@
                             </a>
                             <ul>
                                 <li>
-                                    <a href="{{ path('octopouce_admin_option_index') }}">Général</a>
-                                    <a href="{{ path('octopouce_admin_option_index', {'category':'company'}) }}">Company</a>
-                                    <a href="{{ path('octopouce_admin_option_index', {'category':'mail'}) }}">Mail</a>
+                                    {% block option_sidebar_left_nav %}
+                                        <a href="{{ path('octopouce_admin_option_index') }}">Général</a>
+                                        <a href="{{ path('octopouce_admin_option_index', {'category':'company'}) }}">Company</a>
+                                        <a href="{{ path('octopouce_admin_option_index', {'category':'mail'}) }}">Mail</a>
+                                    {% endblock %}
                                 </li>
                             </ul>
                         </li>

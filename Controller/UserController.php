@@ -32,6 +32,34 @@ class UserController extends AbstractController
     }
 
 	/**
+	 * @Route("/create", name="octopouce_admin_user_create")
+	 */
+	public function create(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+	{
+		$user = new User();
+
+		$form = $this->createForm(UserType::class, $user);
+
+		$form->handleRequest($request);
+		if ($form->isSubmitted() && $form->isValid()) {
+			$plainPassword = $form->get('password')->getData();
+			if ($plainPassword)  {
+				$user->setPassword($passwordEncoder->encodePassword($user, $plainPassword));
+			}
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($user);
+			$em->flush();
+
+			return $this->redirectToRoute('octopouce_admin_user_show', ['user' => $user->getId()]);
+		}
+
+		return $this->render('@OctopouceAdmin/User/create.html.twig', [
+			'user' => $user,
+			'form' => $form->createView()
+		]);
+	}
+
+	/**
 	 * @Route("/{id}", name="octopouce_admin_user_show")
 	 */
 	public function show(User $user): Response
@@ -41,12 +69,16 @@ class UserController extends AbstractController
 		]);
 	}
 
+
+
 	/**
 	 * @Route("/edit/{id}", name="octopouce_admin_user_edit")
 	 */
 	public function edit(Request $request, User $user, UserPasswordEncoderInterface $passwordEncoder): Response
 	{
-		$form = $this->createForm(UserType::class, $user);
+		$form = $this->createForm(UserType::class, $user, [
+			'edit' => true
+		]);
 
 		$form->handleRequest($request);
 		if ($form->isSubmitted() && $form->isValid()) {

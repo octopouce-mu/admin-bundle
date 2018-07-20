@@ -21,6 +21,13 @@ abstract class User implements UserInterface
      */
     protected $id;
 
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(type="string")
+	 */
+	protected $gender;
+
     /**
      * @var string
      *
@@ -299,6 +306,30 @@ abstract class User implements UserInterface
 	{
 		// add $this->salt too if you don't use Bcrypt or Argon2i
 		[$this->id, $this->username, $this->password] = unserialize($serialized, ['allowed_classes' => false]);
+	}
+
+	/**
+	 * Set gender.
+	 *
+	 * @param string $gender
+	 *
+	 * @return User
+	 */
+	public function setGender($gender)
+	{
+		$this->gender = $gender;
+
+		return $this;
+	}
+
+	/**
+	 * Get gender.
+	 *
+	 * @return string
+	 */
+	public function getGender()
+	{
+		return $this->gender;
 	}
 
     /**

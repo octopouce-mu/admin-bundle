@@ -15,26 +15,22 @@
                     <div class="content">
 
                         {{ form_start(form) }}
-                        {% for key, children in form.children %}
-                            {% if key == 'translations' %}
-                                <div class="row">
-                                    <div class="col s12">
-                                        <ul class="tabs transparent">
-                                            {% for locale, translation in children %}
-                                                <li class="tab col s3"><a {% if loop.first %}class="active"{% endif %} href="#locale-{{ locale }}">{{ locale }}</a></li>
-                                            {% endfor %}
-                                        </ul>
-                                        {% for locale, translation in children %}
-                                            <div id="locale-{{ locale }}">
-                                                {{ form_widget(translation) }}
-                                            </div>
+                        {% if form.translations is defined %}
+                            <div class="row">
+                                <div class="col s12">
+                                    <ul class="tabs transparent">
+                                        {% for locale, translation in form.translations.children %}
+                                            <li class="tab col s3"><a {% if loop.first %}class="active"{% endif %} href="#locale-{{ locale }}">{{ locale }}</a></li>
                                         {% endfor %}
-                                    </div>
+                                    </ul>
+                                    {% for locale, translation in form.translations.children %}
+                                        <div id="locale-{{ locale }}">
+                                            {{ form_widget(translation) }}
+                                        </div>
+                                    {% endfor %}
                                 </div>
-                            {% else %}
-                                {{ form_row(children) }}
-                            {% endif %}
-                        {% endfor %}
+                            </div>
+                        {% endif %}
                         {{ form_end(form) }}
                     </div>
                 </div>

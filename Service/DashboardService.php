@@ -135,7 +135,13 @@ class DashboardService {
 			$this->cache->delete($name);
 		}else{
 			$this->cache->delete('stats');
+			$this->cache->delete('stats.google');
+			$this->cache->delete('stats.facebook');
+			$this->cache->delete('stats.twitter');
+			$this->cache->delete('stats.youtube');
 			$this->cache->delete('perf');
+			$this->cache->delete('perf.newVisitors');
+			$this->cache->delete('perf.newUsers');
 		}
 
 	}

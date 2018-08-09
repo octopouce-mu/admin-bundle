@@ -105,10 +105,6 @@
 {%- endblock choice_widget_collapsed -%}
 
 {%- block textarea_widget -%}
-    {% if 'editor' in attr.class %}
-    {% else %}
-    {% endif %}
-
     {% set attr = attr|merge({class: (attr.class|default('') ~ ' materialize-textarea')|trim}) %}
     {{ parent() }}
 {%- endblock -%}

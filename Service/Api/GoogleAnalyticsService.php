@@ -469,11 +469,11 @@ class GoogleAnalyticsService {
 		$time = ceil($time);
 		$min = '';
 		$s = '';
-		if(gmdate("i", $time)) {
+		if((int) gmdate("i", $time)) {
 			$min = ltrim(gmdate("i", $time), 0).' min ';
 		}
 
-		if(gmdate("s", $time)){
+		if((int) gmdate("s", $time)){
 			$s = gmdate("s", $time).' s';
 		}
 		return $min.$s;

@@ -70,7 +70,7 @@ class ResettingPassword {
 
 	private function sendMailRequest(User $user){
 
-		$url = $this->router->generate('octopouce_password_resetting_reset', array('token' => $user->getResetToken()), UrlGeneratorInterface::ABSOLUTE_URL);
+		$url = $this->router->generate('octopouce_octopouce_password_resetting_reset', array('token' => $user->getResetToken()), UrlGeneratorInterface::ABSOLUTE_URL);
 		$rendered = $this->twig->render('@OctopouceAdmin/Security/Resetting/request-mail.html.twig', array(
 			'user' => $user,
 			'confirmationUrl' => $url,

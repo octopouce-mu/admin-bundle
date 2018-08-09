@@ -4,17 +4,14 @@
 
 {% block body_id 'login' %}
 
+{% block title %}Login - {{ parent() }}{% endblock %}
+
 {% block stylesheets %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
     <link rel="stylesheet" href="{{ asset('bundles/octopouceadmin/build/css/login.css') }}">
 {% endblock %}
 
 {% block body %}
-    {% if error %}
-        <div class="alert alert-danger">
-            {{ error.messageKey|trans(error.messageData) }}
-        </div>
-    {% endif %}
     <form class="form-signin" action="{{ path('octopouce_admin_login_admin') }}" method="post">
         <div class="center mb-4">
             {% if thor.options.PROJECT_LOGO is defined and thor.options.PROJECT_LOGO.value %}
@@ -24,6 +21,12 @@
             {% endif %}
             <h3 class="h3 mb-3 font-weight-normal">{{ 'title.login'|trans }}</h3>
         </div>
+
+        {% if error %}
+            <div class="alert alert-danger">
+                {{ error.messageKey|trans(error.messageData) }}
+            </div>
+        {% endif %}
 
         <div class="form-label-group input-field">
             <input type="text" id="username" class="form-control" name="_username"  required autofocus value="{{ lastUsername }}">

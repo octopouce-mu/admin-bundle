@@ -25,6 +25,14 @@ body {
     @media only screen and (max-height:479px ){
         height:10.9rem;
     }
+    .alert {
+        border: 1px solid #fff;
+        padding: 10px;
+        margin: 30px 0;
+        &.alert-danger {
+            background-color: #992126;
+        }
+    }
     .form-signin {
         width: 100%;
         max-width: 420px;

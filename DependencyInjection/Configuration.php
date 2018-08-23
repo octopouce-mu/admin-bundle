@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface {
 
 		$rootNode
 			->children()
-				->scalarNode('upload_path')->defaultValue('uploads/adv')->end()
+				->scalarNode('upload_path')->defaultValue('uploads')->end()
 			->end()
 		;
 

@@ -28,9 +28,7 @@ class UserType extends AbstractType
 	{
 
 		$builder
-			->add('username', TextType::class, [
-				'disabled' => $options['edit']
-			])
+			->add('username', TextType::class)
 			->add('firstname', TextType::class, [
 				'required' => false
 			])

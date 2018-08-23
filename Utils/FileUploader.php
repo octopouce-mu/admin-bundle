@@ -10,6 +10,7 @@ namespace Octopouce\AdminBundle\Utils;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileUploader {
+
 	private $targetDirectory;
 
 	public function __construct($targetDirectory)
@@ -19,13 +20,24 @@ class FileUploader {
 
 	public function upload(UploadedFile $file, $path = null)
 	{
+		if (!file_exists($this->getTargetDirectory())) {
+			mkdir($this->getTargetDirectory(), 0777, true);
+		}
+
 		$file->move($path ? $path : $this->getTargetDirectory(), $file->getClientOriginalName());
 
 		return $file->getClientOriginalName();
+	}
+
+	public function setTargetDirectory($targetDirectory)
+	{
+		$this->targetDirectory = $targetDirectory;
 	}
 
 	public function getTargetDirectory()
 	{
 		return $this->targetDirectory;
 	}
+
+
 }

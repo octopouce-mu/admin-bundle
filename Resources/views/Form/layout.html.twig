@@ -109,9 +109,13 @@
     {{ parent() }}
 {%- endblock -%}
 {%- block textarea_row -%}
-    {{- form_label(form) -}}
-    {{- form_widget(form) -}}
-    {{- form_errors(form) -}}
+    <div class="row{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %} textarea">
+        <div class="input-field col s12">
+            {{- form_label(form) -}}
+            {{- form_widget(form) -}}
+            {{- form_errors(form) -}}
+        </div>
+    </div>
 {%- endblock -%}
 
 {%- block form_errors -%}
@@ -154,15 +158,6 @@
         {{ form_widget(form, {'attr': {'class':'datepicker'}}) }}
         {{ form_label(form) }}
         {{ form_errors(form) }}
-    </div>
-{% endblock %}
-
-{% block tags_input_widget %}
-    <div class="input-group">
-        {{ form_widget(form, {'attr': {'data-toggle': 'tagsinput', 'data-tags': tags|json_encode}}) }}
-        <span class="input-group-addon">
-            <span class="fa fa-tags" aria-hidden="true"></span>
-        </span>
     </div>
 {% endblock %}
 
@@ -225,3 +220,16 @@
     <span class="prefix">{{ money_pattern|replace({ '{{ widget }}': '' })|raw }}</span>
     {{- block('form_widget_simple') -}}
 {%- endblock money_widget -%}
+
+{% block collection_widget %}
+    {% spaceless %}
+        {% if prototype is defined %}
+            {% set attr = attr|merge({'data-prototype': form_row(prototype)}) %}
+            {% set attr = attr|merge({'data-prototype-name': prototype.vars.name}) %}
+        {% endif %}
+        {% set attr = attr|merge({'data-allow-add': allow_add ? 1 : 0}) %}
+        {% set attr = attr|merge({'data-allow-remove': allow_delete ? 1 : 0 }) %}
+        {% set attr = attr|merge({'data-name-prefix': full_name}) %}
+        {{ block('form_widget') }}
+    {% endspaceless %}
+{% endblock collection_widget %}

@@ -130,3 +130,15 @@
   background-color: #6d0606;
   border: 1px solid #1c2b38;
 }
+
+.modal, .modal .modal-footer{
+  background-color: rgba(0,20,35,.9);
+}
+
+.modal {
+  border: 1px solid #fff;
+}
+
+.modal .modal-footer {
+  border-top: 1px solid #fff;
+}

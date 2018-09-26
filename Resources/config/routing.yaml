@@ -1,4 +1,4 @@
 octopouce_admin:
     resource: '../../Controller'
     type: annotation
-    prefix: /
+    prefix: /admin

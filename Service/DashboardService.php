@@ -104,9 +104,13 @@ class DashboardService {
 	private function getPerfOfTheWeekNewUsers($firstDayThisWeek, $lastDayThisWeek){
 		if(!$this->cache->has('perf.newUsers')){
 			$users = $this->em->getRepository(User::class)->countAll();
-			$usersThisWeek = $this->em->getRepository(User::class)->countByCreatedAtTo($firstDayThisWeek, $lastDayThisWeek);
-			$perfNewUsers = ($usersThisWeek - $users) / $users * 100;
-			$this->cache->set('perf.newUsers', $perfNewUsers, $this->ttl);
+			if($users) {
+				$usersThisWeek = $this->em->getRepository(User::class)->countByCreatedAtTo($firstDayThisWeek, $lastDayThisWeek);
+				$perfNewUsers = ($usersThisWeek - $users) / $users * 100;
+				$this->cache->set('perf.newUsers', $perfNewUsers, $this->ttl);
+			} else {
+				$this->cache->set('perf.newUsers', 0, $this->ttl);
+			}
 		}else{
 			$perfNewUsers = $this->cache->get('perf.newUsers');
 		}

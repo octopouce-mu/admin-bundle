@@ -43,7 +43,7 @@ class UserFixtures extends Fixture
     	$now = new \DateTime();
         return [
             // $userData = [$fullname, $username, $password, $email, $roles];
-	        ['Kevin', 'kevin', 'octopouce', 'kevin@octopouce.mu', ['ROLE_ADMIN'], $now],
+	        ['Kevin', 'kevin', 'octopouce', 'kevin@octopouce.mu', ['ROLE_SUPER_ADMIN'], $now],
 	        ['Octopouce', 'octopouce', '$Octopouce2018', 'contact@octopouce.mu', ['ROLE_ADMIN'], $now],
 	        ['Demo', 'demo', 'demo', 'demo@octopouce.mu', ['ROLE_USER'], $now],
         ];

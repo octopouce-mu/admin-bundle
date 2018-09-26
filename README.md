@@ -88,9 +88,7 @@ Now that you have activated and configured the bundle, all that is left to do is
 
 _octopouce_admin:
     resource: "@OctopouceAdminBundle/Resources/config/routing.yaml"
-    
-fos_js_routing:
-    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+    prefix: /admin
 ```
 
 ### Step 5: Publish the Assets
@@ -160,6 +158,7 @@ security:
     access_control:
         # this is a catch-all for the admin area
         # additional security lives in the controllers
+        - { path: '^/admin/login', roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: '^/admin', roles: ROLE_ADMIN }
 ```
 ### Step 6: Load fixtures

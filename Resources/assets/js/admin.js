@@ -67,7 +67,10 @@ $(document).ready(function(){
         });
 
     });
-    ClassicEditor.create( document.querySelector( '.editor' ) );
+    var allEditors = document.querySelectorAll('.editor');
+    for (var i = 0; i < allEditors.length; ++i) {
+        ClassicEditor.create(allEditors[i]);
+    }
 });
 $('.add-another-collection-widget').on('click', function() {
    setMateralize();

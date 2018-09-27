@@ -250,9 +250,9 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('bundles/octopouceadmin/build/js/admin.js') }}"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/10.1.0/classic/ckeditor.js"></script>
     <script src="{{ asset('bundles/octopouceadmin/vendor/jquery.collection.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
-    <script src="{{ asset('bundles/octopouceadmin/build/js/admin.js') }}"></script>
 {% endblock %}

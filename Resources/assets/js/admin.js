@@ -66,7 +66,8 @@ $(document).ready(function(){
             }
         });
 
-    })
+    });
+    ClassicEditor.create( document.querySelector( '.editor' ) );
 });
 $('.add-another-collection-widget').on('click', function() {
    setMateralize();

@@ -36,7 +36,9 @@
 {%- endblock checkbox_row %}
 
 {% block checkbox_widget -%}
-    <input type="checkbox" class="filled-in"{{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked or (value is defined and value) %} checked="checked"{% endif %} />
+    {%- set attr = attr|merge({class: 'filled-in'}) -%}
+    {{- parent() -}}
+    {#<input type="checkbox" class="filled-in"{{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked or (value is defined and value) %} checked="checked"{% endif %} />#}
 {%- endblock checkbox_widget %}
 
 {# Checkbox label is raw here #}

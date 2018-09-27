@@ -219,148 +219,150 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('bundles/octopouceadmin/vendor/jvectormap/jquery-jvectormap-2.0.3.min.js') }}"></script>
-    <script src="{{ asset('bundles/octopouceadmin/vendor/jvectormap/jquery-jvectormap-world-mill.js') }}"></script>
+    {% if stats.ga is defined or stats.rs is defined %}
+        <script src="{{ asset('bundles/octopouceadmin/vendor/jvectormap/jquery-jvectormap-2.0.3.min.js') }}"></script>
+        <script src="{{ asset('bundles/octopouceadmin/vendor/jvectormap/jquery-jvectormap-world-mill.js') }}"></script>
 
-    <script>
-        var $window = $(window);
-        var $filter = $('.dashboard-filter');
-        var $calendarFilter = $('.calendar-stat span');
-        var filterTop = $filter.offset().top;
+        <script>
+            var $window = $(window);
+            var $filter = $('.dashboard-filter');
+            var $calendarFilter = $('.calendar-stat span');
+            var filterTop = $filter.offset().top;
 
+            {% if stats.ga is defined %}
+                var $perfTop   = $('.perf').offset().top;
+                $window.scroll(function() {
+                    $filter.toggleClass('fixed', $window.scrollTop() > filterTop);
+                });
+            {% endif %}
+
+            {% if stats.rs is defined %}
+                $window.scroll(function() {
+                    if($window.scrollTop() > filterTop && $window.scrollTop() <= $perfTop){
+                        $calendarFilter.html('{{ 'dashboard.resume_social_media'|trans|raw }}');
+                    }else if($window.scrollTop() <= filterTop){
+                        $calendarFilter.html('{{ 'dashboard.stats_of'|trans({'%day1%': 'now'|date_modify('-28 days')|date('d F'), '%day2%':'yesterday'|date('d F')}, 'admin')|raw }}');
+                    }else if($window.scrollTop() > $perfTop){
+                        $calendarFilter.html('{{ 'dashboard.yield_of'|trans({'%day1%': 'now'|date_modify('Last Week Next Monday')|date('d F'), '%day2%': 'now'|date('d F')}, 'admin')|raw }}');
+                    }
+                });
+            {% else %}
+                $window.scroll(function() {
+                    if($window.scrollTop() > filterTop && $window.scrollTop() <= $perfTop){
+                        $calendarFilter.html('{{ 'dashboard.yield_of'|trans({'%day1%': 'now'|date_modify('Last Week Next Monday')|date('d F'), '%day2%': 'now'|date('d F')}, 'admin')|raw }}');
+                    }else if($window.scrollTop() <= filterTop){
+                        $calendarFilter.html('{{ 'dashboard.stats_of'|trans({'%day1%': 'now'|date_modify('-28 days')|date('d F'), '%day2%':'yesterday'|date('d F')}, 'admin')|raw }}');
+                    }else if($window.scrollTop() > $perfTop){
+                        $calendarFilter.html('{{ 'dashboard.yield_of'|trans({'%day1%': 'now'|date_modify('Last Week Next Monday')|date('d F'), '%day2%': 'now'|date('d F')}, 'admin')|raw }}');
+                    }
+                });
+            {% endif %}
+        </script>
         {% if stats.ga is defined %}
-            var $perfTop   = $('.perf').offset().top;
-            $window.scroll(function() {
-                $filter.toggleClass('fixed', $window.scrollTop() > filterTop);
-            });
-        {% endif %}
+            <script>
+                var countryISOSessions = { {% for country, metrics in stats.ga.countryIsoCode %}'{{ country }}':{{ metrics.sessions }},{% endfor %} };
 
-        {% if stats.rs is defined %}
-            $window.scroll(function() {
-                if($window.scrollTop() > filterTop && $window.scrollTop() <= $perfTop){
-                    $calendarFilter.html('{{ 'dashboard.resume_social_media'|trans|raw }}');
-                }else if($window.scrollTop() <= filterTop){
-                    $calendarFilter.html('{{ 'dashboard.stats_of'|trans({'%day1%': 'now'|date_modify('-28 days')|date('d F'), '%day2%':'yesterday'|date('d F')}, 'admin')|raw }}');
-                }else if($window.scrollTop() > $perfTop){
-                    $calendarFilter.html('{{ 'dashboard.yield_of'|trans({'%day1%': 'now'|date_modify('Last Week Next Monday')|date('d F'), '%day2%': 'now'|date('d F')}, 'admin')|raw }}');
-                }
-            });
-        {% else %}
-            $window.scroll(function() {
-                if($window.scrollTop() > filterTop && $window.scrollTop() <= $perfTop){
-                    $calendarFilter.html('{{ 'dashboard.yield_of'|trans({'%day1%': 'now'|date_modify('Last Week Next Monday')|date('d F'), '%day2%': 'now'|date('d F')}, 'admin')|raw }}');
-                }else if($window.scrollTop() <= filterTop){
-                    $calendarFilter.html('{{ 'dashboard.stats_of'|trans({'%day1%': 'now'|date_modify('-28 days')|date('d F'), '%day2%':'yesterday'|date('d F')}, 'admin')|raw }}');
-                }else if($window.scrollTop() > $perfTop){
-                    $calendarFilter.html('{{ 'dashboard.yield_of'|trans({'%day1%': 'now'|date_modify('Last Week Next Monday')|date('d F'), '%day2%': 'now'|date('d F')}, 'admin')|raw }}');
-                }
-            });
-        {% endif %}
-    </script>
-    {% if stats.ga is defined %}
-        <script>
-            var countryISOSessions = { {% for country, metrics in stats.ga.countryIsoCode %}'{{ country }}':{{ metrics.sessions }},{% endfor %} };
-
-            $('.world-sessions #map').vectorMap({
-                map: 'world_mill',
-                backgroundColor: 'transparant',
-                zoomOnScroll: false,
-                series: {
-                    regions: [{
-                        values: countryISOSessions,
-                        scale: ['#C8EEFF', '#0071A4'],
-                        normalizeFunction: 'polynomial'
-                    }]
-                },
-                onRegionTipShow: function(e, el, code){
-                    if(countryISOSessions[code] !== undefined){
-                        el.html(el.html()+'<br><b>'+countryISOSessions[code]+'</b>');
-                    }
-                },
-                regionStyle:{
-                    initial: {
-                        fill: 'rgba(255, 255, 255, .02)',
-                        "fill-opacity": 1,
-                        stroke: 'none',
-                        "stroke-width": 0,
-                        "stroke-opacity": 1
+                $('.world-sessions #map').vectorMap({
+                    map: 'world_mill',
+                    backgroundColor: 'transparant',
+                    zoomOnScroll: false,
+                    series: {
+                        regions: [{
+                            values: countryISOSessions,
+                            scale: ['#C8EEFF', '#0071A4'],
+                            normalizeFunction: 'polynomial'
+                        }]
                     },
-                    hover: {
-                        "fill-opacity": 0.8,
-                        cursor: 'pointer'
+                    onRegionTipShow: function(e, el, code){
+                        if(countryISOSessions[code] !== undefined){
+                            el.html(el.html()+'<br><b>'+countryISOSessions[code]+'</b>');
+                        }
                     },
-                    selected: {
-                        fill: 'yellow'
+                    regionStyle:{
+                        initial: {
+                            fill: 'rgba(255, 255, 255, .02)',
+                            "fill-opacity": 1,
+                            stroke: 'none',
+                            "stroke-width": 0,
+                            "stroke-opacity": 1
+                        },
+                        hover: {
+                            "fill-opacity": 0.8,
+                            cursor: 'pointer'
+                        },
+                        selected: {
+                            fill: 'yellow'
+                        }
                     }
-                }
-            });
-        </script>
-        <script>
-            var dataDevice = [];
-            {% for device, metrics in stats.ga.deviceCategory|reverse %}
-                dataDevice.push({{ (100 * metrics.sessions / stats.ga.metrics.users) | round(2) }});
-            {% endfor %}
+                });
+            </script>
+            <script>
+                var dataDevice = [];
+                {% for device, metrics in stats.ga.deviceCategory|reverse %}
+                    dataDevice.push({{ (100 * metrics.sessions / stats.ga.metrics.users) | round(2) }});
+                {% endfor %}
 
-            var labelsDevice = [];
-            {% for device, metrics in stats.ga.deviceCategory|reverse %}
-                labelsDevice.push('{{ device }}');
-            {% endfor %}
+                var labelsDevice = [];
+                {% for device, metrics in stats.ga.deviceCategory|reverse %}
+                    labelsDevice.push('{{ device }}');
+                {% endfor %}
 
-            var elemDeviceCategorySessions = document.getElementById('chartDeviceCategorySessions');
-            var chartDeviceCategorySessions = new Chart(elemDeviceCategorySessions, {
-                type: 'doughnut',
-                data: {
-                    datasets: [{
-                        data:dataDevice,
-                        backgroundColor: ['rgb(104, 188, 237)', 'rgb(66, 133, 244)']
-                    }],
-                    labels: labelsDevice
-                },
-                options: {
-                    tooltips: {
-                        callbacks: {
-                            label: function(tooltipItem, data) {
-                                return labelsDevice[tooltipItem.index] + ' : ' + data.datasets[0].data[tooltipItem.index] +'%';;
+                var elemDeviceCategorySessions = document.getElementById('chartDeviceCategorySessions');
+                var chartDeviceCategorySessions = new Chart(elemDeviceCategorySessions, {
+                    type: 'doughnut',
+                    data: {
+                        datasets: [{
+                            data:dataDevice,
+                            backgroundColor: ['rgb(104, 188, 237)', 'rgb(66, 133, 244)']
+                        }],
+                        labels: labelsDevice
+                    },
+                    options: {
+                        tooltips: {
+                            callbacks: {
+                                label: function(tooltipItem, data) {
+                                    return labelsDevice[tooltipItem.index] + ' : ' + data.datasets[0].data[tooltipItem.index] +'%';;
+                                }
                             }
                         }
                     }
-                }
-            });
-        </script>
-        <script>
-            var dataCountry = [];
-            var labelsCountry = [];
-            {% for country, metrics in stats.ga.country|slice(0, 4)  %}
-                dataCountry.push({{ (100 * metrics.sessions / stats.ga.metrics.users) | round(2) }});
-                labelsCountry.push('{{ country }} ({{ metrics.sessions }})');
-            {% endfor %}
-            {% set others = 0 %}
-            {% for country, metrics in stats.ga.country|slice(4, stats.ga.country|length) %}
-                {% set others = others + metrics.sessions %}
-            {% endfor %}
-            dataCountry.push({{ (100 * others / stats.ga.metrics.users) | round(2) }});
-            labelsCountry.push('{{ 'dashboard.stats.ga.others'|trans }}... ({{ others }})');
-            var elemCountrySessions = document.getElementById('chartCountrySessions');
-            var chartCountrySessions = new Chart(elemCountrySessions, {
-                type: 'horizontalBar',
-                data: {
-                    datasets: [{
-                        data:dataCountry,
-                        backgroundColor: 'rgb(66, 133, 244)'
-                    }],
-                    labels: labelsCountry
-                },
-                options: {
-                    legend: { display: false },
-                    tooltips: {
-                        callbacks: {
-                            label: function(tooltipItem, data) {
-                                return data.datasets[0].data[tooltipItem.index] +'%';;
+                });
+            </script>
+            <script>
+                var dataCountry = [];
+                var labelsCountry = [];
+                {% for country, metrics in stats.ga.country|slice(0, 4)  %}
+                    dataCountry.push({{ (100 * metrics.sessions / stats.ga.metrics.users) | round(2) }});
+                    labelsCountry.push('{{ country }} ({{ metrics.sessions }})');
+                {% endfor %}
+                {% set others = 0 %}
+                {% for country, metrics in stats.ga.country|slice(4, stats.ga.country|length) %}
+                    {% set others = others + metrics.sessions %}
+                {% endfor %}
+                dataCountry.push({{ (100 * others / stats.ga.metrics.users) | round(2) }});
+                labelsCountry.push('{{ 'dashboard.stats.ga.others'|trans }}... ({{ others }})');
+                var elemCountrySessions = document.getElementById('chartCountrySessions');
+                var chartCountrySessions = new Chart(elemCountrySessions, {
+                    type: 'horizontalBar',
+                    data: {
+                        datasets: [{
+                            data:dataCountry,
+                            backgroundColor: 'rgb(66, 133, 244)'
+                        }],
+                        labels: labelsCountry
+                    },
+                    options: {
+                        legend: { display: false },
+                        tooltips: {
+                            callbacks: {
+                                label: function(tooltipItem, data) {
+                                    return data.datasets[0].data[tooltipItem.index] +'%';;
+                                }
                             }
                         }
                     }
-                }
-            });
-        </script>
+                });
+            </script>
+        {% endif %}
     {% endif %}
 {% endblock %}

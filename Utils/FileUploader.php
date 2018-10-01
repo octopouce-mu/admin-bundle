@@ -18,13 +18,13 @@ class FileUploader {
 		$this->targetDirectory = $targetDirectory;
 	}
 
-	public function upload(UploadedFile $file, $path = null)
+	public function upload(UploadedFile $file, $path = null, $name = null)
 	{
 		if (!file_exists($this->getTargetDirectory())) {
 			mkdir($this->getTargetDirectory(), 0777, true);
 		}
 
-		$file->move($path ? $path : $this->getTargetDirectory(), $file->getClientOriginalName());
+		$file->move($path ? $path : $this->getTargetDirectory(), $name ? $name : $file->getClientOriginalName());
 
 		return $file->getClientOriginalName();
 	}

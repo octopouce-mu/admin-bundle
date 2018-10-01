@@ -110,6 +110,7 @@
     {% set attr = attr|merge({class: (attr.class|default('') ~ ' materialize-textarea')|trim}) %}
     {{ parent() }}
 {%- endblock -%}
+
 {%- block textarea_row -%}
     <div class="row{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %} textarea">
         <div class="input-field col s12">
@@ -205,6 +206,11 @@
         </label>
     </div>
 {% endblock %}
+
+{%- block wysiwyg_widget -%}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' editor')|trim}) %}
+    {{ parent() }}
+{%- endblock textarea_widget -%}
 
 {%- block repeated_row -%}
     <div class="row">

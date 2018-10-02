@@ -20,13 +20,25 @@ class FileUploader {
 
 	public function upload(UploadedFile $file, $path = null, $name = null)
 	{
-		if (!file_exists($this->getTargetDirectory())) {
+		if (!$path && !file_exists($this->getTargetDirectory())) {
 			mkdir($this->getTargetDirectory(), 0777, true);
 		}
 
-		$file->move($path ? $path : $this->getTargetDirectory(), $name ? $name : $file->getClientOriginalName());
+		if($name) {
+			$name = $name.'.'.$file->getClientOriginalExtension();
+		} else {
+			$name = $file->getClientOriginalName();
+		}
 
-		return $file->getClientOriginalName();
+		$name = $this->slugify($name);
+
+		if(file_exists($path.'/'.$name)){
+			$name = '2_'.$name;
+		}
+
+		$file->move($path ? $path : $this->getTargetDirectory(), $name);
+
+		return $name;
 	}
 
 	public function setTargetDirectory($targetDirectory)
@@ -39,5 +51,31 @@ class FileUploader {
 		return $this->targetDirectory;
 	}
 
+	private function slugify($text)
+	{
+		// replace non letter or digits by -
+		$text = preg_replace('~[^\pL\d]+~u', '-', $text);
+
+		// transliterate
+		$text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+
+		// remove unwanted characters
+		$text = preg_replace('~[^-\w]+~', '', $text);
+
+		// trim
+		$text = trim($text, '-');
+
+		// remove duplicate -
+		$text = preg_replace('~-+~', '-', $text);
+
+		// lowercase
+		$text = strtolower($text);
+
+		if (empty($text)) {
+			throw new \Exception('Error slugify');
+		}
+
+		return $text;
+	}
 
 }

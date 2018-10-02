@@ -181,7 +181,7 @@
             {{ form_widget(form) }}
         </div>
         <div class="file-path-wrapper">
-            <input class="file-path validate" type="text">
+            <input class="file-path validate" type="text" {{ block('widget_attributes') }}>
         </div>
     </div>
 {% endblock %}
@@ -209,8 +209,8 @@
 
 {%- block wysiwyg_widget -%}
     {% set attr = attr|merge({class: (attr.class|default('') ~ ' editor')|trim}) %}
-    {{ parent() }}
-{%- endblock textarea_widget -%}
+    {{- block('textarea_widget') -}}
+{%- endblock wysiwyg_widget -%}
 
 {%- block repeated_row -%}
     <div class="row">

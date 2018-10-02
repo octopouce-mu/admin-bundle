@@ -1,0 +1,78 @@
+form {
+  .ck-content.ck-editor__editable {
+    border-bottom-color: #9e9e9e!important;
+    border-left: none!important;
+    border-right: none!important;
+    background-color: transparent!important;
+  }
+
+  .ck-content.ck-editor__editable.ck-focused:focus {
+    border-bottom-color: #26a69a!important;
+    box-shadow: 0 1px 0 0 #26a69a!important;
+  }
+  .ck.ck-editor {
+    margin-bottom: 30px!important;
+  }
+
+  .sliders li {
+    background-color: transparent;
+    position: relative;
+    width: 100px;
+    height: 100Px;
+    color: #fff;
+    font-size: 2em;
+    cursor: pointer;
+    float: left;
+    margin-right: 20px;
+    border: 1px dashed #fff;
+  }
+
+  .sliders li b {
+    text-align: center;
+    font-size: 1rem;
+    display: none;
+  }
+  .sliders li:hover b {
+    display: block;
+  }
+  .sliders li img {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  .sliders li:hover img {
+    opacity: .3;
+  }
+  .sliders li button.btn-remove {
+    background-color: #f44336;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    border: none;
+    padding: 0;
+    margin: 0;
+    width: 25px;
+    z-index: 1;
+    border-radius: 50%;
+    height: 25px;
+    display: none;
+  }
+  .sliders li:hover button.btn-remove {
+    display: block;
+  }
+  .sliders li.add-slide {
+    border: 1px solid #fff;
+  }
+  .sliders li.add-slide button {
+    background-color: transparent;
+    width: 100px;
+    height: 100Px;
+    color: #fff;
+    font-size: 2rem;
+    cursor: pointer;
+    border: none;
+  }
+}

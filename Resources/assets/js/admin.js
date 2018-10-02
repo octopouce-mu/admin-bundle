@@ -51,14 +51,14 @@ $(document).ready(function(){
     $('input:regex(name, slug)').each(function(index, value) {
         var id = value.id;
         var target = $(this);
-        $('input#'+id.replace('slug', 'name')).keyup(function() {
+        $('input#'+id.replace('slug', 'name')).bind('keyup change', function() {
             var source = $(this).val();
             if(source.length > 0) {
                 var slug = slugify(source);
                 target.val(slug);
             }
         });
-        $('input#'+id.replace('slug', 'title')).keyup(function() {
+        $('input#'+id.replace('slug', 'title')).bind('keyup change',function() {
             var source = $(this).val();
             if(source.length > 0) {
                 var slug = slugify(source);

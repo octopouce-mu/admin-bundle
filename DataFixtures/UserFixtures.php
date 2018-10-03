@@ -24,15 +24,17 @@ class UserFixtures extends Fixture
     private function loadUsers(ObjectManager $manager)
     {
         foreach ($this->getUserData() as [$fullname, $username, $password, $email, $roles, $createdAt]) {
-            $user = new User();
-            $user->setFirstname($fullname);
-            $user->setUsername($username);
-            $user->setPassword($this->passwordEncoder->encodePassword($user, $password));
-            $user->setEmail($email);
-	        $user->setRoles($roles);
-	        $user->setCreatedAt($createdAt);
+	        if(!$manager->getRepository(User::class)->findOneByEmail($email)) {
+		        $user = new User();
+		        $user->setFirstname( $fullname );
+		        $user->setUsername( $username );
+		        $user->setPassword( $this->passwordEncoder->encodePassword( $user, $password ) );
+		        $user->setEmail( $email );
+		        $user->setRoles( $roles );
+		        $user->setCreatedAt( $createdAt );
 
-            $manager->persist($user);
+		        $manager->persist( $user );
+	        }
         }
 
         $manager->flush();

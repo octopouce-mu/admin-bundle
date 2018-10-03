@@ -11,13 +11,15 @@ class OptionFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
 	    foreach ($this->getOptionData() as [$nameOption, $value, $categoryName]) {
+		    if(!$manager->getRepository(Option::class)->findOneByName($nameOption)) {
 
-		    $option = new Option();
-		    $option->setName($nameOption);
-		    $option->setValue($value);
-		    $option->setCategory($this->getReference('cat-'.$categoryName));
+			    $option = new Option();
+			    $option->setName( $nameOption );
+			    $option->setValue( $value );
+			    $option->setCategory( $this->getReference( 'cat-' . $categoryName ) );
 
-		    $manager->persist($option);
+			    $manager->persist( $option );
+		    }
 	    }
 
 	    $manager->flush();

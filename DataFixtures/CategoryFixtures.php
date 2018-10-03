@@ -12,16 +12,21 @@ class CategoryFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
 	    foreach ($this->getData() as [$name, $parent]) {
-		    $category = new Category();
-		    $category->setName($name);
-		    $category->setType('option');
-		    if($parent){
-		    	$category->setParent($this->getReference('cat-'.$parent));
+	    	$category = $manager->getRepository(Category::class)->findOneByName($name);
+		    if(!$category) {
+
+			    $category = new Category();
+			    $category->setName( $name );
+			    $category->setType( 'option' );
+			    if ( $parent ) {
+				    $category->setParent( $this->getReference( 'cat-' . $parent ) );
+			    }
+			    $this->addReference( 'cat-' . $name, $category );
+
+			    $manager->persist( $category );
+		    } else {
+			    $this->addReference( 'cat-' . $name, $category );
 		    }
-		    $this->addReference('cat-'.$name, $category);
-
-
-		    $manager->persist($category);
 	    }
 
 	    $manager->flush();

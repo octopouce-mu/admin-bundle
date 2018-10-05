@@ -9,6 +9,7 @@ namespace Octopouce\AdminBundle\Controller;
 use Octopouce\AdminBundle\Utils\FileUploader;
 use Octopouce\AdminBundle\Entity\File;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,21 +30,29 @@ class FileController extends Controller
 		$em = $this->getDoctrine()->getManager();
 
 		if($request->files->has('file') && $request->files->get('file')) {
-			$name = $fileUploader->upload($request->files->get('file'), 'uploads/gallery');
+			$now = new \DateTime();
+			$path = 'uploads/'.$now->format('Y/m');
 
+			$fileSystem = new Filesystem();
+			$fileSystem->mkdir($path, 0777);
 
-			$file = $em->getRepository(File::class)->findOneByPath('uploads/gallery/'.$name);
+			$file = $em->getRepository(File::class)->findOneByPath($path.'/'.$request->files->get('file')->getClientOriginalName());
 			if(!$file) {
 				if($request->request->has('title')) {
+
+					$name = $fileUploader->upload($request->files->get('file'), $path);
+
 					$file = new File();
 					$file->setTitle($request->request->get('title'));
 
-					$file->setPath('uploads/gallery/'.$name);
+					$file->setPath($path.'/'.$name);
 					$em->persist($file);
 					$em->flush();
 				} else {
 					return new JsonResponse('Field title missing', 500);
 				}
+			} else {
+				return new JsonResponse('File with same name already exist', 500);
 			}
 		} else {
 			return new JsonResponse('Field file missing', 500);

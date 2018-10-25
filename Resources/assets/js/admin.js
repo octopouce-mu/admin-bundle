@@ -44,6 +44,7 @@ $(".hamburger-menu").on('click', function(){
 
     }
 });
+
 $(document).ready(function(){
    // Materialize.toast('I am a toast!', 10000);
     setMateralize();
@@ -69,7 +70,18 @@ $(document).ready(function(){
     });
     var allEditors = document.querySelectorAll('.editor');
     for (var i = 0; i < allEditors.length; ++i) {
-        ClassicEditor.create(allEditors[i]);
+        ClassicEditor.create(allEditors[i], {
+            toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'alignment', 'bulletedList', 'numberedList', 'code', '|', 'undo', 'redo' ],
+            heading: {
+                options: [
+                    { model: 'paragraph', title: 'Paragraph' },
+                    { model: 'heading2', view: 'h2', title: 'Heading 2' },
+                    { model: 'heading3', view: 'h3', title: 'Heading 3' },
+                    { model: 'heading4', view: 'h4', title: 'Heading 4' },
+                    { model: 'heading5', view: 'h5', title: 'Heading 5' }
+                ]
+            }
+        });
     }
 });
 $('.add-another-collection-widget').on('click', function() {

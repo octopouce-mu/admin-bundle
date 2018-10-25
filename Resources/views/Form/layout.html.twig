@@ -92,7 +92,7 @@
     <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
         {%- if placeholder is not none or (attr.placeholder is defined and attr.placeholder is not none) -%}
             {% if placeholder is none %}{% set placeholder = attr.placeholder %}{% endif %}
-            <option value="" disabled="disabled">{{ placeholder != '' ? (translation_domain is same as(false) ? placeholder : placeholder|trans({}, translation_domain)) }}</option>
+            <option value="" {% if required or multiple %}disabled="disabled"{% endif %} {% if not multiple and value is empty %}selected="selected"{% endif %}>{{ placeholder != '' ? (translation_domain is same as(false) ? placeholder : placeholder|trans({}, translation_domain)) }}</option>
         {%- endif -%}
         {%- if preferred_choices|length > 0 -%}
             {% set options = preferred_choices %}
@@ -209,6 +209,7 @@
 
 {%- block wysiwyg_widget -%}
     {% set attr = attr|merge({class: (attr.class|default('') ~ ' editor')|trim}) %}
+    {% set attr = attr|merge({placeholder: ''}) %}
     {{- block('textarea_widget') -}}
 {%- endblock wysiwyg_widget -%}
 

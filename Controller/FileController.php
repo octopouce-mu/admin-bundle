@@ -62,6 +62,27 @@ class FileController extends Controller
 	}
 
 	/**
+	 * @Route("/api/wysiwyg", name="octopouce_admin_admin_file_api_wysiwyg", options={"expose"=true})
+	 * @Method("POST")
+	 */
+	public function apiWysiwyg(Request $request, FileUploader $fileUploader) : Response {
+
+		if($request->files->has('upload') && $request->files->get('upload')) {
+			$now = new \DateTime();
+			$path = 'uploads/'.$now->format('Y/m');
+
+			$fileSystem = new Filesystem();
+			$fileSystem->mkdir($path, 0777);
+
+			$name = $fileUploader->upload($request->files->get('upload'), $path);
+		} else {
+			return new JsonResponse('Field file missing', 500);
+		}
+
+		return new JsonResponse($request->headers->get('origin').'/'.$path.'/'.$name);
+	}
+
+	/**
 	 * @Route("/api/{id}", name="octopouce_admin_admin_file_api_get", options={"expose"=true})
 	 */
 	public function apiGet(File $file) : Response {

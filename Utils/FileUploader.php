@@ -33,7 +33,19 @@ class FileUploader {
 		$name = $this->slugify($name);
 
 		if(file_exists($path.'/'.$name)){
-			$name = '2_'.$name;
+
+			$exist = true;
+			$i = 2;
+
+			while ($exist) {
+				$p = $path.'/'.$i.'_'.$name;
+				if(file_exists($p)) {
+					$i++;
+				} else {
+					$exist = false;
+					$name = $i.'_'.$name;
+				}
+			}
 		}
 
 		$file->move($path ? $path : $this->getTargetDirectory(), $name);

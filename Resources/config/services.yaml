@@ -14,6 +14,11 @@ services:
         bind:
             $locales: '%app.locales%'
 
+    Octopouce\AdminBundle\EventListener\FileListener:
+        autowire: true
+        tags:
+            - { name: doctrine.event_listener, event: postLoad }
+
     twig.extension.text:
         class: Twig_Extensions_Extension_Text
         tags:

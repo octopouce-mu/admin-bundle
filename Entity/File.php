@@ -116,13 +116,7 @@ class File
 		return $this->alt;
 	}
 
-	/**
-	 * Set path
-	 *
-	 * @param string $path
-	 *
-	 * @return File
-	 */
+
 	public function setPath($path)
 	{
 		$this->path = $path;
@@ -130,11 +124,7 @@ class File
 		return $this;
 	}
 
-	/**
-	 * Get path
-	 *
-	 * @return string
-	 */
+
 	public function getPath()
 	{
 		return $this->path;

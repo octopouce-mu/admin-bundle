@@ -32,20 +32,16 @@ class FileController extends Controller
 		if($request->files->has('file') && $request->files->get('file')) {
 			$now = new \DateTime();
 			$path = 'uploads/'.$now->format('Y/m');
-
-			$fileSystem = new Filesystem();
-			$fileSystem->mkdir($path, 0777);
-
 			$file = $em->getRepository(File::class)->findOneByPath($path.'/'.$request->files->get('file')->getClientOriginalName());
 			if(!$file) {
 				if($request->request->has('title')) {
 
-					$name = $fileUploader->upload($request->files->get('file'), $path);
+					$name = $fileUploader->upload($request->files->get('file'), 'date');
 
 					$file = new File();
 					$file->setTitle($request->request->get('title'));
 
-					$file->setPath($path.'/'.$name);
+					$file->setPath($name);
 					$em->persist($file);
 					$em->flush();
 				} else {
@@ -68,18 +64,13 @@ class FileController extends Controller
 	public function apiWysiwyg(Request $request, FileUploader $fileUploader) : Response {
 
 		if($request->files->has('upload') && $request->files->get('upload')) {
-			$now = new \DateTime();
-			$path = 'uploads/'.$now->format('Y/m');
 
-			$fileSystem = new Filesystem();
-			$fileSystem->mkdir($path, 0777);
-
-			$name = $fileUploader->upload($request->files->get('upload'), $path);
+			$name = $fileUploader->upload($request->files->get('upload'), 'date');
 		} else {
 			return new JsonResponse('Field file missing', 500);
 		}
 
-		return new JsonResponse($request->headers->get('origin').'/'.$path.'/'.$name);
+		return new JsonResponse($request->headers->get('origin').'/'.$name);
 	}
 
 	/**

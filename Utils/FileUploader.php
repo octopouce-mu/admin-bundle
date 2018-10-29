@@ -7,6 +7,7 @@
 namespace Octopouce\AdminBundle\Utils;
 
 
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileUploader {
@@ -22,6 +23,14 @@ class FileUploader {
 	{
 		if (!$path && !file_exists($this->getTargetDirectory())) {
 			mkdir($this->getTargetDirectory(), 0777, true);
+		}
+
+		if($path && $path == 'date') {
+			$now = new \DateTime();
+			$path = 'uploads/'.$now->format('Y/m');
+
+			$fileSystem = new Filesystem();
+			$fileSystem->mkdir($path, 0777);
 		}
 
 		if($name) {
@@ -50,7 +59,7 @@ class FileUploader {
 
 		$file->move($path ? $path : $this->getTargetDirectory(), $name);
 
-		return $name;
+		return $path.'/'.$name;
 	}
 
 	public function setTargetDirectory($targetDirectory)

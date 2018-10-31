@@ -64,7 +64,6 @@ class FileController extends Controller
 	public function apiWysiwyg(Request $request, FileUploader $fileUploader) : Response {
 
 		if($request->files->has('upload') && $request->files->get('upload')) {
-
 			$name = $fileUploader->upload($request->files->get('upload'), 'date');
 		} else {
 			return new JsonResponse('Field file missing', 500);
@@ -78,6 +77,10 @@ class FileController extends Controller
 	 */
 	public function apiGet(File $file) : Response {
 
-		return new JsonResponse(['id' => $file->getId(), 'path' => $file->getPath()]);
+		if($file->getPath() instanceof \Symfony\Component\HttpFoundation\File\File) {
+			return new JsonResponse(['id' => $file->getId(), 'path' => $file->getPath()->getPathName()]);
+		} else {
+			return new JsonResponse(['id' => $file->getId(), 'path' => $file->getPath()]);
+		}
 	}
 }

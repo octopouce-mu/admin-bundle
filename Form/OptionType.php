@@ -8,9 +8,11 @@ namespace Octopouce\AdminBundle\Form;
 
 
 use Octopouce\AdminBundle\Form\Type\SwitchType;
+use Octopouce\AdminBundle\Form\Type\WysiwygType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -47,7 +49,7 @@ class OptionType extends AbstractType
 			function (FormEvent $event) use ($options) {
 				$form = $event->getForm();
 				foreach ($options['options'] as $option) {
-					if($option->getName() == 'PROJECT_LOGO' || $option->getName() == 'GOOGLE_GA_JSON'){
+					if($option->getName() == 'PROJECT_LOGO' || $option->getName() == 'GOOGLE_GA_JSON' || strpos($option->getName(), '_IMAGE') || strpos($option->getName(), '_FILE')){
 						$value = $option->getValue() ? ' ('.$option->getValue().')' : '';
 						$form
 							->get('options')
@@ -56,7 +58,7 @@ class OptionType extends AbstractType
 								'required' =>false
 							])
 						;
-					}elseif(strpos($option->getName(), '_ENABLE')){
+					} elseif(strpos($option->getName(), '_ENABLE')){
 						$form
 							->get('options')
 							->add($option->getId(), SwitchType::class, [
@@ -65,7 +67,34 @@ class OptionType extends AbstractType
 								'data' => boolval($option->getValue())
 							])
 						;
-					}else{
+					} elseif(strpos($option->getName(), '_DESCRIPTION')){
+						$form
+							->get('options')
+							->add($option->getId(), WysiwygType::class, [
+								'label' => $option->getName(),
+								'required' =>false,
+								'data' => $option->getValue()
+							])
+						;
+					} elseif(strpos($option->getName(), '_COLOR')){
+						$form
+							->get('options')
+							->add($option->getId(), ColorType::class, [
+								'label' => $option->getName(),
+								'required' =>false,
+								'data' => $option->getValue()
+							])
+						;
+					} elseif(strpos($option->getName(), '_DESCRIPTION')){
+						$form
+							->get('options')
+							->add($option->getId(), WysiwygType::class, [
+								'label' => $option->getName(),
+								'required' =>false,
+								'data' => $option->getValue()
+							])
+						;
+					} else{
 						$form
 							->get('options')
 							->add($option->getId(), TextType::class, [

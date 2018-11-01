@@ -23,4 +23,14 @@ class OptionRepository extends ServiceEntityRepository
         parent::__construct($registry, Option::class);
     }
 
+    public function findByCategorySlug($slug)
+    {
+    	$qb = $this->createQueryBuilder('o');
+    	$qb->leftJoin('o.category', 'c')
+		    ->where('c.slug = :slug')
+		    ->setParameter('slug', $slug);
+
+    	return $qb->getQuery()->getResult();
+    }
+
 }

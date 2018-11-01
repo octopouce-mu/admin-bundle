@@ -1,9 +1,10 @@
 require('materialize-css');
 require('chart.js');
-
+require('bootstrap-colorpicker');
 
 // require jQuery normally
 const $ = require('jquery');
+
 
 // create global $ and jQuery variables
 global.$ = global.jQuery = $;
@@ -82,6 +83,9 @@ function setMateralize() {
         tags: true
     });
 
+    $('.colorpicker').colorpicker({
+        component: '.btn'
+    });
     $('.tabs').tabs();
     $('.tooltipped').tooltip();
     $('.datepicker').datepicker({

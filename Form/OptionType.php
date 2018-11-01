@@ -49,7 +49,7 @@ class OptionType extends AbstractType
 			function (FormEvent $event) use ($options) {
 				$form = $event->getForm();
 				foreach ($options['options'] as $option) {
-					if($option->getName() == 'PROJECT_LOGO' || $option->getName() == 'GOOGLE_GA_JSON' || strpos($option->getName(), '_IMAGE') || strpos($option->getName(), '_FILE')){
+					if($option->getName() == 'PROJECT_LOGO' || $option->getName() == 'GOOGLE_GA_JSON' || strpos($option->getName(), '_IMAGE') || strpos($option->getName(), '_FILE') || strpos($option->getName(), '_VIDEO')){
 						$value = $option->getValue() ? ' ('.$option->getValue().')' : '';
 						$form
 							->get('options')

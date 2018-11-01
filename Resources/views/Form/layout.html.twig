@@ -207,6 +207,30 @@
     </div>
 {% endblock %}
 
+{% block color_row -%}
+    <div class="row{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+        <div class="col s12">
+            {{- form_label(form) -}}
+            {{- form_widget(form) -}}
+            {{- form_errors(form) -}}
+        </div>
+    </div>
+{%- endblock color_row %}
+
+{% block color_widget %}
+    <div class="colorpicker file-field">
+        <div class="btn"></div>
+        <div class="file-path-wrapper">
+            {%- set type = type|default('text') -%}
+            {%- if type == 'range' or type == 'color' -%}
+                {# Attribute "required" is not supported #}
+                {%- set required = false -%}
+            {%- endif -%}
+            <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+        </div>
+    </div>
+{% endblock %}
+
 {%- block wysiwyg_widget -%}
     {% set attr = attr|merge({class: (attr.class|default('') ~ ' editor')|trim}) %}
     {% set attr = attr|merge({placeholder: ''}) %}

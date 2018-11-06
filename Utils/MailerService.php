@@ -38,7 +38,7 @@ class MailerService {
 		;
 
 		if($this->options['MAIL_TO_DEV']->getValue() && (getenv('APP_ENV') == 'dev' || getenv('APP_ENV') == 'test')){
-			$message->setFrom($this->options['MAIL_TO_DEV']->getValue());
+			$message->setTo($this->options['MAIL_TO_DEV']->getValue());
 		}
 
 		$mailer->send($message);

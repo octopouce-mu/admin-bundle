@@ -66,6 +66,7 @@
   > .content {
     padding: 10px;
     overflow: auto;
+    overflow-y: hidden;
     z-index: 2;
     position: relative;
     display: block;

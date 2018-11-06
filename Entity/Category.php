@@ -7,10 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="category")
+ * @ORM\MappedSuperclass(repositoryClass="Octopouce\AdminBundle\Repository\CategoryRepository")
  */
-class Category
+abstract class Category
 {
     /**
      * @var int

@@ -2,7 +2,7 @@
 
 namespace Octopouce\AdminBundle\Controller;
 
-use Octopouce\AdminBundle\Entity\Category;
+use App\Entity\Category;
 use Octopouce\AdminBundle\Entity\Option;
 use Octopouce\AdminBundle\Form\OptionType;
 use Octopouce\AdminBundle\Service\DashboardService;

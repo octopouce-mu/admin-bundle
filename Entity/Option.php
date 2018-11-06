@@ -37,7 +37,7 @@ class Option
 	/**
 	 * @var Category
 	 *
-	 * @ORM\ManyToOne(targetEntity="Octopouce\AdminBundle\Entity\Category", inversedBy="options")
+	 * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="options")
 	 * @ORM\JoinColumn(nullable=false)
 	 */
 	private $category;

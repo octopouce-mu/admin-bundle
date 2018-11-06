@@ -7,9 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\MappedSuperclass(repositoryClass="Octopouce\AdminBundle\Repository\CategoryRepository")
+ * @ORM\Entity
+ * @ORM\Table(name="category")
  */
-abstract class Category
+class Category
 {
     /**
      * @var int
@@ -51,14 +52,14 @@ abstract class Category
 	/**
 	 * @var Category
 	 *
-	 * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="childs")
+	 * @ORM\ManyToOne(targetEntity="Octopouce\AdminBundle\Entity\Category", inversedBy="childs")
 	 */
 	private $parent;
 
 	/**
 	 * @var Category[]|ArrayCollection
 	 *
-	 * @ORM\OneToMany(targetEntity="App\Entity\Category", mappedBy="parent", orphanRemoval=true, cascade={"persist"})
+	 * @ORM\OneToMany(targetEntity="Octopouce\AdminBundle\Entity\Category", mappedBy="parent", orphanRemoval=true, cascade={"persist"})
 	 */
 	private $childs;
 
@@ -172,11 +173,11 @@ abstract class Category
     /**
      * Set parent.
      *
-     * @param \App\Entity\Category|null $parent
+     * @param \Octopouce\AdminBundle\Entity\Category|null $parent
      *
      * @return Category
      */
-    public function setParent(\App\Entity\Category $parent = null)
+    public function setParent(\Octopouce\AdminBundle\Entity\Category $parent = null)
     {
         $this->parent = $parent;
 
@@ -186,7 +187,7 @@ abstract class Category
     /**
      * Get parent.
      *
-     * @return \App\Entity\Category|null
+     * @return \Octopouce\AdminBundle\Entity\Category|null
      */
     public function getParent()
     {
@@ -196,11 +197,11 @@ abstract class Category
     /**
      * Add child.
      *
-     * @param \App\Entity\Category $child
+     * @param \Octopouce\AdminBundle\Entity\Category $child
      *
      * @return Category
      */
-    public function addChild(\App\Entity\Category $child)
+    public function addChild(\Octopouce\AdminBundle\Entity\Category $child)
     {
         $this->childs[] = $child;
 
@@ -210,11 +211,11 @@ abstract class Category
     /**
      * Remove child.
      *
-     * @param \App\Entity\Category $child
+     * @param \Octopouce\AdminBundle\Entity\Category $child
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeChild(\App\Entity\Category $child)
+    public function removeChild(\Octopouce\AdminBundle\Entity\Category $child)
     {
         return $this->childs->removeElement($child);
     }

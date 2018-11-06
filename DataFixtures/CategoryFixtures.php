@@ -2,7 +2,7 @@
 
 namespace Octopouce\AdminBundle\DataFixtures;
 
-use App\Entity\Category;
+use Octopouce\AdminBundle\Entity\Category;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 

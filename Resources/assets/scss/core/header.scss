@@ -14,7 +14,6 @@ header.sidebar {
   -ms-transition: all .5s, ease;
   -o-transition: all .5s, ease;
   transition: all .5s, ease;
-  overflow-y: auto;
   &.open {
     .bar {
       .icon-nav {

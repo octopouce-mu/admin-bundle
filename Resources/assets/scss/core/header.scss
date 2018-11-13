@@ -367,6 +367,7 @@ header.sidebar-left {
               &:last-child{
                   border-bottom: 0px;
               }
+
             }
         }
     }
@@ -416,6 +417,18 @@ header.sidebar-left {
       border-left: 1px solid rgba(255,255,255,.1);
       @media only screen and (max-width: 767px){
         display: block;
+      }
+      &.logout {
+        padding: 0;
+        a {
+          padding: 16px 30px;
+          color: #fff;
+          display: block;
+          font-size: 1.9rem;
+          &:hover {
+            color: #F44336;
+          }
+        }
       }
     }
   }

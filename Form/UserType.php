@@ -65,27 +65,47 @@ class UserType extends AbstractType
 				'first_options'  => array('label' => 'New Password'),
 				'second_options' => array('label' => 'Repeat Password'),
 			])
-			->add('roles', ChoiceType::class, [
-				'choices' => [
-					'Admin' => 'ROLE_ADMIN',
-					'User' => 'ROLE_USER'
-				],
-				'multiple' => true,
-				'placeholder' => 'Choose the role'
-			])
+
 
 			->add('submit', SubmitType::class, [
 				'label' => 'submit',
 				'translation_domain' => 'button'
 			])
 		;
+
+		if($options['super_admin']) {
+			$roles = [
+				'Admin' => 'ROLE_ADMIN'
+			];
+
+			if(class_exists('Octopouce\BlogBundle\OctopouceBlogBundle')){
+				$roles['Blogger'] = 'ROLE_BLOG';
+			}
+
+			if(class_exists('Octopouce\CmsBundle\OctopouceCmsBundle')){
+				$roles['CMS'] = 'ROLE_CMS';
+			}
+
+			if(class_exists('Octopouce\AdvertisingBundle\OctopouceAdvertisingBundle')){
+				$roles['Advertiser'] = 'ROLE_ADVERT';
+			}
+
+			$roles['Super Admin'] = 'ROLE_SUPER_ADMIN';
+
+			$builder->add('roles', ChoiceType::class, [
+				'choices' => $roles,
+				'multiple' => true,
+				'placeholder' => 'Choose the role'
+			]);
+		}
 	}
 
 	public function configureOptions(OptionsResolver $resolver)
 	{
 		$resolver->setDefaults([
 			'data_class' => User::class,
-			'edit' => false
+			'edit' => false,
+			'super_admin' => false
 		]);
 	}
 }

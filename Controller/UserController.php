@@ -7,15 +7,18 @@ use App\Entity\Account\User;
 use Octopouce\AdminBundle\Form\UserType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/user")
+ * @IsGranted("ROLE_ADMIN")
  */
 class UserController extends AbstractController
 {
@@ -33,12 +36,15 @@ class UserController extends AbstractController
 
 	/**
 	 * @Route("/create", name="octopouce_admin_user_create")
+	 * @IsGranted("ROLE_SUPER_ADMIN")
 	 */
 	public function create(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
 	{
 		$user = new User();
 
-		$form = $this->createForm(UserType::class, $user);
+		$form = $this->createForm(UserType::class, $user, [
+			'super_admin' => true
+		]);
 
 		$form->handleRequest($request);
 		if ($form->isSubmitted() && $form->isValid()) {
@@ -74,10 +80,17 @@ class UserController extends AbstractController
 	/**
 	 * @Route("/edit/{id}", name="octopouce_admin_user_edit")
 	 */
-	public function edit(Request $request, User $user, UserPasswordEncoderInterface $passwordEncoder): Response
+	public function edit(Request $request, User $user, UserPasswordEncoderInterface $passwordEncoder, AuthorizationCheckerInterface $authChecker): Response
 	{
+		$userIdentified = $this->getUser();
+
+		if (false === $authChecker->isGranted('ROLE_SUPER_ADMIN') && $userIdentified !== $user) {
+			throw new AccessDeniedException('Unable to access this page!');
+		}
+
 		$form = $this->createForm(UserType::class, $user, [
-			'edit' => true
+			'edit' => true,
+			'super_admin' => $authChecker->isGranted('ROLE_SUPER_ADMIN')
 		]);
 
 		$form->handleRequest($request);

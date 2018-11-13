@@ -8,11 +8,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 
 class DashboardController extends AbstractController
 {
     /**
      * @Route("/", name="octopouce_admin_dashboard_index")
+     * @IsGranted("ROLE_USER")
      */
     public function index( DashboardService $dashboardService, Request $request ): Response
     {

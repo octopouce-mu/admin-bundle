@@ -15,6 +15,8 @@ class LoginController extends AbstractController
      */
     public function loginAdmin(AuthenticationUtils $helper): Response
     {
+	    $this->denyAccessUnlessGranted('IS_AUTHENTICATED_ANONYMOUSLY');
+
         return $this->render('@OctopouceAdmin/Security/login.html.twig', [
 	        'lastUsername' => $helper->getLastUsername(),
 	        'error' => $helper->getLastAuthenticationError(),
@@ -26,6 +28,8 @@ class LoginController extends AbstractController
      */
     public function logout(): void
     {
+	    $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         throw new \Exception('This should never be reached!');
     }
 }

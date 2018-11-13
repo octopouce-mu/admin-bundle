@@ -82,7 +82,7 @@
                                                 <a href="{{ path(app.request.get('_route')|replace({'index':'edit'}), {'id': entity.id}) }}" class="waves-effect waves-light btn orange"><i class="fas fa-pencil-alt"></i></a>
                                             {% endif %}
                                             {% if app.request.get('_route')|replace({'index':'delete'})|routeExist and (delete is not defined or delete) %}
-                                                <a href="{{ path(app.request.get('_route')|replace({'index':'delete'}), {'id': entity.id}) }}" class="waves-effect waves-light btn red"><i class="fas fa-times"></i></a>
+                                                <a href="{{ path(app.request.get('_route')|replace({'index':'delete'}), {'id': entity.id}) }}" class="waves-effect waves-light btn red"  onclick="if (!confirm('Are you sure?')) { return false }"><i class="fas fa-times"></i></a>
                                             {% endif %}
                                         </td>
                                     </tr>

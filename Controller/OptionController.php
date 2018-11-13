@@ -10,28 +10,37 @@ use Octopouce\AdminBundle\Utils\FileUploader;
 use Octopouce\AdminBundle\Utils\MailerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/option")
+ * @IsGranted("ROLE_USER")
  */
 class OptionController extends AbstractController
 {
     /**
      * @Route("/", name="octopouce_admin_option_index")
      */
-    public function index(Request $request, FileUploader $fileUploader, DashboardService $dashboardService, MailerService $mailerService): Response
+    public function index(Request $request, FileUploader $fileUploader, DashboardService $dashboardService, MailerService $mailerService, AuthorizationCheckerInterface $authChecker): Response
     {
 
     	$em = $this->getDoctrine()->getManager();
 
     	// get category option page
     	$categoryName = $request->get('category') ? $request->get('category') : 'general';
+
     	$category = $em->getRepository(Category::class)->findOneBy(['name' => $categoryName, 'type' => 'option']);
     	if(!$category || $category->getOptions()->count() == 0){
 		    $category = $em->getRepository(Category::class)->findOneBy(['name' => 'general', 'type' => 'option']);
+	    }
+
+	    if ( ($category->getType() == 'blog' && false === $authChecker->isGranted('ROLE_BLOG')) || false === $authChecker->isGranted('ROLE_ADMIN') ) {
+		    throw new AccessDeniedException('Unable to access this page!');
 	    }
 
 		$form = $this->createForm(OptionType::class, null, [

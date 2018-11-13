@@ -99,14 +99,11 @@
                                 </a>
                             {% endblock %}
                         </li>
+
                         {% block custom_sidebar_left_nav %}
                         {% endblock %}
-                        {#<li>#}
-                            {#<a href="{{ path('octopouce_cms_admin_page_index') }}">#}
-                                {#{{ 'header.sidebar.left.nav.menu'|trans|raw }}#}
-                            {#</a>#}
-                        {#</li>#}
-                        {% if 'octopouce_cms_admin_page_index'|routeExist %}
+
+                        {% if 'octopouce_cms_admin_page_index'|routeExist and is_granted('ROLE_CMS') %}
                             <li>
                                 <a href="{{ path('octopouce_cms_admin_page_index') }}">
                                     {{ 'header.sidebar.left.nav.cms'|trans|raw }}
@@ -120,7 +117,8 @@
                                 </ul>
                             </li>
                         {% endif %}
-                        {% if 'octopouce_blog_admin_post_index'|routeExist %}
+
+                        {% if 'octopouce_blog_admin_post_index'|routeExist and is_granted('ROLE_BLOG') %}
                             <li>
                                 <a href="{{ path('octopouce_blog_admin_post_index') }}">
                                     {{ 'header.sidebar.left.nav.post'|trans|raw }}
@@ -136,29 +134,33 @@
                                 </ul>
                             </li>
                         {% endif %}
-                        <li>
-                            {% block user_sidebar_left_nav %}
-                                <a href="{{ path('octopouce_admin_user_index') }}">
-                                    {{ 'header.sidebar.left.nav.users'|trans|raw }}
+
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li>
+                                {% block user_sidebar_left_nav %}
+                                    <a href="{{ path('octopouce_admin_user_index') }}">
+                                        {{ 'header.sidebar.left.nav.users'|trans|raw }}
+                                    </a>
+                                {% endblock %}
+                            </li>
+
+                            <li>
+                                <a href="javascript:void(0)">
+                                    {{ 'header.sidebar.left.nav.rs'|trans|raw }}
                                 </a>
-                            {% endblock %}
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                {{ 'header.sidebar.left.nav.rs'|trans|raw }}
-                            </a>
-                            <ul>
-                                <li>
-                                    {% block rs_sidebar_left_nav %}
-                                        <a href="{{ path('octopouce_admin_option_index', {'category':'facebook'}) }}">Facebook</a>
-                                        <a href="{{ path('octopouce_admin_option_index', {'category':'twitter'}) }}">Twitter</a>
-                                        <a href="{{ path('octopouce_admin_option_index', {'category':'google'}) }}">Google</a>
-                                        <a href="{{ path('octopouce_admin_option_index', {'category':'youtube'}) }}">Youtube</a>
-                                        <a href="{{ path('octopouce_admin_option_index', {'category':'instagram'}) }}">Instagram</a>
-                                    {% endblock %}
-                                </li>
-                            </ul>
-                        </li>
+                                <ul>
+                                    <li>
+                                        {% block rs_sidebar_left_nav %}
+                                            <a href="{{ path('octopouce_admin_option_index', {'category':'facebook'}) }}">Facebook</a>
+                                            <a href="{{ path('octopouce_admin_option_index', {'category':'twitter'}) }}">Twitter</a>
+                                            <a href="{{ path('octopouce_admin_option_index', {'category':'google'}) }}">Google</a>
+                                            <a href="{{ path('octopouce_admin_option_index', {'category':'youtube'}) }}">Youtube</a>
+                                            <a href="{{ path('octopouce_admin_option_index', {'category':'instagram'}) }}">Instagram</a>
+                                        {% endblock %}
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
 
 
                         {#<li>#}
@@ -166,7 +168,7 @@
                                 {#{{ 'header.sidebar.left.nav.language'|trans|raw }}#}
                             {#</a>#}
                         {#</li>#}
-                        {% if 'octopouce_advertising_admin_dashboard_index'|routeExist %}
+                        {% if 'octopouce_advertising_admin_dashboard_index'|routeExist and is_granted('ROLE_ADVERT') %}
                             <li>
                                 <a href="{{ path('octopouce_advertising_admin_dashboard_index') }}">
                                     {{ 'header.sidebar.left.nav.advertising'|trans|raw }}
@@ -183,20 +185,23 @@
                                 </ul>
                             </li>
                         {% endif %}
-                        <li>
-                            <a href="{{ path('octopouce_admin_option_index') }}">
-                                {{ 'header.sidebar.left.nav.options'|trans|raw }}
-                            </a>
-                            <ul>
-                                <li>
-                                    {% block option_sidebar_left_nav %}
-                                        <a href="{{ path('octopouce_admin_option_index') }}">Général</a>
-                                        <a href="{{ path('octopouce_admin_option_index', {'category':'company'}) }}">Company</a>
-                                        <a href="{{ path('octopouce_admin_option_index', {'category':'mail'}) }}">Mail</a>
-                                    {% endblock %}
-                                </li>
-                            </ul>
-                        </li>
+
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                            <li>
+                                <a href="{{ path('octopouce_admin_option_index') }}">
+                                    {{ 'header.sidebar.left.nav.options'|trans|raw }}
+                                </a>
+                                <ul>
+                                    <li>
+                                        {% block option_sidebar_left_nav %}
+                                            <a href="{{ path('octopouce_admin_option_index') }}">Général</a>
+                                            <a href="{{ path('octopouce_admin_option_index', {'category':'company'}) }}">Company</a>
+                                            <a href="{{ path('octopouce_admin_option_index', {'category':'mail'}) }}">Mail</a>
+                                        {% endblock %}
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
                     </ul>
                 {% endblock %}
 
@@ -238,6 +243,7 @@
                 <div class="right">
                     <ul>
                         <li class="profile">{{ 'dashboard.connected_by'|trans({}, 'admin') }} <br>{{ app.user.username }} <i class="far fa-user"></i></li>
+                        <li class="logout"><a href="{{ path('octopouce_admin_logout') }}"><i class="fas fa-power-off"></i></a></li>
                     </ul>
                 </div>
             </div>

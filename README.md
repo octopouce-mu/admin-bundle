@@ -117,7 +117,11 @@ security:
             entity: { class: App\Entity\Account\User, property: username }
 
     role_hierarchy:
-        ROLE_ADMIN: ROLE_USER
+        ROLE_CMS: ROLE_USER
+        ROLE_BLOG: ROLE_USER
+        ROLE_ADVERT: ROLE_USER
+        ROLE_ADMIN: [ROLE_CMS, ROLE_BLOG, ROLE_ADVERT]
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
 
     # https://symfony.com/doc/current/security.html#initial-security-yml-setup-authentication
     firewalls:

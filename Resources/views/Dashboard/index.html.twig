@@ -109,6 +109,7 @@
                     <ul>
                         <li class="calendar-stat"><span>{{ 'dashboard.stats_of'|trans({'%day1%': 'now'|date_modify('-28 days')|date('d F'), '%day2%':'yesterday'|date('d F')})|raw }}</span> <i class="far fa-calendar-alt"></i></li>
                         <li class="profile">{{ 'dashboard.connected_by'|trans }} <br>{{ app.user.username }} <i class="far fa-user"></i></li>
+                        <li class="logout"><a href="{{ path('octopouce_admin_logout') }}"><i class="fas fa-power-off"></i></a></li>
                     </ul>
                 </div>
             </div>

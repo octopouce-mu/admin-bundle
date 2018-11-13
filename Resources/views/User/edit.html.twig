@@ -43,7 +43,9 @@
                     <div class="box">
                         <div class="content">
                             {{ form_row(form.password) }}
-                            {{ form_row(form.roles) }}
+                            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                {{ form_row(form.roles) }}
+                            {% endif %}
                         </div>
                     </div>
                 </div>

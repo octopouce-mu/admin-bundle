@@ -4,7 +4,7 @@
     <div class="padding-filter">
         <div class="row title">
             <div class="col s12">
-                <h1>Users <a href="{{ path('octopouce_admin_user_create') }}" class="waves-effect waves-light btn green"><i class="fas fa-plus"></i></a></h1>
+                <h1>Users {% if is_granted('ROLE_SUPER_ADMIN') %}<a href="{{ path('octopouce_admin_user_create') }}" class="waves-effect waves-light btn green"><i class="fas fa-plus"></i></a>{% endif %}</h1>
             </div>
         </div>
         <div class="row">
@@ -36,15 +36,21 @@
                                             <td>{{ user.email }}</td>
                                             <td>
                                                 {% for role in user.roles %}
-                                                    <span class="chip blue">{{ role }}</span>
+                                                    <span class="chip {{ role == 'ROLE_SUPER_ADMIN' ? 'orange' : 'blue' }}">{{ role }}</span>
                                                 {% endfor %}
                                             </td>
                                             <td>{{ user.enabled }}</td>
                                             <td>{{ user.createdAt|date('d/m/Y') }}</td>
                                             <td class="center-align">
                                                 <a href="{{ path('octopouce_admin_user_show', {'id': user.id}) }}" class="waves-effect waves-light btn blue"><i class="fas fa-eye"></i></a>
-                                                <a href="{{ path('octopouce_admin_user_edit', {'id': user.id}) }}" class="waves-effect waves-light btn orange"><i class="fas fa-pencil-alt"></i></a>
-                                                <a href="{{ path('octopouce_admin_user_delete', {'id': user.id}) }}" class="waves-effect waves-light btn red"><i class="fas fa-times"></i></a>
+
+                                                {% if app.user == user or is_granted('ROLE_SUPER_ADMIN') %}
+                                                    <a href="{{ path('octopouce_admin_user_edit', {'id': user.id}) }}" class="waves-effect waves-light btn orange"><i class="fas fa-pencil-alt"></i></a>
+                                                {% endif %}
+
+                                                {% if app.user != user and is_granted('ROLE_SUPER_ADMIN') %}
+                                                    <a href="{{ path('octopouce_admin_user_delete', {'id': user.id}) }}" class="waves-effect waves-light btn red" onclick="if (!confirm('Are you sure?')) { return false }"><i class="fas fa-times"></i></a>
+                                                {% endif %}
                                             </td>
                                         </tr>
                                     {% endfor %}

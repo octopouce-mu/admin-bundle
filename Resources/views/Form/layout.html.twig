@@ -266,3 +266,21 @@
         {{ block('form_widget') }}
     {% endspaceless %}
 {% endblock collection_widget %}
+
+{%- block submit_widget -%}
+    {%- set type = type|default('submit') -%}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' green')|trim}) %}
+    {%- if label is empty -%}
+        {%- if label_format is not empty -%}
+            {% set label = label_format|replace({
+                '%name%': name,
+                '%id%': id,
+            }) %}
+        {%- elseif label is same as(false) -%}
+            {% set translation_domain = false %}
+        {%- else -%}
+            {% set label = name|humanize %}
+        {%- endif -%}
+    {%- endif -%}
+    <button type="{{ type|default('button') }}" {{ block('button_attributes') }}>{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }} <i class="material-icons right">send</i></button>
+{%- endblock submit_widget -%}

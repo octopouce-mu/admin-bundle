@@ -269,7 +269,7 @@
 
 {%- block submit_widget -%}
     {%- set type = type|default('submit') -%}
-    {% set attr = attr|merge({class: (attr.class|default('') ~ ' green')|trim}) %}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' btn waves-effect waves-light green')|trim}) %}
     {%- if label is empty -%}
         {%- if label_format is not empty -%}
             {% set label = label_format|replace({

@@ -52,6 +52,8 @@
                                                     {% endfor %}
                                                 {% elseif val.timestamp is defined %}
                                                     {{ val|date('d/m/Y') }}
+                                                {% elseif val is same as(true) or val is same as(false) and key != 'id' %}
+                                                    {% if val %}<i class="fas fa-check green-text"></i>{% else %}<i class="fas fa-times red-text"></i>{% endif %}
                                                 {% else %}
                                                     {{ val|raw }}
                                                 {% endif %}
@@ -67,6 +69,8 @@
                                                             {% endfor %}
                                                         {% elseif val.timestamp is defined %}
                                                             {{ val|date('d/m/Y') }}
+                                                        {% elseif val is same as(true) or val is same as(false) and key != 'id' %}
+                                                            {% if val %}<i class="fas fa-check green-text"></i>{% else %}<i class="fas fa-times red-text"></i>{% endif %}
                                                         {% else %}
                                                             {{ val|raw }}
                                                         {% endif %}

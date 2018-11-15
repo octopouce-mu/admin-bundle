@@ -39,6 +39,8 @@ class AdminExtension extends AbstractExtension implements \Twig_Extension_Global
 
 	public function objectFilter($stdClassObject) {
 		$class = get_class($stdClassObject);
+		$class = str_replace('Proxies\__CG__\\', '', $class);
+
 		// Just typecast it to an array
 		$response = (array)$stdClassObject;
 		foreach ($response as $key => $val){

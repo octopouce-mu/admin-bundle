@@ -9,14 +9,63 @@
                 <h1>Create user</h1>
             </div>
         </div>
+        {{ form_start(form) }}
         <div class="row">
-            <div class="col s12">
+            <div class="col s9">
+                <div class="row">
+                    <div class="col s12">
+                        <ul class="tabs transparent">
+                            <li class="tab col s3"><a href="#general" class="active">General</a></li>
+                            <li class="tab col s3"><a href="#security">Security</a></li>
+                            <li class="tab col s3"><a href="#notrequired">Not required</a></li>
+                        </ul>
+                    </div>
+                    <div id="general" class="col s12">
+                        <div class="box">
+                            <div class="content">
+                                {{ form_row(form.username) }}
+                                {{ form_row(form.firstname) }}
+                                {{ form_row(form.lastname) }}
+                                {{ form_row(form.email) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="security" class="col s12">
+                        <div class="box">
+                            <div class="content">
+                                {{ form_row(form.enabled) }}
+                                {{ form_row(form.password) }}
+                                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                    {{ form_row(form.roles) }}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="notrequired" class="col s12">
+                        <div class="box">
+                            <div class="content">
+                                {{ form_row(form.phone) }}
+                                {{ form_row(form.address) }}
+                                {{ form_row(form.complementAddress) }}
+                                {{ form_row(form.postalCode) }}
+                                {{ form_row(form.city) }}
+                                {{ form_row(form.country) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col s3">
                 <div class="box">
                     <div class="content">
-                        {{ form(form) }}
+                        {{ form_row(form.enabled) }}
+                        {{ form_row(form.submit, {'attr':{'class':'btn-block'}}) }}
                     </div>
                 </div>
             </div>
         </div>
+        {{ form_end(form) }}
     </div>
 {% endblock %}

@@ -166,7 +166,7 @@ abstract class User implements UserInterface
 	{
 		$this->invitations = new ArrayCollection();
 		$this->roles = array('ROLE_USER');
-		$this->enabled = false;
+		$this->enabled = true;
 		$this->createdAt = new \DateTime();
 	}
 

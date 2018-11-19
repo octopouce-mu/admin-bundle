@@ -9,6 +9,7 @@ namespace Octopouce\AdminBundle\Form;
 
 use App\Entity\Account\User;
 use Octopouce\AdminBundle\Form\Type\DateTimePickerType;
+use Octopouce\AdminBundle\Form\Type\SwitchType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
@@ -28,14 +29,18 @@ class UserType extends AbstractType
 	{
 
 		$builder
-			->add('username', TextType::class)
+			->add('username', TextType::class, [
+				'label' => 'Username*'
+			])
 			->add('firstname', TextType::class, [
 				'required' => false
 			])
 			->add('lastname', TextType::class, [
-				'required' => false
+				'required' => false,
 			])
-			->add('email', EmailType::class)
+			->add('email', EmailType::class, [
+				'label' => 'E-mail*'
+			])
 			->add('phone', TelType::class, [
 				'required' => false
 			])
@@ -66,16 +71,16 @@ class UserType extends AbstractType
 				'second_options' => array('label' => 'Repeat Password'),
 			])
 
-
-			->add('submit', SubmitType::class, [
-				'label' => 'submit',
-				'translation_domain' => 'button'
+			->add('enabled', SwitchType::class, [
+				'required' => false
 			])
+
 		;
 
 		if($options['super_admin']) {
 			$roles = [
-				'Admin' => 'ROLE_ADMIN'
+				'User (show)'  => 'ROLE_USER',
+				'Admin (show & edit)' => 'ROLE_ADMIN'
 			];
 
 			if(class_exists('Octopouce\BlogBundle\OctopouceBlogBundle')){
@@ -95,9 +100,15 @@ class UserType extends AbstractType
 			$builder->add('roles', ChoiceType::class, [
 				'choices' => $roles,
 				'multiple' => true,
-				'placeholder' => 'Choose the role'
+				'placeholder' => 'Choose roles',
+				'required' => false
 			]);
 		}
+
+		$builder->add('submit', SubmitType::class, [
+			'label' => 'submit',
+			'translation_domain' => 'button'
+		]);
 	}
 
 	public function configureOptions(OptionsResolver $resolver)

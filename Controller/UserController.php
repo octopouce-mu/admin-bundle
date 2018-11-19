@@ -56,7 +56,7 @@ class UserController extends AbstractController
 			$em->persist($user);
 			$em->flush();
 
-			return $this->redirectToRoute('octopouce_admin_user_show', ['user' => $user->getId()]);
+			return $this->redirectToRoute('octopouce_admin_user_index');
 		}
 
 		return $this->render('@OctopouceAdmin/User/create.html.twig', [

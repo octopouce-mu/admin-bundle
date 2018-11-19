@@ -2,7 +2,13 @@
 
 {% trans_default_domain 'admin' %}
 
-{% block title %}Admin {{ parent() }}{% endblock %}
+{% block title %}Admin
+    {% if thor.options.PROJECT_NAME is defined and thor.options.PROJECT_NAME.value %}
+        {{thor.options.PROJECT_NAME.value}}
+    {% else %}
+        Thor
+    {% endif %}
+{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}

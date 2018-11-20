@@ -7,7 +7,9 @@
 namespace Octopouce\AdminBundle\Utils;
 
 
+use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileUploader {
@@ -60,6 +62,68 @@ class FileUploader {
 		$file->move($path ? $path : $this->getTargetDirectory(), $name);
 
 		return $path.'/'.$name;
+	}
+
+	public function uploadWithCollection($files, $name, $old = null) {
+		$fileSystem = new Filesystem();
+
+		if($old) { // update
+			if(!is_array($files) && !$files instanceof PersistentCollection) {
+				if($files) {
+					if($old instanceof File) $fileSystem->remove($old);
+
+					$nameHeaderImage = $this->upload($files, 'date', $name);
+					return $nameHeaderImage;
+				} else {
+					return $old instanceof File ? $old->getPathName() : $old;
+				}
+			} else {
+				foreach ($files as $k => $file) {
+
+					if($file->getPath()) {
+						if($file->getPath() instanceof File){
+							$nameImage = $this->upload($file->getPath(), 'date');
+							$file->setPath($nameImage);
+						}
+
+					} else {
+						if(array_key_exists($file->getId(), $old)) {
+							$oldFile = $old[$file->getId()];
+							$file->setPath($oldFile->getPath()->getPathName());
+						}
+					}
+					unset($old[$file->getId()]);
+				}
+				return $old;
+			}
+
+		} else { // create
+			if(!is_array($files) && !$files instanceof PersistentCollection) {
+				if($files) {
+					$nameThumbnail = $this->upload( $files, 'date', $name);
+					return $nameThumbnail;
+				}
+			} else {
+				foreach ($files as $k => $file) {
+					$nameImage = $this->upload($file->getPath(), 'date');
+					$file->setPath($nameImage);
+				}
+			}
+		}
+		return null;
+	}
+
+	public function removeFiles($files) {
+		$fileSystem = new Filesystem();
+		if($files instanceof File) {
+			$fileSystem->remove($files->getPathName());
+		} elseif(is_array($files) || $files instanceof PersistentCollection) {
+			foreach ($files as $file) {
+				if($file->getPath() instanceof File) {
+					$fileSystem->remove($file->getPath()->getPathName());
+				}
+			}
+		}
 	}
 
 	public function setTargetDirectory($targetDirectory)

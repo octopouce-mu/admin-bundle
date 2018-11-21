@@ -1,5 +1,6 @@
 require('materialize-css');
 require('chart.js');
+const lodash = require('lodash');
 
 // require jQuery normally
 const $ = require('jquery');
@@ -128,8 +129,10 @@ function setEditor() {
 
 function slugify(text)
 {
-    return text.toString().toLowerCase()
-        .replace(/\s+/g, '-')           // Replace spaces with -
+    text =  text.toString().toLowerCase();
+    text = lodash.deburr(text);
+
+    return text.replace(/\s+/g, '-')           // Replace spaces with -
         .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
         .replace(/\-\-+/g, '-')         // Replace multiple - with single -
         .replace(/^-+/, '')             // Trim - from start of text

@@ -33,8 +33,17 @@ class AdminExtension extends AbstractExtension implements \Twig_Extension_Global
 	{
 		return [
 			new TwigFilter('cast_to_array', [$this, 'objectFilter']),
+			new TwigFilter('getClass', [$this, 'getClass']),
 			new TwigFilter('routeExist', [$this, 'routeExist']),
 		];
+	}
+
+	public function getClass($object)
+	{
+		$class = get_class($object);
+		$class = str_replace('Proxies\__CG__\\', '', $class);
+
+		return $class;
 	}
 
 	public function objectFilter($stdClassObject) {
@@ -49,13 +58,11 @@ class AdminExtension extends AbstractExtension implements \Twig_Extension_Global
 
 			if(!in_array($newKey, ['translations', 'newTranslations', 'newTranslations', 'defaultLocale', 'currentLocale', 'translatable', 'locale'])){
 				$response[$newKey] = $val;
-//				unset($response[$newKey]);
 			}
 
 			unset($response[$key]);
 		}
 
-//		var_dump($response);die;
 
 		return $response;
 	}

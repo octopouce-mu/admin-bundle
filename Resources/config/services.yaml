@@ -23,3 +23,10 @@ services:
         class: Twig_Extensions_Extension_Text
         tags:
             - { name: twig.extension }
+
+    Octopouce\AdminBundle\Service\Sortable\PositionORMHandler:
+        public: false
+        arguments:
+            $entityManager: "@doctrine.orm.entity_manager"
+        calls:
+            - [ 'setPositionField', ['sort']]

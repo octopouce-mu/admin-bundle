@@ -43,6 +43,9 @@ class AdminExtension extends AbstractExtension implements \Twig_Extension_Global
 		$class = get_class($object);
 		$class = str_replace('Proxies\__CG__\\', '', $class);
 
+		$class = str_replace('\\', '/', $class);
+
+
 		return $class;
 	}
 

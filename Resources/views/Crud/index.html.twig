@@ -26,7 +26,7 @@
                             <table>
                                 <thead>
                                 <tr>
-                                    {% if entity.sort is defined %}
+                                    {% if entities.0.sort is defined %}
                                         <th></th>
                                     {% endif %}
                                     {% for key, val in entities.0|cast_to_array if key not in fieldsHide and key != 'sort' %}
@@ -49,7 +49,7 @@
                                     <tr>
                                         {% if entity.sort is defined %}
                                             <td><span class="waves-effect waves-light btn transparent draggable" data-id="{{ entity.id }}" data-position="{{ entity.sort }}" data-new-position="" ><i class="fas fa-sort"></i></span></td>
-                                        {% endfor %}
+                                        {% endif %}
                                         {% for key, val in entity|cast_to_array if key not in fieldsHide and key != 'sort' %}
                                             <td>
                                                 {% if val is iterable %}
@@ -112,7 +112,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {% if entity.0 is defined and entity.0.sort is defined %}
+    {% if entities and entities.0.sort is defined %}
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
         <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
@@ -143,11 +143,10 @@
                             dataPositionList[index]['id'] = $(el).attr('data-id');
                         });
                         $.ajax({
-                            data: {data: dataPositionList, class:'{{ users.0|getClass}}'},
+                            data: {data: dataPositionList, class:'{{ entities.0|getClass}}'},
                             type: 'POST',
                             url: Routing.generate('octopouce_admin_admin_sortable_drag'),
                             success: function (data) {
-                                alert(data);
                             },
                         });
                     }

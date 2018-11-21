@@ -28,8 +28,11 @@ class SortableController extends AbstractController {
 	public function drag(Request $request, PositionORMHandler $positionService) {
 
 		$entity = $request->request->get('class');
+		$entity = str_replace('/', '\\', $entity);
 
-		$setter = sprintf($positionService->getPositionFieldByEntity($entity));
+		$setter = 'sort';
+
+//		$setter = sprintf($positionService->getPositionFieldByEntity($entity));
 
 		$dataPositionList = $request->request->get('data');
 

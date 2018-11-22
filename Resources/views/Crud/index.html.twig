@@ -51,38 +51,40 @@
                                             <td><span class="waves-effect waves-light btn transparent draggable" data-id="{{ entity.id }}" data-position="{{ entity.sort }}" data-new-position="" ><i class="fas fa-sort"></i></span></td>
                                         {% endif %}
                                         {% for key, val in entity|cast_to_array if key not in fieldsHide and key != 'sort' %}
-                                            <td>
-                                                {% if val is iterable %}
+                                            {% if val is iterable %}
+                                                <td>
                                                     {% for v in val %}
                                                         <span class="chip blue">{{ v }}</span>
                                                     {% endfor %}
-                                                {% elseif val.timestamp is defined %}
-                                                    {{ val|date('d/m/Y') }}
-                                                {% elseif val is same as(true) or val is same as(false) and key != 'id' %}
-                                                    {% if val %}<i class="fas fa-check green-text"></i>{% else %}<i class="fas fa-times red-text"></i>{% endif %}
-                                                {% else %}
-                                                    {{ val|raw }}
-                                                {% endif %}
-                                            </td>
+                                                </td>
+                                            {% elseif val.timestamp is defined %}
+                                                <td>{{ val|date('d/m/Y') }}</td>
+                                            {% elseif val is same as(true) or val is same as(false) and key == 'featured' %}
+                                                <td class="center-align">{% if val %}<i class="fas fa-star" data-id="{{ entity.id }}" data-featured="{{ entity.featured }}"></i>{% else %}<i class="far fa-star" data-id="{{ entity.id }}" data-featured="{{ entity.featured }}"></i>{% endif %}</td>
+                                            {% elseif val is same as(true) or val is same as(false) and key != 'id' %}
+                                                <td class="center-align">{% if val %}<i class="fas fa-check green-text"></i>{% else %}<i class="fas fa-times red-text"></i>{% endif %}</td>
+                                            {% else %}
+                                                <td>{{ val|raw }}</td>
+                                            {% endif %}
                                         {% endfor %}
                                         {% if entity.translate is defined %}
                                             {% for key, val in entity.translate|cast_to_array if key not in fieldsHide and key != 'sort' %}
                                                 {% if key != 'id' %}
-                                                    <td>
-                                                        {% if val is iterable %}
-                                                            {% for v in val %}
-                                                                <span class="chip blue">{{ v }}</span>
-                                                            {% endfor %}
-                                                        {% elseif val.timestamp is defined %}
-                                                            {{ val|date('d/m/Y') }}
-                                                        {% elseif val is same as(true) or val is same as(false) and key == 'featured' %}
-                                                            {% if val %}<i class="fas fa-star" data-id="{{ entity.id }}" data-featured="{{ entity.featured }}"></i>{% else %}<i class="far fa-star" data-id="{{ entity.id }}" data-featured="{{ entity.featured }}"></i>{% endif %}
-                                                        {% elseif val is same as(true) or val is same as(false) and key != 'id' %}
-                                                            {% if val %}<i class="fas fa-check green-text"></i>{% else %}<i class="fas fa-times red-text"></i>{% endif %}
-                                                        {% else %}
-                                                            {{ val|raw }}
-                                                        {% endif %}
-                                                    </td>
+                                                    {% if val is iterable %}
+                                                        <td>
+                                                        {% for v in val %}
+                                                            <span class="chip blue">{{ v }}</span>
+                                                        {% endfor %}
+                                                        </td>
+                                                    {% elseif val.timestamp is defined %}
+                                                        <td>{{ val|date('d/m/Y') }}</td>
+                                                    {% elseif val is same as(true) or val is same as(false) and key == 'featured' %}
+                                                        <td class="center-align">{% if val %}<i class="fas fa-star" data-id="{{ entity.id }}" data-featured="{{ entity.featured }}"></i>{% else %}<i class="far fa-star" data-id="{{ entity.id }}" data-featured="{{ entity.featured }}"></i>{% endif %}</td>
+                                                    {% elseif val is same as(true) or val is same as(false) and key != 'id' %}
+                                                        <td class="center-align">{% if val %}<i class="fas fa-check green-text"></i>{% else %}<i class="fas fa-times red-text"></i>{% endif %}</td>
+                                                    {% else %}
+                                                        <td>{{ val|raw }}</td>
+                                                    {% endif %}
                                                 {% endif %}
                                             {% endfor %}
                                         {% endif %}

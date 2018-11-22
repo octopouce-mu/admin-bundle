@@ -128,7 +128,7 @@ function setEditor() {
     var allEditors = document.querySelectorAll('.editor');
     for (var i = 0; i < allEditors.length; ++i) {
         ClassicEditor.create(allEditors[i], {
-            toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'alignment', 'bulletedList', 'numberedList', 'code', '|', 'undo', 'redo' ],
+            toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 'undo', 'redo' ],
             heading: {
                 options: [
                     { model: 'paragraph', title: 'Paragraph' },

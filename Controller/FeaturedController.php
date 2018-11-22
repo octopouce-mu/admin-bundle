@@ -6,7 +6,7 @@
 
 namespace Octopouce\AdminBundle\Controller;
 
-use Octopouce\AdminBundle\Service\Sortable\PositionORMHandler;
+use Octopouce\AdminBundle\Service\Featured\FeaturedORMHandler;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,25 +15,26 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
- * @Route("/sortable")
+ * @Route("/featured")
  * @IsGranted("ROLE_ADMIN")
  */
-class SortableController extends AbstractController {
+class FeaturedController extends AbstractController {
 
 	/**
-	 * @Route("/", name="octopouce_admin_admin_sortable_drag", options={"expose"=true})
+	 * @Route("/", name="octopouce_admin_admin_featured_action", options={"expose"=true})
 	 * @Method("POST")
 	 */
-	public function drag(Request $request, PositionORMHandler $positionService) {
+	public function action(Request $request, FeaturedORMHandler $featuredService) {
 
 		$entity = $request->request->get('class');
 		$entity = str_replace('/', '\\', $entity);
 
-		$setter = 'sort';
+		$setter = 'featured';
 
-		$dataPositionList = $request->request->get('data');
+		$id = (int) $request->request->get('id');
+		$featured = (int) $request->request->get('featured');
 
-		$updateDb = $positionService->setPosition($entity, $setter, $dataPositionList);
+		$updateDb = $featuredService->setFeatured($entity, $setter, $id, $featured);
 
 		if($updateDb === true){
 			return new Response('Success');

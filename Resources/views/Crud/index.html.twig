@@ -75,6 +75,8 @@
                                                             {% endfor %}
                                                         {% elseif val.timestamp is defined %}
                                                             {{ val|date('d/m/Y') }}
+                                                        {% elseif val is same as(true) or val is same as(false) and key == 'featured' %}
+                                                            {% if val %}<i class="fas fa-star" data-id="{{ entity.id }}" data-featured="{{ entity.featured }}"></i>{% else %}<i class="far fa-star" data-id="{{ entity.id }}" data-featured="{{ entity.featured }}"></i>{% endif %}
                                                         {% elseif val is same as(true) or val is same as(false) and key != 'id' %}
                                                             {% if val %}<i class="fas fa-check green-text"></i>{% else %}<i class="fas fa-times red-text"></i>{% endif %}
                                                         {% else %}
@@ -151,6 +153,22 @@
                             },
                         });
                     }
+                });
+            });
+        </script>
+    {% endif %}
+    {% if entities and entities.0.featured is defined %}
+        <script>
+            $('.fa-star').on('click', function() {
+                var id = $(this).data('id');
+                var featured = $(this).data('featured');
+
+                $.ajax({
+                    data: {id: id, featured: featured, class:'{{ entities.0|getClass}}'},
+                    type: 'POST',
+                    url: Routing.generate('octopouce_admin_admin_featured_action'),
+                    success: function (data) {
+                    },
                 });
             });
         </script>

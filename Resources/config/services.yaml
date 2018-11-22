@@ -30,3 +30,8 @@ services:
             $entityManager: "@doctrine.orm.entity_manager"
         calls:
             - [ 'setPositionField', ['sort']]
+
+    Octopouce\AdminBundle\Service\Featured\FeaturedORMHandler:
+        public: false
+        arguments:
+            $entityManager: "@doctrine.orm.entity_manager"

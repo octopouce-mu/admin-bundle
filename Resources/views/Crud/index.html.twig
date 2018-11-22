@@ -59,9 +59,9 @@
                                                 </td>
                                             {% elseif val.timestamp is defined %}
                                                 <td>{{ val|date('d/m/Y') }}</td>
-                                            {% elseif val is same as(true) or val is same as(false) and key == 'featured' %}
+                                            {% elseif (val is same as(true) or val is same as(false)) and key == 'featured' %}
                                                 <td class="center-align">{% if val %}<i class="fas fa-star" data-id="{{ entity.id }}" data-featured="{{ entity.featured }}"></i>{% else %}<i class="far fa-star" data-id="{{ entity.id }}" data-featured="{{ entity.featured }}"></i>{% endif %}</td>
-                                            {% elseif val is same as(true) or val is same as(false) and key != 'id' %}
+                                            {% elseif (val is same as(true) or val is same as(false)) and key != 'id' %}
                                                 <td class="center-align">{% if val %}<i class="fas fa-check green-text"></i>{% else %}<i class="fas fa-times red-text"></i>{% endif %}</td>
                                             {% else %}
                                                 <td>{{ val|raw }}</td>
@@ -78,9 +78,9 @@
                                                         </td>
                                                     {% elseif val.timestamp is defined %}
                                                         <td>{{ val|date('d/m/Y') }}</td>
-                                                    {% elseif val is same as(true) or val is same as(false) and key == 'featured' %}
+                                                    {% elseif (val is same as(true) or val is same as(false)) and key == 'featured' %}
                                                         <td class="center-align">{% if val %}<i class="fas fa-star" data-id="{{ entity.id }}" data-featured="{{ entity.featured }}"></i>{% else %}<i class="far fa-star" data-id="{{ entity.id }}" data-featured="{{ entity.featured }}"></i>{% endif %}</td>
-                                                    {% elseif val is same as(true) or val is same as(false) and key != 'id' %}
+                                                    {% elseif (val is same as(true) or val is same as(false)) and key != 'id' %}
                                                         <td class="center-align">{% if val %}<i class="fas fa-check green-text"></i>{% else %}<i class="fas fa-times red-text"></i>{% endif %}</td>
                                                     {% else %}
                                                         <td>{{ val|raw }}</td>
@@ -116,11 +116,10 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
     {% if entities and entities.0.sort is defined %}
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
-        <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
-
         <script>
             $(document).ready(function () {
                 var dataPositionList = {};
@@ -163,13 +162,20 @@
         <script>
             $('.fa-star').on('click', function() {
                 var id = $(this).data('id');
-                var featured = $(this).data('featured');
+                var featured = $(this).data('featured') == 1 ? 0 : 1;
 
                 $.ajax({
                     data: {id: id, featured: featured, class:'{{ entities.0|getClass}}'},
                     type: 'POST',
                     url: Routing.generate('octopouce_admin_admin_featured_action'),
                     success: function (data) {
+                        $(this).data('featured', featured);
+                        if(featured == 1) {
+                            $(this).removeClass('fas').addClass('far');
+                        } else {
+                            $(this).removeClass('far').addClass('fas');
+                        }
+
                     },
                 });
             });

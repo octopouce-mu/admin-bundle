@@ -141,6 +141,7 @@
                     update: function( event, ui ) {
                         $.map($('tbody').find('.draggable'), function(el, index) {
                             dataPositionList[index]['id'] = $(el).attr('data-id');
+                            dataPositionList[index]['position'] = index;
                         });
                         $.ajax({
                             data: {data: dataPositionList, class:'{{ entities.0|getClass}}'},

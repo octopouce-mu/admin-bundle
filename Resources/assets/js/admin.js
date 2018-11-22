@@ -68,9 +68,24 @@ $(document).ready(function(){
         });
 
     });
+    removeBlock();
+
 });
 $('.add-collection-widget').on('click', function() {
-   setMateralize();
+    let list = $($(this).attr('data-list'));
+    let counter = list.data('widget-counter') | list.children().length;
+    if (!counter) { counter = list.children().length; }
+
+    let newWidget = list.attr('data-prototype');
+    newWidget = newWidget.replace(/__name__/g, counter);
+    counter++;
+    list.data(' widget-counter', counter);
+
+    let newElem = $(list.attr('data-widget-tags')).html('<div class="content"><button type="button" class="waves-effect waves-light btn-small remove-block red"><i class="fas fa-times"></i></button>' + newWidget + '</div>');
+    newElem.appendTo(list);
+
+    removeBlock();
+    setMateralize();
 });
 
 function setMateralize() {
@@ -137,4 +152,11 @@ function slugify(text)
         .replace(/\-\-+/g, '-')         // Replace multiple - with single -
         .replace(/^-+/, '')             // Trim - from start of text
         .replace(/-+$/, '');            // Trim - from end of text
+}
+
+function removeBlock() {
+    $('.remove-block').on('click', function() {
+        $(this).parent().parent().remove();
+        isChanged = true;
+    });
 }

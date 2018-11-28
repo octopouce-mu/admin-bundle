@@ -32,7 +32,11 @@
                     <input type="text" placeholder="{{ 'header.sidebar.left.search'|trans }}" name="search" />
                 </div>
                 <div class="center-align">
-                    <a href="/" class="btn btn-large">{{ 'header.sidebar.left.go_to_website'|trans }}</a>
+                    {% if thor.options.PROJECT_URL is defined and thor.options.PROJECT_URL.value %}
+                        <a href="{{ thor.options.PROJECT_URL.value }}" class="btn btn-large">{{ 'header.sidebar.left.go_to_website'|trans }}</a>
+                    {% else %}
+                        <a href="/" class="btn btn-large">{{ 'header.sidebar.left.go_to_website'|trans }}</a>
+                    {% endif %}
                 </div>
 
                 <article>

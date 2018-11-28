@@ -60,6 +60,7 @@ class OptionFixtures extends Fixture
 			['INSTAGRAM_PAGE_URL', null, 'instagram'],
 
 			['PROJECT_NAME', 'Thor', 'general'],
+			['PROJECT_URL', null, 'general'],
 			['PROJECT_LOGO', null, 'general'],
 
 			['COMPANY_NAME', null, 'company'],

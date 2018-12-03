@@ -40,5 +40,10 @@
   },
   "autoload": {
     "psr-4": { "Octopouce\\AdminBundle\\": "" }
+  },
+  "extra": {
+    "symfony": {
+      "allow-contrib": "true"
+    }
   }
 }

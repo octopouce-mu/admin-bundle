@@ -1,26 +1,81 @@
-AdminBundle
-===============
+OctopouceAdminBundle
+====================
 
-Introduction
-------------
-This Symfony bundle offers a manage website admin.
+Prerequisites
+-------------
 
-## Prerequisites
+This version of the bundle requires Symfony Flex (>= 4.0) and PHP 7.
+You want to use Doctrine ORM and MySQL.
 
-This version of the bundle requires Symfony Flex. 
+## Translations
 
-##Installation
 
-### Step 1: Download AdminBundle using composer
-This library is available on [Packagist](http://packagist.org/packages/octopouce-mu/admin-bundle).
+If you wish to use default texts provided in this bundle, you have to make
+sure you have translator enabled in your config.
 
-```bash
-composer require octopouce-mu/admin-bundle
+```yaml
+# app/config/config.yml
+
+framework:
+    default_locale: en
+    translator:
+        fallbacks: ['en']
 ```
 
-Composer will install the bundle to your project's `vendor/` directory.
+For more information about translations, check [Symfony documentation](https://symfony.com/doc/current/book/translation.html).
 
-### Step 2: Create your User and Invitation class
+Installation
+------------
+
+1. Download OctopouceAdminBundle using composer
+2. Create your User and Invitation class
+3. Update your database schema
+4. Import OctopouceAdminBundle routing
+5. Publish the Assets
+6. Configure your file security
+7. Generate Data Fixtures
+8. Configure your .env
+
+## Step 1: Download OctopouceAdminBundle using composer
+
+Require the bundle with composer:
+
+```bash
+$ composer require octopouce-mu/admin-bundle
+```
+
+## Step 2: Create your User and Invitation class
+
+The goal of this bundle is to persist some ``User`` class to a database.
+Your first job, then, is to create the ``User`` and ``Invitation`` class
+for your application. This class can look and act however you want: add any
+properties or methods you find useful. This is *your* ``User`` & ``Invitation`` class.
+
+The bundle provides base classes which are already mapped for most fields
+to make it easier to create your entity. Here is how you use it:
+
+1. Extend the base class (from the ``Model`` folder if you are using
+   any of the doctrine variants)
+2. Map the ``id`` field. It must be protected as it is inherited from the parent class.
+
+**Note**
+
+The doc uses a bundle named ``AppBundle`` according to the Symfony best
+practices. However, you can of course place your user class in the bundle
+you want.
+
+**Caution:**
+
+If you override the __construct() method in your User class, be sure
+to call parent::__construct(), as the base User class depends on
+this to initialize some fields.
+
+### a) Doctrine ORM User class
+
+If you're persisting your users via the Doctrine ORM, then your ``User`` class
+should live in the ``Entity`` namespace of your bundle and look like this to
+start:
+
 ```php
 <?php
 // src/Entity/Account/User
@@ -42,6 +97,13 @@ class User extends BaseUser
     }
 }
 ```
+
+
+### b) Doctrine ORM Invitation class
+
+If you're persisting your users via the Doctrine ORM, then your ``Invitation`` class
+should live in the ``Entity`` namespace of your bundle and look like this to
+start:
 
 ```php
 <?php
@@ -65,14 +127,21 @@ class Invitation extends BaseInvitation
 }
 ```
 
-### Step 3: Update database
+## Step 3: Update your database schema
+
+For ORM run the following command.
+
+```bash
+$ php bin/console doctrine:schema:update --force
 ```
-php bin/console doctrine:schema:update --force
-```
+
+**Caution**
+
 If error "1071 Specified key was too long; max key length is 767 bytes", you change configs doctrine :
+
+
 ```yaml
 # config/packages/doctrine.yaml
-
 doctrine:
     dbal:
         charset: utf8
@@ -81,46 +150,38 @@ doctrine:
             collate: utf8_unicode_ci
 ```
 
-### Step 4: Import Octopouce Admin routing file
-Now that you have activated and configured the bundle, all that is left to do is import the routing files.
-```yaml
-# config/routes/octopouce.yaml
+## Step 4: Import OctopouceAdminBundle routing files
 
+Now that you have activated and configured the bundle, all that is left to do is
+import the OctopouceAdminBundle routing files if Symfony Flex hasn't already imported the file.
+
+```yaml
+# config/routes/octopouce_admin.yaml
 _octopouce_admin:
     resource: "@OctopouceAdminBundle/Resources/config/routing.yaml"
     prefix: /admin
 ```
 
-### Step 5: Publish the Assets
-Now that you have activated and configured the bundle, all that is left to do is import the routing files.
-```
-php bin/console assets:install --symlink
+## Step 5: Publish the Assets
+
+```bash
+$ php bin/console assets:install --symlink
 ```
 
-### Step 6: Config the file security
-You does to config the provider and encoder in security and the access
+## Step 6: Configure your file security
+
 ```yaml
 # config/packages/security.yaml
-
 security:
     encoders:
-        # Our user class and the algorithm we'll use to encode passwords
-        # https://symfony.com/doc/current/security.html#c-encoding-the-user-s-password
         App\Entity\Account\User: bcrypt
 
     providers:
-        # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
-        # In this example, users are stored via Doctrine in the database
-        # To see the users at src/App/DataFixtures/ORM/LoadFixtures.php
-        # To load users from somewhere else: https://symfony.com/doc/current/security/custom_provider.html
         database_users:
             entity: { class: App\Entity\Account\User, property: username }
 
     role_hierarchy:
-        ROLE_CMS: ROLE_USER
-        ROLE_BLOG: ROLE_USER
-        ROLE_ADVERT: ROLE_USER
-        ROLE_ADMIN: [ROLE_CMS, ROLE_BLOG, ROLE_ADVERT]
+        ROLE_ADMIN: ROLE_USER
         ROLE_SUPER_ADMIN: ROLE_ADMIN
 
     # https://symfony.com/doc/current/security.html#initial-security-yml-setup-authentication
@@ -165,17 +226,25 @@ security:
         - { path: '^/admin/login', roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: '^/admin', roles: ROLE_ADMIN }
 ```
-### Step 6: Load fixtures
-Add a translator in framework.yaml
-```yaml
-framework:
-    default_locale: en
-    translator:
-        fallbacks: ['en']
+
+## Step 7: Generate Data Fixtures
+
+The bundle need data default for working so uou can to generate fixtures data in database :
+
+```bash
+$ php bin/console doctrine:fixtures:load
 ```
 
-### Step 7: Load fixtures
-You can to generate fixtures data in database
-```
-php bin/console doctrine:fixtures:load
-```
+##Step 8: Configure your .env
+
+For finish the configuration of OctopouceAdminBundle, you can to configure package dependencies in .env.
+
+
+Others bundles
+--------------
+
+You can to add bundles with OctopouceAdminBundle :
+
+- [OctopouceCmsBundle](https://github.com/octopouce-mu/cms-bundle)
+- [OctopouceBlogBundle](https://github.com/octopouce-mu/blog-bundle)
+- [OctopouceAdvertisingBundle](https://github.com/octopouce-mu/advertising-bundle)

@@ -12,7 +12,7 @@ services:
 
     Octopouce\AdminBundle\Form\EventSubscriber\TranslationFieldSubscriber:
         bind:
-            $locales: '%app.locales%'
+            $locales: '%kernel.default_locale%'
 
     Octopouce\AdminBundle\EventListener\FileListener:
         autowire: true

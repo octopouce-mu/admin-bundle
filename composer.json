@@ -45,5 +45,6 @@
     "symfony": {
       "allow-contrib": "true"
     }
-  }
+  },
+  "minimum-stability" : "stable"
 }

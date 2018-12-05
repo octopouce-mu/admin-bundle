@@ -11,6 +11,9 @@ services:
             $targetDirectory: '/uploads'
 
     Octopouce\AdminBundle\Form\EventSubscriber\TranslationFieldSubscriber:
+        autowire: false
+        autoconfigure: false
+        public: false
         bind:
             $locales: '%kernel.default_locale%'
 

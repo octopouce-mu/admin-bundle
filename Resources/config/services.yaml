@@ -14,7 +14,7 @@ services:
         autowire: false
         autoconfigure: false
         public: false
-        bind:
+        arguments:
             $locales: '%kernel.default_locale%'
 
     Octopouce\AdminBundle\EventListener\FileListener:

@@ -2,6 +2,7 @@
 .idea/
 .DS_Store
 yarn.lock
+/recipes/
 
 ###> symfony/framework-bundle ###
 /vendor/

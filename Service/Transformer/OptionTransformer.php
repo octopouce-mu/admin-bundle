@@ -35,7 +35,7 @@ class OptionTransformer {
 
 	public function getOptionsWithKeyName(){
 		$cachedOptions = $this->cache->getItem('thor.options');
-		if(!$cachedOptions->isHit()){
+		if(!$cachedOptions->isHit() || !$cachedOptions->get()){
 			$options = $this->em->getRepository(Option::class)->findAll();
 			$opts = [];
 			foreach ($options as $option){

@@ -13,12 +13,10 @@ services:
     Octopouce\AdminBundle\Form\EventSubscriber\TranslationFieldSubscriber:
         autowire: false
         autoconfigure: false
-        public: false
         arguments:
             $locales: '%kernel.default_locale%'
 
     Octopouce\AdminBundle\EventListener\FileListener:
-        autowire: true
         tags:
             - { name: doctrine.event_listener, event: postLoad }
 
@@ -28,13 +26,5 @@ services:
             - { name: twig.extension }
 
     Octopouce\AdminBundle\Service\Sortable\PositionORMHandler:
-        public: false
-        arguments:
-            $entityManager: "@doctrine.orm.entity_manager"
         calls:
             - [ 'setPositionField', ['sort']]
-
-    Octopouce\AdminBundle\Service\Featured\FeaturedORMHandler:
-        public: false
-        arguments:
-            $entityManager: "@doctrine.orm.entity_manager"

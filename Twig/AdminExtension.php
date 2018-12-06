@@ -14,6 +14,8 @@ class AdminExtension extends AbstractExtension implements \Twig_Extension_Global
 	private $options;
 	private $router;
 
+	private $dashboardEnabled;
+
 
 	public function __construct(OptionTransformer $optionTransformer, RouterInterface $router)
 	{
@@ -21,10 +23,20 @@ class AdminExtension extends AbstractExtension implements \Twig_Extension_Global
 		$this->router = $router;
 	}
 
+	public function setDashboardEnabled( $dashboardEnabled )
+	{
+		$this->dashboardEnabled = $dashboardEnabled;
+	}
+
 	public function getGlobals()
 	{
 		$globals = [];
-		$globals['thor'] = ['options' => $this->options];
+		$globals['thor'] = [
+			'options' => $this->options,
+			'dashboard' => [
+				'enabled' => $this->dashboardEnabled
+			]
+		];
 
 		return $globals;
 	}

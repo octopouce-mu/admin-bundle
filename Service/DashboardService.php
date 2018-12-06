@@ -51,6 +51,8 @@ class DashboardService {
 	 */
 	private $em;
 
+	private $enabled;
+
 	/**
 	 * DashboardService constructor.
 	 *
@@ -68,8 +70,17 @@ class DashboardService {
 		$this->em = $em;
 	}
 
+	public function setEnabled( $enabled )
+	{
+		$this->enabled = $enabled;
+	}
+
 
 	public function getData(){
+		if($this->enabled === false) {
+			return $this->enabled;
+		}
+
 		$response = [];
 
 		$firstDayLastWeek = new \DateTime();

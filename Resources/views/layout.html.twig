@@ -102,13 +102,15 @@
                 </div>
                 {% block sidebar_left_nav %}
                     <ul>
-                        <li class="current">
-                            {% block dashboard_sidebar_left_nav %}
-                                <a href="{{ path('octopouce_admin_dashboard_index') }}">
-                                    {{ 'header.sidebar.left.nav.dashboard'|trans|raw }}
-                                </a>
-                            {% endblock %}
-                        </li>
+                        {% if thor.dashboard.enabled %}
+                            <li class="current">
+                                {% block dashboard_sidebar_left_nav %}
+                                    <a href="{{ path('octopouce_admin_dashboard_index') }}">
+                                        {{ 'header.sidebar.left.nav.dashboard'|trans|raw }}
+                                    </a>
+                                {% endblock %}
+                            </li>
+                        {% endif %}
 
                         {% block custom_sidebar_left_nav %}
                         {% endblock %}

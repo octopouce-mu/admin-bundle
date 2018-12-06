@@ -17,16 +17,11 @@ class Configuration implements ConfigurationInterface {
 
 		$rootNode
 			->children()
-				->scalarNode( 'project_name' )->isRequired()->end()
-				->scalarNode( 'project_domain' )->isRequired()->end()
-				->scalarNode( 'google_ga_json' )->end()
-				->scalarNode( 'google_ga_view' )->end()
-				->scalarNode( 'facebook_id' )->end()
-				->scalarNode( 'facebook_secret' )->end()
-				->scalarNode( 'twitter_oauth_token' )->end()
-				->scalarNode( 'twitter_oauth_secret' )->end()
-				->scalarNode( 'twitter_consumer_key' )->end()
-				->scalarNode( 'twitter_consumer_secret' )->end()
+				->arrayNode('dashboard')
+					->children()
+						->booleanNode( 'enabled' )->defaultTrue()->end()
+					->end()
+				->end()
 			->end();
 
 		return $treeBuilder;

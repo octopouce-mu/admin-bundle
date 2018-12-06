@@ -5,7 +5,6 @@ namespace Octopouce\AdminBundle\Entity\Account;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\MappedSuperclass(repositoryClass="Octopouce\AdminBundle\Repository\Account\UserRepository")
@@ -96,12 +95,6 @@ abstract class User implements UserInterface
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
-     * @Assert\Image(
-     *     minWidth = 100,
-     *     maxWidth = 250,
-     *     minHeight = 100,
-     *     maxHeight = 250
-     * )
      */
     protected $image;
 

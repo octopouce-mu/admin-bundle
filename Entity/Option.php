@@ -3,7 +3,6 @@
 namespace Octopouce\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="Octopouce\AdminBundle\Repository\OptionRepository")

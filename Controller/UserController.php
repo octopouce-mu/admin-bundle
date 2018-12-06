@@ -22,17 +22,17 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
  */
 class UserController extends AbstractController
 {
-    /**
-     * @Route("/", name="octopouce_admin_user_index")
-     */
-    public function index(): Response
-    {
-    	$users = $this->getDoctrine()->getRepository(User::class)->findAll();
+	/**
+	 * @Route("/", name="octopouce_admin_user_index")
+	 */
+	public function index(): Response
+	{
+		$users = $this->getDoctrine()->getRepository(User::class)->findAll();
 
-        return $this->render('@OctopouceAdmin/User/index.html.twig', [
-	        'users' => $users
-        ]);
-    }
+		return $this->render('@OctopouceAdmin/User/index.html.twig', [
+			'users' => $users
+		]);
+	}
 
 	/**
 	 * @Route("/create", name="octopouce_admin_user_create")
@@ -68,8 +68,10 @@ class UserController extends AbstractController
 	/**
 	 * @Route("/{id}", name="octopouce_admin_user_show")
 	 */
-	public function show(User $user): Response
+	public function show($id): Response
 	{
+		$user = $this->getDoctrine()->getRepository(User::class)->find($id);
+
 		return $this->render('@OctopouceAdmin/User/show.html.twig', [
 			'user' => $user,
 		]);
@@ -80,13 +82,15 @@ class UserController extends AbstractController
 	/**
 	 * @Route("/edit/{id}", name="octopouce_admin_user_edit")
 	 */
-	public function edit(Request $request, User $user, UserPasswordEncoderInterface $passwordEncoder, AuthorizationCheckerInterface $authChecker): Response
+	public function edit(Request $request, $id, UserPasswordEncoderInterface $passwordEncoder, AuthorizationCheckerInterface $authChecker): Response
 	{
 		$userIdentified = $this->getUser();
+		$user = $this->getDoctrine()->getRepository(User::class)->find($id);
 
 		if (false === $authChecker->isGranted('ROLE_SUPER_ADMIN') && $userIdentified !== $user) {
 			throw new AccessDeniedException('Unable to access this page!');
 		}
+
 
 		$form = $this->createForm(UserType::class, $user, [
 			'edit' => true,
@@ -113,9 +117,11 @@ class UserController extends AbstractController
 	/**
 	 * @Route("/delete/{id}", name="octopouce_admin_user_delete")
 	 */
-	public function delete(User $user): Response
+	public function delete($id): Response
 	{
 		$em = $this->getDoctrine()->getManager();
+		$user = $em->getRepository(User::class)->find($id);
+
 		if($user != $this->getUser()){
 			$em->remove($user);
 			$em->flush();

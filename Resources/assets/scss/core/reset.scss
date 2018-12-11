@@ -13,6 +13,17 @@ div:not(.ck-editor){
   }
 }
 
+.ck-editor ul {
+  padding-left: inherit;
+  list-style-type: inherit;
+  list-style: inherit;
+  margin: 0;
+
+  & > li {
+    list-style-type: inherit;
+  }
+}
+
 a, a:focus, a:hover {
 
   text-decoration: none;

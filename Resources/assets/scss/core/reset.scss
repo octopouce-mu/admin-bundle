@@ -5,24 +5,11 @@ html, body {
   color: #E8E8E8;
 }
 
-div:not(.ck-editor){
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-}
-
-.ck-editor ul {
-  padding-left: inherit;
-  list-style-type: inherit;
-  list-style: inherit;
-  margin: 0;
-
-  & > li {
-    list-style-type: inherit;
-  }
-}
+//ul {
+//  list-style: none;
+//  margin: 0;
+//  padding: 0;
+//}
 
 a, a:focus, a:hover {
 

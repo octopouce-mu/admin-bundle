@@ -82,3 +82,15 @@ h1, .h1, h2, .h2, h3, .h3 {
   margin-bottom: 5px;
 
 }
+
+.ck-editor {
+  strong, b {
+    font-weight: 800 !important;
+  }
+}
+.ck-input {
+  color: #000 !important;
+}
+.ck .ck-link_selected {
+  background: #717171 !important;
+}

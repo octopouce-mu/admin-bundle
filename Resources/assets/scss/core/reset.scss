@@ -5,10 +5,12 @@ html, body {
   color: #E8E8E8;
 }
 
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+div:not(.ck-editor){
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
 }
 
 a, a:focus, a:hover {

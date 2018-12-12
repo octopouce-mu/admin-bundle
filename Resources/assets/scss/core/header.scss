@@ -37,6 +37,9 @@ header.sidebar {
 
 
     ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
       li {
         position: relative;
         a {
@@ -252,6 +255,11 @@ header.sidebar-left {
       margin-left: 0px;
      left:-100%;
   }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
   &.open {
     margin-left: 0;
     @media only screen and (max-width:767px){
@@ -312,6 +320,11 @@ header.sidebar-left {
       border-top: 0;
       border-bottom: 1px solid rgba(255,255,255,.1);
     }
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
  background: rgba(0,20,35,.7);
   border-top: 1px solid rgba(255,255,255,.1);

@@ -5,11 +5,10 @@ html, body {
   color: #E8E8E8;
 }
 
-//ul {
-//  list-style: none;
-//  margin: 0;
-//  padding: 0;
-//}
+ul {
+  list-style: none;
+  padding: 0;
+}
 
 a, a:focus, a:hover {
 
@@ -81,16 +80,4 @@ h1, .h1, h2, .h2, h3, .h3 {
 .waves-effect.btn {
   margin-bottom: 5px;
 
-}
-
-.ck-editor {
-  strong, b {
-    font-weight: 800 !important;
-  }
-}
-.ck-input {
-  color: #000 !important;
-}
-.ck .ck-link_selected {
-  background: #717171 !important;
 }

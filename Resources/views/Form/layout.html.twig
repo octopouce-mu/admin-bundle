@@ -29,16 +29,20 @@
 
 {% block checkbox_row -%}
     <div class="row {% if not valid %} has-error{% endif %}">
-        {{- form_widget(form) -}}
-        {{- form_label(form) -}}
-        {{- form_errors(form) -}}
+        <div class="col s12">
+            <label>
+                {{- form_widget(form) -}}
+                <span>{{- form_label(form) -}}</span>
+            </label>
+            {{- form_errors(form) -}}
+        </div>
     </div>
 {%- endblock checkbox_row %}
 
 {% block checkbox_widget -%}
     {%- set attr = attr|merge({class: 'filled-in'}) -%}
-    {{- parent() -}}
-    {#<input type="checkbox" class="filled-in"{{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked or (value is defined and value) %} checked="checked"{% endif %} />#}
+    {#{{- parent() -}}#}
+    <input type="checkbox" {{ block('widget_attributes') }}{% if checked %} checked="checked"{% endif %} />
 {%- endblock checkbox_widget %}
 
 {# Checkbox label is raw here #}
@@ -60,9 +64,9 @@
                 {% set label = name|humanize %}
             {%- endif -%}
         {%- endif -%}
-        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+        {#<label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>#}
         {{ translation_domain is same as(false) ? label|raw : label|trans({}, translation_domain)|raw }}
-        </label>
+        {#</label>#}
     {%- endif -%}
 {%- endblock -%}
 

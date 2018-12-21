@@ -6,7 +6,7 @@
 
 namespace Octopouce\AdminBundle\Service\Sortable;
 
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityManager;
 
 class PositionORMHandler extends PositionHandler
 {
@@ -15,7 +15,7 @@ class PositionORMHandler extends PositionHandler
 	 */
 	protected $em;
 
-	public function __construct(EntityManagerInterface $entityManager)
+	public function __construct(EntityManager $entityManager)
 	{
 		$this->em = $entityManager;
 	}

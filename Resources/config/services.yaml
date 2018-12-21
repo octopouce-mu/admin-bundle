@@ -26,5 +26,7 @@ services:
             - { name: twig.extension }
 
     Octopouce\AdminBundle\Service\Sortable\PositionORMHandler:
+        arguments:
+            $entityManager: '@doctrine.orm.entity_manager'
         calls:
             - [ 'setPositionField', ['sort']]

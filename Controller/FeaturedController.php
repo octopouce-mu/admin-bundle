@@ -37,7 +37,7 @@ class FeaturedController extends AbstractController {
 		$updateDb = $featuredService->setFeatured($entity, $setter, $id, $featured);
 
 		if($updateDb === true){
-			return new Response('Success');
+			return new Response($featured);
 		}else{
 			return new Response('Error', 500);
 		}

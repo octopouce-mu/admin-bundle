@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityManager;
 class PositionORMHandler extends PositionHandler
 {
 	/**
-	 * @var EntityManagerInterface
+	 * @var EntityManager
 	 */
 	protected $em;
 

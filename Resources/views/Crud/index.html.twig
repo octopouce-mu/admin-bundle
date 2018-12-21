@@ -161,19 +161,23 @@
     {% if entities and entities.0.featured is defined %}
         <script>
             $('.fa-star').on('click', function() {
-                var id = $(this).data('id');
-                var featured = $(this).data('featured') == 1 ? 0 : 1;
+                var icon = $(this);
+                var id = icon.data('id');
+                var featured = icon.data('featured') == 1 ? 0 : 1;
 
                 $.ajax({
                     data: {id: id, featured: featured, class:'{{ entities.0|getClass}}'},
                     type: 'POST',
                     url: Routing.generate('octopouce_admin_admin_featured_action'),
                     success: function (data) {
-                        $(this).data('featured', featured);
-                        if(featured == 1) {
-                            $(this).removeClass('fas').addClass('far');
+                        data = parseInt(data);
+                        icon.data('featured', data);
+                        if(data === 1) {
+                            console.log(1);
+                            icon.removeClass('far').addClass('fas');
                         } else {
-                            $(this).removeClass('far').addClass('fas');
+                            console.log(0);
+                            icon.removeClass('fas').addClass('far');
                         }
 
                     },

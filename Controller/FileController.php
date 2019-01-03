@@ -43,6 +43,7 @@ class FileController extends Controller
 
 					$file = new File();
 					$file->setTitle($request->request->get('title'));
+					$file->setAlt($request->request->get('alt'));
 
 					$file->setPath($name);
 					$em->persist($file);
@@ -57,7 +58,7 @@ class FileController extends Controller
 			return new JsonResponse('Field file missing', 500);
 		}
 
-		return new JsonResponse(['id' => $file->getId(), 'path' => $file->getPath()]);
+		return new JsonResponse(['id' => $file->getId(), 'path' => $file->getPath(), 'title' => $file->getTitle(), 'alt' => $file->getAlt()]);
 	}
 
 	/**
@@ -81,9 +82,9 @@ class FileController extends Controller
 	public function apiGet(File $file) : Response {
 
 		if($file->getPath() instanceof \Symfony\Component\HttpFoundation\File\File) {
-			return new JsonResponse(['id' => $file->getId(), 'path' => $file->getPath()->getPathName()]);
+			return new JsonResponse(['id' => $file->getId(), 'path' => $file->getPath()->getPathName(), 'alt' => $file->getAlt(), 'title' => $file->getTitle()]);
 		} else {
-			return new JsonResponse(['id' => $file->getId(), 'path' => $file->getPath()]);
+			return new JsonResponse(['id' => $file->getId(), 'path' => $file->getPath(), 'alt' => $file->getAlt(), 'title' => $file->getTitle()]);
 		}
 	}
 }

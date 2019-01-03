@@ -16,7 +16,7 @@ class FileListener {
 	{
 		$entity = $args->getEntity();
 
-		if (!$entity instanceof File ) {
+		if (!$entity instanceof File && class_exists('Proxies\__CG__\Octopouce\AdminBundle\Entity\File') && !$entity instanceof Proxies\__CG__\Octopouce\AdminBundle\Entity\File ) {
 			return;
 		}
 

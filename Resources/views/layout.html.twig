@@ -124,6 +124,9 @@
                                     <li>
                                         {% block cms_sidebar_left_nav %}
                                             <a href="{{ path('octopouce_cms_admin_page_index') }}">Page</a>
+                                            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                                <a href="{{ path('octopouce_cms_admin_field_index') }}">ACF</a>
+                                            {% endif %}
                                         {% endblock %}
                                     </li>
                                 </ul>

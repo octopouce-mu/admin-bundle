@@ -23,6 +23,7 @@ class OctopouceAdminExtension extends Extension
 		$config = $this->processConfiguration($configuration, $configs);
 
 		$this->setDashboard($container, $config);
+		$this->setLocale($container);
 	}
 
 	private function setDashboard( $container, $config ) {
@@ -31,5 +32,16 @@ class OctopouceAdminExtension extends Extension
 
 		$adminExtension = $container->getDefinition('Octopouce\AdminBundle\Twig\AdminExtension');
 		$adminExtension->addMethodCall('setDashboardEnabled', [$config['dashboard']['enabled']]);
+	}
+
+	private function setLocale( ContainerBuilder $container ) {
+		$localeProvider = $container->getDefinition('Octopouce\AdminBundle\Provider\Locale\LocaleProvider');
+
+		if($container->hasParameter('app_locales')) {
+			$localeProvider->addMethodCall('setLocales', [$container->getParameter('app_locales')]);
+		} else {
+			$container->setParameter('app_locales', [$container->getParameter('locale')]);
+			$localeProvider->addMethodCall('setLocales', [$container->getParameter('locale')]);
+		}
 	}
 }

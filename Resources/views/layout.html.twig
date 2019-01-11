@@ -261,9 +261,12 @@
                         <li class="logout"><a href="{{ path('octopouce_admin_logout') }}"><i class="fas fa-power-off"></i></a></li>
                     </ul>
                 </div>
+
+
             </div>
 
         {% endblock %}
+
         {% block main %}{% endblock %}
     </div>
 
@@ -277,5 +280,13 @@
     <script src="{{ asset('bundles/octopouceadmin/vendor/jquery.collection.js') }}"></script>
     <script src="{{ asset('bundles/octopouceadmin/vendor/colorpicker/js/bootstrap-colorpicker.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script>
+        {% for label, flashes in app.session.flashbag.all %}
+            {% for flash in flashes %}
+                M.toast({html: '<b>{{ label|upper }}</b> : {{ flash }}', classes: 'rounded {% if label == 'error' %}red{% elseif label == 'success' %}green{% elseif label == 'warning' %}orange{% endif %}'});
+            {% endfor %}
+        {% endfor %}
+
+    </script>
 
 {% endblock %}

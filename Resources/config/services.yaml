@@ -30,3 +30,11 @@ services:
             $entityManager: '@doctrine.orm.entity_manager'
         calls:
             - [ 'setPositionField', ['sort']]
+
+    Octopouce\AdminBundle\Doctrine\ORMInfo:
+        arguments:
+            $entityManager: '@doctrine.orm.entity_manager'
+
+    Octopouce\AdminBundle\Provider\Locale\LocaleProvider:
+        arguments:
+            $defaultLocale: '%locale%'

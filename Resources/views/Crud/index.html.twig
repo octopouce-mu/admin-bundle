@@ -151,6 +151,7 @@
                             type: 'POST',
                             url: Routing.generate('octopouce_admin_admin_sortable_drag'),
                             success: function (data) {
+                                M.toast({html: '<b>Success</b> : Sort success', classes: 'rounded green'});
                             },
                         });
                     }

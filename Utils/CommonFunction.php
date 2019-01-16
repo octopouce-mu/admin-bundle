@@ -7,7 +7,16 @@
 namespace Octopouce\AdminBundle\Utils;
 
 
+use Doctrine\ORM\EntityManagerInterface;
+
 class CommonFunction {
+
+	private $em;
+
+	public function __construct(EntityManagerInterface $em) {
+		$this->em = $em;
+	}
+
 
 	public function setMethod( $key, $object, $value ) {
 		$currMethod = 'set';
@@ -52,6 +61,25 @@ class CommonFunction {
 		}
 
 		return $text;
+	}
+
+	public function getSlugLocales($slug, $entity) {
+		$localeDefault = $request->getDefaultLocale();
+		$locale = $request->getLocale();
+
+		if($localeDefault == $locale) {
+			$page = $this->getDoctrine()->getRepository(Page::class)->findOneBySlug($slug);
+		} else {
+			$pageTranslation = $this->getDoctrine()->getRepository(Page::getTranslationEntityClass())->findOneBySlug($slug);
+			if(!$pageTranslation) {
+				throw new NotFoundHttpException("No route found");
+			}
+			$page = $pageTranslation->getTranslatable();
+		}
+
+		if(!$page) {
+			throw new NotFoundHttpException("No route found");
+		}
 	}
 
 }

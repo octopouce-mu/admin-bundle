@@ -4,7 +4,7 @@ namespace Octopouce\AdminBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+use Octopouce\AdminBundle\Translatable\Translatable;
 
 /**
  * @ORM\Entity
@@ -12,7 +12,7 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
  */
 class Category
 {
-	use ORMBehaviors\Translatable\Translatable;
+	use Translatable;
 
     /**
      * @var int

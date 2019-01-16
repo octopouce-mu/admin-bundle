@@ -24,7 +24,7 @@ class FileUploader {
 	public function upload(UploadedFile $file, $path = null, $name = null)
 	{
 		if (!$path && !file_exists($this->getTargetDirectory())) {
-			mkdir($this->getTargetDirectory(), 0777, true);
+			mkdir($this->getTargetDirectory(), 0775, true);
 		}
 
 		if($path && $path == 'date') {
@@ -32,7 +32,7 @@ class FileUploader {
 			$path = 'uploads/'.$now->format('Y/m');
 
 			$fileSystem = new Filesystem();
-			$fileSystem->mkdir($path, 0777);
+			$fileSystem->mkdir($path, 0775);
 		}
 
 		if($name) {

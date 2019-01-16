@@ -44,6 +44,6 @@ class OctopouceAdminExtension extends Extension
 			$localeProvider->addMethodCall('setLocales', [$container->getParameter('locale')]);
 		}
 
-		$container->setParameter('knp.doctrine_behaviors.translatable_subscriber.translatable_fetch_method', 'Octopouce\AdminBundle\Translatable\TranslatableMethods');
+		$container->setParameter('knp.doctrine_behaviors.translatable_subscriber.translatable_trait', 'Octopouce\AdminBundle\Translatable\Translatable');
 	}
 }

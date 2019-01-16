@@ -12,11 +12,11 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css">
-    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,200,300,700' rel='stylesheet' type='text/css'>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.4.2/css/all.css">
+    <link rel="stylesheet" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link href='//fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,200,300,700' rel='stylesheet' type='text/css'>
+    <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/octopouceadmin/vendor/colorpicker/css/bootstrap-colorpicker.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/octopouceadmin/build/css/style.css') }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -276,10 +276,10 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/octopouceadmin/build/js/admin.js') }}"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/11.2.0/classic/ckeditor.js"></script>
+    <script src="//cdn.ckeditor.com/ckeditor5/11.2.0/classic/ckeditor.js"></script>
     <script src="{{ asset('bundles/octopouceadmin/vendor/jquery.collection.js') }}"></script>
     <script src="{{ asset('bundles/octopouceadmin/vendor/colorpicker/js/bootstrap-colorpicker.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script>
         {% for label, flashes in app.session.flashbag.all %}
             {% for flash in flashes %}

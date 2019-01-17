@@ -8,14 +8,13 @@ namespace Octopouce\AdminBundle\Controller;
 
 use Octopouce\AdminBundle\Utils\FileUploader;
 use Octopouce\AdminBundle\Entity\File;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Routing\Annotation\Route;
 
 
 
@@ -23,7 +22,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
  * @Route("/file")
  * @IsGranted("ROLE_USER")
  */
-class FileController extends Controller
+class FileController extends AbstractController
 {
 	/**
 	 * @Route("/api/create", name="octopouce_admin_admin_file_api_create", options={"expose"=true})

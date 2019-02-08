@@ -168,7 +168,7 @@ abstract class User implements UserInterface
 	}
 
 
-	public function getId(): int
+	public function getId(): ?int
     {
         return $this->id;
     }
@@ -205,7 +205,7 @@ abstract class User implements UserInterface
         $this->email = $email;
     }
 
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -287,7 +287,7 @@ abstract class User implements UserInterface
         // $this->plainPassword = null;
     }
 
-	public function serialize(): string
+	public function serialize(): ?string
 	{
 		// add $this->salt too if you don't use Bcrypt or Argon2i
 		return serialize([$this->id, $this->username, $this->password]);

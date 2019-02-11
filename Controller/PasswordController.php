@@ -63,7 +63,7 @@ class PasswordController extends AbstractController
 		}
 
 		$now = new \DateTime();
-		if($now->modify('+1 hour') < $user->getResetDate()){
+		if($now->modify('+1 hour') < $user->getResetToken()){
 			$this->addFlash('error', 'The token is no longer valid!');
 			return $this->redirectToRoute('octopouce_admin_password_resetting');
 		}

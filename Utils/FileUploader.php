@@ -8,6 +8,7 @@ namespace Octopouce\AdminBundle\Utils;
 
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -68,7 +69,7 @@ class FileUploader {
 		$fileSystem = new Filesystem();
 
 		if($old) { // update
-			if(!is_array($files) && !$files instanceof ArrayCollection) {
+			if(!is_array($files) && !$files instanceof ArrayCollection && !$files instanceof PersistentCollection) {
 				if($files) {
 					if($old instanceof File) $fileSystem->remove($old);
 
@@ -98,7 +99,7 @@ class FileUploader {
 			}
 
 		} else { // create
-			if(!is_array($files) && !$files instanceof ArrayCollection) {
+			if(!is_array($files) && !$files instanceof ArrayCollection && !$files instanceof PersistentCollection) {
 				if($files) {
 					$nameThumbnail = $this->upload( $files, 'date', $name);
 					return $nameThumbnail;
@@ -117,7 +118,7 @@ class FileUploader {
 		$fileSystem = new Filesystem();
 		if($files instanceof File) {
 			$fileSystem->remove($files->getPathName());
-		} elseif(is_array($files) || $files instanceof ArrayCollection) {
+		} elseif(is_array($files) || $files instanceof ArrayCollection || $files instanceof PersistentCollection) {
 			foreach ($files as $file) {
 				if($file->getPath() instanceof File) {
 					$fileSystem->remove($file->getPath()->getPathName());

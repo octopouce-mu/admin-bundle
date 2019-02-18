@@ -1,0 +1,18 @@
+services:
+    octopouce.admin.user.form.factory:
+        class: Octopouce\AdminBundle\Form\Factory\FormFactory
+        arguments:
+            $formFactory: '@form.factory'
+            $name: '%octopouce.admin.user.form.name%'
+            $type: '%octopouce.admin.user.form.type%'
+
+    octopouce.admin.user.form.type:
+        class: Octopouce\AdminBundle\Form\UserType
+        tags:
+            - { name: form.type, alias: octopouce_admin_user_type }
+
+    octopouce.admin.user.controller:
+        class: Octopouce\AdminBundle\Controller\UserController
+        public: true
+        arguments:
+            $formFactory: '@octopouce.admin.user.form.factory'

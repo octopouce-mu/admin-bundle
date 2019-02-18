@@ -6,6 +6,8 @@
 
 namespace Octopouce\AdminBundle\DependencyInjection;
 
+use Octopouce\AdminBundle\Form\UserType;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -24,6 +26,28 @@ class Configuration implements ConfigurationInterface {
 				->end()
 			->end();
 
+		$this->addUserSection($rootNode);
+
 		return $treeBuilder;
+	}
+
+	private function addUserSection(ArrayNodeDefinition $node)
+	{
+		$node
+			->children()
+				->arrayNode('user')
+					->addDefaultsIfNotSet()
+					->canBeUnset()
+					->children()
+						->arrayNode('form')
+							->addDefaultsIfNotSet()
+							->children()
+								->scalarNode('type')->defaultValue(UserType::class)->end()
+								->scalarNode('name')->defaultValue('octopouce_admin_user_type')->end()
+							->end()
+						->end()
+					->end()
+				->end()
+			->end();
 	}
 }

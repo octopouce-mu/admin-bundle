@@ -4,6 +4,7 @@
 namespace Octopouce\AdminBundle\Controller;
 
 use App\Entity\Account\User;
+use Octopouce\AdminBundle\Form\Factory\FactoryInterface;
 use Octopouce\AdminBundle\Form\UserType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,6 +23,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
  */
 class UserController extends AbstractController
 {
+	private $formFactory;
+
+	public function __construct(FactoryInterface $formFactory)
+	{
+		$this->formFactory = $formFactory;
+	}
+
 	/**
 	 * @Route("/", name="octopouce_admin_user_index")
 	 */

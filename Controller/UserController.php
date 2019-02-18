@@ -23,13 +23,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
  */
 class UserController extends AbstractController
 {
-	private $formFactory;
-
-	public function __construct(FactoryInterface $formFactory)
-	{
-		$this->formFactory = $formFactory;
-	}
-
 	/**
 	 * @Route("/", name="octopouce_admin_user_index")
 	 */
@@ -50,7 +43,7 @@ class UserController extends AbstractController
 	{
 		$user = new User();
 
-		$form = $this->createForm(UserType::class, $user, [
+		$form = $this->createForm($this->getParameter('octopouce.admin.user.form.type'), $user, [
 			'super_admin' => true
 		]);
 
@@ -100,7 +93,7 @@ class UserController extends AbstractController
 		}
 
 
-		$form = $this->createForm(UserType::class, $user, [
+		$form = $this->createForm($this->getParameter('octopouce.admin.user.form.type'), $user, [
 			'edit' => true,
 			'super_admin' => $authChecker->isGranted('ROLE_SUPER_ADMIN')
 		]);

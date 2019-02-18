@@ -119,4 +119,9 @@ class UserType extends AbstractType
 			'super_admin' => false
 		]);
 	}
+
+	public function getBlockPrefix()
+	{
+		return 'octopouce_admin_user_type';
+	}
 }

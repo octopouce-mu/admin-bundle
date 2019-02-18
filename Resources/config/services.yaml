@@ -38,3 +38,7 @@ services:
     Octopouce\AdminBundle\Provider\Locale\LocaleProvider:
         arguments:
             $defaultLocale: '%locale%'
+
+    Octopouce\AdminBundle\Form\UserType:
+        tags:
+            - { name: form.type, alias: octopouce_admin_user_type }

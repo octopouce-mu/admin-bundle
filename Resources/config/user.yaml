@@ -1,5 +1,2 @@
 services:
-    octopouce.admin.user.form.type:
-        class: Octopouce\AdminBundle\Form\UserType
-        tags:
-            - { name: form.type, alias: octopouce_admin_user_type }
+

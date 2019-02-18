@@ -65,6 +65,7 @@ select {
     background-color: transparent;
     border: none;
     border-bottom: $input-border;
+    overflow-y: auto;
     outline: none;
     height: $input-height;
     line-height: $input-height;

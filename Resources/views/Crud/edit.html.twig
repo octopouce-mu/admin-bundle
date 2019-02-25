@@ -31,6 +31,10 @@
                                 </div>
                             </div>
                         {% endif %}
+                        {{ form_rest(form) }}
+                        {% if form.submit is not defined %}
+                            <button class="btn">Submit</button>
+                        {% endif %}
                         {{ form_end(form) }}
                     </div>
                 </div>

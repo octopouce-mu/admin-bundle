@@ -22,7 +22,7 @@ class MailerService {
 		$this->options = $optionTransformer->getOptionsWithKeyName();
 	}
 
-	public function send($to = 'kevin@octopouce.mu', $subject = 'This is a test', $body = 'This is a test.'){
+	public function send($to = 'kevin@octopouce.mu', $subject = 'This is a test', $body = 'This is a test.', $pj = null){
 
 		$transport = (new \Swift_SmtpTransport($this->options['MAIL_SMTP_HOST']->getValue(), intval($this->options['MAIL_SMTP_PORT']->getValue())))
 			->setUsername($this->options['MAIL_SMTP_USERNAME']->getValue())
@@ -36,6 +36,10 @@ class MailerService {
 			->setTo($to)
 			->setBody($body, 'text/html')
 		;
+
+		if($pj) {
+			$message->attach(\Swift_Attachment::fromPath($pj));
+		}
 
 		if($this->options['MAIL_TO_DEV']->getValue() && (getenv('APP_ENV') == 'dev' || getenv('APP_ENV') == 'test')){
 			$message->setTo($this->options['MAIL_TO_DEV']->getValue());

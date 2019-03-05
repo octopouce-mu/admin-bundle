@@ -12,6 +12,7 @@ use Octopouce\AdminBundle\Service\Api\GoogleAnalyticsService;
 use Octopouce\AdminBundle\Service\Api\TwitterService;
 use Octopouce\AdminBundle\Service\Api\YoutubeService;
 use Doctrine\ORM\EntityManagerInterface;
+use Octopouce\AdminBundle\Service\Transformer\OptionTransformer;
 use Symfony\Component\Cache\Simple\FilesystemCache;
 
 class DashboardService {
@@ -51,6 +52,9 @@ class DashboardService {
 	 */
 	private $em;
 
+	/** @var OptionTransformer */
+	private $optionTransformer;
+
 	private $enabled;
 
 	/**
@@ -61,13 +65,41 @@ class DashboardService {
 	 * @param TwitterService $twitterService
 	 * @param YoutubeService $youtubeService
 	 */
-	public function __construct( GoogleAnalyticsService $analyticsService, FacebookService $facebookService, TwitterService $twitterService, YoutubeService $youtubeService, EntityManagerInterface $em) {
+	public function __construct( GoogleAnalyticsService $analyticsService, FacebookService $facebookService, TwitterService $twitterService, YoutubeService $youtubeService, EntityManagerInterface $em, OptionTransformer $optionTransformer) {
 		$this->analyticsService = $analyticsService;
 		$this->facebookService  = $facebookService;
 		$this->twitterService   = $twitterService;
 		$this->youtubeService   = $youtubeService;
-		$this->cache = new FilesystemCache();
+		$this->optionTransformer = $optionTransformer->getOptionsWithKeyName();
+		$this->cache = new FilesystemCache(self::slugify($this->optionTransformer['PROJECT_NAME']->getValue()));
 		$this->em = $em;
+	}
+
+	public static function slugify($text = '')
+	{
+		// replace non letter or digits by -
+		$text = preg_replace('~[^\pL\d]+~u', '-', $text);
+
+		// transliterate
+		$text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+
+		// remove unwanted characters
+		$text = preg_replace('~[^-\w]+~', '', $text);
+
+		// trim
+		$text = trim($text, '-');
+
+		// remove duplicate -
+		$text = preg_replace('~-+~', '-', $text);
+
+		// lowercase
+		$text = strtolower($text);
+
+		if (empty($text)) {
+			return $text;
+		}
+
+		return $text;
 	}
 
 	public function setEnabled( $enabled )

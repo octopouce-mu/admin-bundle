@@ -16,7 +16,7 @@ class DashboardController extends AbstractController
 {
     /**
      * @Route("/", name="octopouce_admin_dashboard_index")
-     * @IsGranted("ROLE_USER")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function index( DashboardService $dashboardService, Request $request ): Response
     {

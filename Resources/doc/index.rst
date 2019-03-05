@@ -22,6 +22,14 @@ sure you have translator enabled in your config.
         translator:
             fallbacks: ['en']
 
+.. code-block:: yaml
+
+    # app/config/services.yml
+
+    parameters:
+        app_locales: en|fr
+        locale: 'fr'
+
 For more information about translations, check `Symfony documentation <https://symfony.com/doc/current/book/translation.html>`_.
 
 Installation

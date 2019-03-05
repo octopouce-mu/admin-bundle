@@ -1,6 +1,6 @@
 title.login: Admin
 label:
-    username: Pseudo
+    username: E-mail
     password: Mot de passe
     remember: S'en souvenir
 action.sign_in: Se connecter

@@ -22,6 +22,14 @@ framework:
         fallbacks: ['en']
 ```
 
+```yaml
+# app/config/services.yml
+
+parameters:
+    app_locales: en|fr
+    locale: 'fr'
+```
+
 For more information about translations, check [Symfony documentation](https://symfony.com/doc/current/book/translation.html).
 
 Installation
@@ -142,6 +150,7 @@ If error "1071 Specified key was too long; max key length is 767 bytes", you cha
 
 ```yaml
 # config/packages/doctrine.yaml
+
 doctrine:
     dbal:
         charset: utf8
@@ -156,10 +165,10 @@ Now that you have activated and configured the bundle, all that is left to do is
 import the OctopouceAdminBundle routing files if Symfony Flex hasn't already imported the file.
 
 ```yaml
-# config/routes/octopouce_admin.yaml
+# config/routes/octopouce.yaml
+
 _octopouce_admin:
-    resource: "@OctopouceAdminBundle/Resources/config/routing.yaml"
-    prefix: /admin
+    resource: "@OctopouceAdminBundle/Resources/config/routing/routing.yaml"
 ```
 
 ## Step 5: Publish the Assets
@@ -170,15 +179,18 @@ $ php bin/console assets:install --symlink
 
 ## Step 6: Configure your file security
 
+### a. Configure default for admin and user
+
 ```yaml
 # config/packages/security.yaml
+
 security:
     encoders:
         App\Entity\Account\User: bcrypt
 
     providers:
         database_users:
-            entity: { class: App\Entity\Account\User, property: username }
+            entity: { class: App\Entity\Account\User, property: email }
 
     role_hierarchy:
         ROLE_ADMIN: ROLE_USER
@@ -190,35 +202,39 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        main:
-            # this firewall applies to all URLs
-            pattern: ^/
-
-            # but the firewall does not require login on every page
-            # denying access is done in access_control or in your controllers
+        admin:
+            pattern: ^/admin/
+            
+            # you can change your user checker here
+            user_checker: Octopouce\AdminBundle\Security\UserChecker
+            
             anonymous: true
-
-            # This allows the user to login by submitting a username and password
-            # Reference: https://symfony.com/doc/current/security/form_login_setup.html
             form_login:
-                # The route name that the login form submits to
                 check_path: octopouce_admin_login_admin
-                # The name of the route where the login form lives
-                # When the user tries to access a protected page, they are redirected here
                 login_path: octopouce_admin_login_admin
-                # Secure the login form against CSRF
-                # Reference: https://symfony.com/doc/current/security/csrf_in_login_form.html
                 csrf_token_generator: security.csrf.token_manager
-                # The page users are redirect to when there is no previous page stored in the
-                # session (for example when the users access directly to the login page).
                 failure_path: octopouce_admin_login_admin
                 use_referer: true
-
+                default_target_path: octopouce_admin_dashboard_index
             logout:
-                # The route name the user can go to in order to logout
                 path: octopouce_admin_logout
-                # The name of the route to redirect to after logging out
                 target: octopouce_admin_login_admin
+                
+        # you can config user control in frontend here, exemple :
+        #main:
+        #    pattern: ^/
+        #    user_checker: App\Security\UserChecker
+        #    anonymous: true
+        #    form_login:
+        #        check_path: security_login
+        #        login_path: security_login
+        #        csrf_token_generator: security.csrf.token_manager
+        #        failure_path: security_login
+        #        use_referer: true
+        #        default_target_path: account_index
+        #    logout:
+        #        path: security_logout
+        #        target: homepage
 
     access_control:
         # this is a catch-all for the admin area

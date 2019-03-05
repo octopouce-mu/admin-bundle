@@ -71,32 +71,8 @@ class DashboardService {
 		$this->twitterService   = $twitterService;
 		$this->youtubeService   = $youtubeService;
 		$this->optionTransformer = $optionTransformer->getOptionsWithKeyName();
-		$this->cache = new FilesystemCache(self::slugify($this->optionTransformer['PROJECT_NAME']->getValue()));
+		$this->cache = new FilesystemCache(strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $this->optionTransformer['PROJECT_NAME']->getValue()))));
 		$this->em = $em;
-	}
-
-	public static function slugify($text = '')
-	{
-		// replace non letter or digits by -
-		$text = preg_replace('~[^\pL\d]+~u', '-', $text);
-
-		// remove unwanted characters
-		$text = preg_replace('~[^-\w]+~', '', $text);
-
-		// trim
-		$text = trim($text, '-');
-
-		// remove duplicate -
-		$text = preg_replace('~-+~', '-', $text);
-
-		// lowercase
-		$text = strtolower($text);
-
-		if (empty($text)) {
-			return $text;
-		}
-
-		return $text;
 	}
 
 	public function setEnabled( $enabled )

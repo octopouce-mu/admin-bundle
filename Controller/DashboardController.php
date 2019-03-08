@@ -20,7 +20,7 @@ class DashboardController extends AbstractController
      */
     public function index( DashboardService $dashboardService, Request $request ): Response
     {
-    	if($request->get('reset_stats')) $dashboardService->clearCache($request->get('reset_stats'));
+    	 $dashboardService->clearCache($request->get('reset_stats'));
 
 		$stats = $dashboardService->getData();
 

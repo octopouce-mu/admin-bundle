@@ -71,7 +71,7 @@ class DashboardService {
 		$this->twitterService   = $twitterService;
 		$this->youtubeService   = $youtubeService;
 		$this->optionTransformer = $optionTransformer->getOptionsWithKeyName();
-		$this->cache = new FilesystemCache(strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $this->optionTransformer['PROJECT_NAME']->getValue()))));
+		$this->cache = new FilesystemCache(strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $this->optionTransformer['PROJECT_URL']->getValue()))));
 		$this->em = $em;
 	}
 

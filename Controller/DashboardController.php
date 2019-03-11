@@ -32,4 +32,23 @@ class DashboardController extends AbstractController
 	        'stats' => $stats
         ]);
     }
+
+	/**
+	 * @Route("/", name="octopouce_admin_dashboard_clear_cache")
+	 * @IsGranted("ROLE_ADMIN")
+	 */
+	public function clearCache( DashboardService $dashboardService, Request $request ): Response
+	{
+		$dashboardService->clearCache($request->get('reset_stats'));
+
+		$stats = $dashboardService->getData();
+
+		if($stats === false) {
+			return $this->redirectToRoute('octopouce_admin_user_index');
+		}
+
+		return $this->render('@OctopouceAdmin/Dashboard/index.html.twig', [
+			'stats' => $stats
+		]);
+	}
 }

@@ -4,9 +4,6 @@
 namespace Octopouce\AdminBundle\Controller;
 
 use App\Entity\Account\User;
-use Octopouce\AdminBundle\Form\Factory\FactoryInterface;
-use Octopouce\AdminBundle\Form\UserType;
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,12 +11,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Routing\Annotation\Route;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/user")
- * @IsGranted("ROLE_ADMIN")
+ * @IsGranted("ROLE_EDIT_USER")
  */
 class UserController extends AbstractController
 {
@@ -37,7 +33,6 @@ class UserController extends AbstractController
 
 	/**
 	 * @Route("/create", name="octopouce_admin_user_create")
-	 * @IsGranted("ROLE_SUPER_ADMIN")
 	 */
 	public function create(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
 	{

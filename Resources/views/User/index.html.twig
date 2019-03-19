@@ -44,11 +44,11 @@
                                             <td class="center-align">
                                                 <a href="{{ path('octopouce_admin_user_show', {'id': user.id}) }}" class="waves-effect waves-light btn blue"><i class="fas fa-eye"></i></a>
 
-                                                {% if app.user == user or is_granted('ROLE_SUPER_ADMIN') %}
+                                                {% if app.user == user or is_granted('ROLE_EDIT_USER') %}
                                                     <a href="{{ path('octopouce_admin_user_edit', {'id': user.id}) }}" class="waves-effect waves-light btn orange"><i class="fas fa-pencil-alt"></i></a>
                                                 {% endif %}
 
-                                                {% if app.user != user and is_granted('ROLE_SUPER_ADMIN') %}
+                                                {% if app.user != user and is_granted('ROLE_EDIT_USER') %}
                                                     <a href="{{ path('octopouce_admin_user_delete', {'id': user.id}) }}" class="waves-effect waves-light btn red" onclick="if (!confirm('Are you sure?')) { return false }"><i class="fas fa-times"></i></a>
                                                 {% endif %}
                                             </td>

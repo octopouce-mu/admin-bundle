@@ -39,7 +39,7 @@
                                                     <span class="chip {{ role == 'ROLE_SUPER_ADMIN' ? 'orange' : 'blue' }}">{{ role }}</span>
                                                 {% endfor %}
                                             </td>
-                                            <td>{{ user.enabled }}</td>
+                                            <td>{% if user.enabled %}<i class="fas fa-check green-text"></i>{% else %}<i class="fas fa-times red-text"></i>{% endif %}</td>
                                             <td>{{ user.createdAt|date('d/m/Y') }}</td>
                                             <td class="center-align">
                                                 <a href="{{ path('octopouce_admin_user_show', {'id': user.id}) }}" class="waves-effect waves-light btn blue"><i class="fas fa-eye"></i></a>

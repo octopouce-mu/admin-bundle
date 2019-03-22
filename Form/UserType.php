@@ -79,8 +79,9 @@ class UserType extends AbstractType
 
 		if($options['super_admin']) {
 			$roles = [
-				'User (show)'  => 'ROLE_USER',
-				'Admin (show & edit)' => 'ROLE_ADMIN'
+				'User (not access admin)'  => 'ROLE_USER',
+				'User Admin'  => 'ROLE_USER_ADMIN',
+				'Admin (access admin)' => 'ROLE_ADMIN'
 			];
 
 			if(class_exists('Octopouce\BlogBundle\OctopouceBlogBundle')){

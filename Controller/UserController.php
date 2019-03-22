@@ -12,10 +12,11 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * @Route("/user")
- * @IsGranted("ROLE_EDIT_USER")
+ * @IsGranted("ROLE_ADMIN")
  */
 class UserController extends AbstractController
 {
@@ -33,6 +34,7 @@ class UserController extends AbstractController
 
 	/**
 	 * @Route("/create", name="octopouce_admin_user_create")
+	 * @IsGranted({"ROLE_USER_ADMIN", "ROLE_SUPER_ADMIN"})
 	 */
 	public function create(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
 	{
@@ -73,8 +75,6 @@ class UserController extends AbstractController
 		]);
 	}
 
-
-
 	/**
 	 * @Route("/edit/{id}", name="octopouce_admin_user_edit")
 	 */
@@ -83,7 +83,7 @@ class UserController extends AbstractController
 		$userIdentified = $this->getUser();
 		$user = $this->getDoctrine()->getRepository(User::class)->find($id);
 
-		if (false === $authChecker->isGranted('ROLE_SUPER_ADMIN') && $userIdentified !== $user) {
+		if (false === $authChecker->isGranted('ROLE_SUPER_ADMIN') && false === $authChecker->isGranted('ROLE_USER_ADMIN') && $userIdentified !== $user) {
 			throw new AccessDeniedException('Unable to access this page!');
 		}
 
@@ -112,6 +112,7 @@ class UserController extends AbstractController
 
 	/**
 	 * @Route("/delete/{id}", name="octopouce_admin_user_delete")
+	 * @IsGranted({"ROLE_USER_ADMIN", "ROLE_SUPER_ADMIN"})
 	 */
 	public function delete($id): Response
 	{

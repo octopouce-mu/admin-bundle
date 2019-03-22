@@ -17,9 +17,9 @@ sure you have translator enabled in your config.
 # app/config/config.yml
 
 framework:
-    default_locale: en
+    default_locale: '%locale%'
     translator:
-        fallbacks: ['en']
+        fallbacks: ['%locale%']
 ```
 
 ```yaml
@@ -29,6 +29,13 @@ parameters:
     app_locales: en|fr
     locale: 'fr'
 ```
+
+Add the vendor KNP Doctrine Behaviors in bundles.php
+```php
+<?php
+...
+Knp\DoctrineBehaviors\Bundle\DoctrineBehaviorsBundle::class => ['all' => true],
+``` 
 
 For more information about translations, check [Symfony documentation](https://symfony.com/doc/current/book/translation.html).
 
@@ -193,6 +200,7 @@ security:
             entity: { class: App\Entity\Account\User, property: email }
 
     role_hierarchy:
+        ROLE_USER_ADMIN: ROLE_USER
         ROLE_ADMIN: ROLE_USER
         ROLE_SUPER_ADMIN: ROLE_ADMIN
 

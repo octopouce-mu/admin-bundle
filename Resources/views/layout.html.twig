@@ -201,6 +201,23 @@
                             </li>
                         {% endif %}
 
+                        {% if 'octopouce_shop_admin_cart_index'|routeExist and is_granted('ROLE_ADMIN') %}
+                            <li>
+                                <a href="{{ path('octopouce_shop_admin_cart_index') }}">
+                                    {{ 'header.sidebar.left.nav.shop'|trans|raw }}
+                                </a>
+                                <ul>
+                                    <li>
+                                        {% block shop_sidebar_left_nav %}
+                                            <a href="#">Dashboard</a>
+                                            <a href="{{ path('octopouce_shop_admin_order_index') }}">Commandes</a>
+                                            <a href="{{ path('octopouce_shop_admin_cart_index') }}">Panier</a>
+                                        {% endblock %}
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
+
                         {% if is_granted('ROLE_SUPER_ADMIN') %}
                             <li>
                                 <a href="{{ path('octopouce_admin_option_index') }}">

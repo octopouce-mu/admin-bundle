@@ -44,5 +44,6 @@ header.sidebar.left.nav.options: <i class="fas fa-cogs"></i><span class="label-m
 header.sidebar.left.nav.advertising: <i class="fab fa-adversal"></i><span class="label-menu">Pub</span>
 header.sidebar.left.nav.post: <i class="fas fa-comments"></i><span class="label-menu">Blog</span>
 header.sidebar.left.nav.cms: <i class="fas fa-file-alt"></i><span class="label-menu">CMS</span>
+header.sidebar.left.nav.shop: <i class="fas fa-shopping-cart"></i><span class="label-menu">Shop</span>
 header.sidebar.left.nav.menu: <i class="fas fa-ellipsis-h"></i><span class="label-menu">Menu</span>
 header.sidebar.left.nav.language: <i class="fas fa-globe"></i><span class="label-menu">Langues</span>

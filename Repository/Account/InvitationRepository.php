@@ -4,7 +4,7 @@ namespace Octopouce\AdminBundle\Repository\Account;
 
 use App\Entity\Account\Invitation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
  * @method Invitation|null find( $id, $lockMode = null, $lockVersion = null )
@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Invitation[]    findBy( array $criteria, array $orderBy = null, $limit = null, $offset = null )
  */
 class InvitationRepository extends ServiceEntityRepository {
-	public function __construct( RegistryInterface $registry ) {
+	public function __construct( ManagerRegistry $registry ) {
 		parent::__construct( $registry, Invitation::class );
 	}
 
